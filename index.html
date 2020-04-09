@@ -1,181 +1,88 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
- <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Правда или  Действие</title>
-   <style>
-   .box-btn{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  flex-wrap: wrap;
-  margin: auto;
-}
+<!DOCTYPE html>
+<html lang="en">
 
-.btn-gradient{
-  margin: 10px;
-  padding: 20px;
-  text-align: center;
-  transition: 0.5s;
-  background-size: 200% auto;
-  color: white;
-  box-shadow: 0 2px 20px -5px grey;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  width:320px;
-}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="public/css/materialize.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Document</title>
+</head>
 
-.btn-gradient:hover{
-  background-position: right center;
-  color: #ffffff;
-}
+<body>
+    <nav class="grey darken-3">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo center">Dahor</a>
+        </div>
+    </nav>
 
-.yellow{ 
-background-image: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%);
-}
+    <div id="present">
+        <div class="carousel carousel-slider center">
+            <div class="carousel-fixed-item center">
+                <a class="btn waves-effect white grey-text darken-text-2">button</a>
+            </div>
+            <div class="carousel-item red white-text" href="#one!">
+                <h2>First Panel</h2>
+                <p class="white-text">This is your first panel</p>
+            </div>
+            <div class="carousel-item amber white-text" href="#two!">
+                <h2>Second Panel</h2>
+                <p class="white-text">This is your second panel</p>
+            </div>
+            <div class="carousel-item green white-text" href="#three!">
+                <h2>Third Panel</h2>
+                <p class="white-text">This is your third panel</p>
+            </div>
+            <div class="carousel-item blue white-text" href="#four!">
+                <h2>Fourth Panel</h2>
+                <p class="white-text">This is your fouth panel</p>
+            </div>
+        </div>
 
-.blue{
-background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
-}
+    </div>
 
-.green {
-  background-image: linear-gradient(to right, #84fab0 0%, #8fd3f4 51%, #84fab0 100%);
-}
+    <div class="container">
+        <div id="advantages">
 
-#blokUserCreat{
-  display: flex;
-  justify-content: center;
-}
+            <div class="row">
 
-#wrap{
-  display:flex;
-  align-items:center;
-  flex-direction:column;
-  margin-top:10%;
-  
-}
+                <div class="col s12 m7">
 
-body{
-  -webkit-touch-callout: none; 
-  -webkit-user-select: none;  
-  -khtml-user-select: none;    
-  -moz-user-select: none;    
-  -ms-user-select: none;       
-  user-select: none;                                           
-}
+                  <div class="card small">
+                    <div class="card-image">
+                      <img src="images/sample-1.jpg">
+                      <span class="card-title">Card Title</span>
+                    </div>
+                    <div class="card-content">
+                      <p>I am a very simple card. I am good at containing small bits of information.
+                      I am convenient because I require little markup to use effectively.</p>
+                    </div>
+                    <div class="card-action">
+                      <a href="#">This is a link</a>
+                    </div>
+                  </div>
 
-.UserAddButton{
-width:45px;
-border: 1px black solid;
-border-radius:1em;
-text-align: center;
-margin-left:0.5em;
-}
-  </style>
- </head>
- <body class="unselectable">
- <div id="wrap" >
-<div id="blokUserCreat">
-<input type="text" placeholder="Введите имя" id="NameUserEnter">
-<div id="Men" class="UserAddButton" >М</div>
-<div id="Girl" class="UserAddButton" >Ж</div>
-</div>
+                </div>
 
-<div style="margin-top:15vh;">
-<p id="UserName" style="text-align: center;"></p>
-<h1 id="OutText" style="text-align: center;margin-top:0px;">
-Правда или Действие?
-</h1>
-</div>
+              </div>
+                        
+        </div>
 
-<div id ="box-botom" margin-bottom:1em;>
-  <div id="qestion" class="btn-gradient yellow">
-Правда
-  </div>
-  <div id="action" class="btn-gradient blue">
-Действие
-  </div>
-</div>
-<div id="nextUser" class="btn-gradient green" style="display:none;">
-Далее
-</div>
+        <div id="contact"></div>
+    </div>
 
-</div>
+    <script src="public/js/materialize.js"></script>
+    <script>
 
-<script >
-  function User(name,gender){
-this.name=name;
-this.gender=gender;
-}
-var massUser=[];
-let boxBottom = document.getElementById("box-botom");
-let bottomNext =document.getElementById("nextUser");
-let GetUser = document.getElementById("NameUserEnter");
-let textUser = document.getElementById("UserName");
-let OutText = document.getElementById("OutText");
-let qestions = [];
-let actions = [];
+        document.addEventListener('DOMContentLoaded', function () {
+            let elems = document.querySelectorAll('.carousel');
+            let instance = M.Carousel.init(elems, {
+                fullWidth: true,
+                indicators: true
+            });
+        });
 
-Array.prototype.random = function () {
-  return this[Math.floor((Math.random()*this.length))];
-}// Получение рандомного элемента из массива
+    </script>
+</body>
 
-massUser.count= -1; // Добавление своиства итерирование, для передвижение по массиву
-massUser.next=function(){
-	if(this.count>=this.length){ this.count=0; return this[this.count];}
-  else{++this.count; return this[this.count]; }
-};
-function Random(mass){
-OutText.textContent = mass.random();
-}
-bottomNext.addEventListener("click",()=>{
-ShowUserName(); OutText.textContent="Правда или Действие?"; boxBottom.style.display="block";bottomNext.style.display="none" });
-
-document.getElementById("qestion").addEventListener("click",()=>{
-Random(qestions);boxBottom.style.display="none";bottomNext.style.display="block"});
-document.getElementById("action").addEventListener("click",()=>{
-Random(actions);boxBottom.style.display="none";bottomNext.style.display="block"});
-
-function AddUser(gender){
-if(GetUser.value.length==0|| GetUser.value==null){alert("Введите имя")}
-else{ massUser.push(new User(GetUser.value,gender)); console.log(`New user: ${GetUser.value}:${gender}`)}
-GetUser.value="";
-ShowUserName();
-}
-
-document.getElementById("Men").addEventListener("click",()=>{AddUser("M")});
-document.getElementById("Girl").addEventListener("click",()=>{AddUser("G")});
-
-function ShowUserName(){
-if(massUser.length!=0)
-	{
-if(massUser.length<=3){ textUser.textContent=massUser.next().name;}    
-else{ textUser.textContent=massUser.random().name;}
-	}
-}
-
-function GetData() {
-   var app = "https://script.google.com/macros/s/AKfycbwC4dLzpBH5tOBOEm9PMx2wpF1Od7_iDPQrFsRWVWKp0NG0-1ju/exec",
-      output = '',
-      xhr = new XMLHttpRequest();
-   xhr.open('GET', app);
-   xhr.onreadystatechange = function() {
-     if (xhr.readyState !== 4) return;
-
-     if (xhr.status == 200) {
-        try {
-            var QestionAndAction = JSON.parse(xhr.responseText).result;
-          qestions = QestionAndAction.qestion.slice()
-          actions = QestionAndAction.action.slice(); 
-        } catch(e) {console.log(e)}
-     } 
-   }
-   xhr.send()
-}
-GetData();
-
-</script>
- </body>
 </html>
