@@ -1,30 +1,46 @@
 let switche_theme_button = document.getElementById(`switche-theme`);
 
-class theme{
-    constructor(id, theme_body ,from , to){
+
+
+function Themer (id, class_array){
+        let self = this;
+        this.themes = {
+            array : class_array,
+            index : 0,
+            get next() {
+                console.log("getnext -> this.index", this.index)
+                if (this.index < this.array.length-1) {
+                    
+                    this.index += 1;
+                    return this.array[self.themes.index]
+                }
+                else {
+                    this.index = -1;
+                    return self.themes.next;      
+                }
+            },
+
+            get current(){
+                return this.array[this.index];
+            },
+
+        };
         this.switcher = id;
-        this.theme_body = theme_body;
-        this.from = from; 
-        this.to = to ; 
-
-
-        this.switcher.addEventListener('click', swap);
-
-       function swap(){
-           let save;
-            if(document.body.classList.contains(from)){
-                document.body.classList.remove(from);
-                document.body.classList.add(to);
-                save = from;
-                from = to;
-                to = save;
-            } else {
-                console.error(`Not found class`);
-            }
-            return false;
-        }
-    }
+        
     
+
+    function swap() {
+        event.preventDefault();
+        if (document.body.classList.contains(self.themes.current)) {
+            document.body.classList.remove(self.themes.current);
+            document.body.classList.add(self.themes.next);
+        } else {
+            console.error(`Not found class`);
+        }
+        return false;
+    }
+
+    this.switcher.addEventListener('click', swap);
 }
 
-new theme(switche_theme_button , document.body ,'theme-light', 'theme-dark');
+ let theme =new Themer(switche_theme_button, ['theme-light', 'theme-dark']);
