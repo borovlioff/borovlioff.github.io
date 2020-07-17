@@ -1,0 +1,15 @@
+#OutText {
+  max-height: 300px;
+  font-weight: bold;
+}
+
+#blokUserCreat{
+    max-width: 600px;
+}
+
+@media screen and (max-width: 600px) {
+body .container {
+    width: 100%;
+    margin: 0px;
+  }
+}
