@@ -12,42 +12,46 @@
 
 <body class="theme-light">
 
-  <div class="container">
-   
-      <div id="blokUserCreat" class="row section ">
-        <div class="col s8">
-          <input type="text" id="NameUserEnter" placeholder="Игрок 1">
-          <label for="NameUserEnter">Введите имя</label>
-        </div>
-        <div class="col s2">
-          <div id="Men" class="btn-floating blue center-align">М</div>
-        </div>
-        <div class="col s2">
-          <div id="Girl" class="btn-floating pink center-align">Ж</div>
-        </div>
-      </div>
+  <div id="app" class="container">
 
-      <div class="center-align section ">
-        <p id="UserName"></p>
-        <div id="OutText" class="flow-text ">
-          Правда или Действие?
-        </div>
+    <div id="user-wrap">
+      <div class="wrap row">
+      <div class="col s8">
+        <input type="text" id="NameUserEnter" placeholder="Игрок 1">
+        <label for="NameUserEnter">Введите имя</label>
       </div>
+      <div class="col s2">
+        <div id="Men" class="btn-floating blue center-align">М</div>
+      </div>
+      <div class="col s2">
+        <div id="Girl" class="btn-floating pink center-align">Ж</div>
+      </div>
+    </div>
+    </div>
 
-      <div id="box-botom" class="row section ">
-        <div id="qestion" class="btn btn-large orange lighten-2 col s12 l5 section">
-          Правда
-        </div>
-        <div id="action" class="btn btn-large blue lighten-2 col s12 l5 right">
-          Действие
-        </div>
+    <div id="content-wrap" class="center-align">
+      <p id="UserName"></p>
+      <div id="OutText" class="flow-text">
+        Правда или Действие?
       </div>
-      
-      <div id="nextUser" class="btn green" style="display:none;">
-        Далее
-      </div>
+    </div>
 
-    
+    <div id="action-wrap">
+    <div id="box-botom" class="row">
+      <div id="qestion" class="btn gradient yellow col s6 l5 ">
+        Правда
+      </div>
+      <div id="action" class="btn gradient blue col s6 l5 right">
+        Действие
+      </div>
+    </div>
+
+    <div id="nextUser" class="btn gradient green" style="display:none;">
+      Далее
+    </div>
+  </div>
+
+
   </div>
 
   </div>
