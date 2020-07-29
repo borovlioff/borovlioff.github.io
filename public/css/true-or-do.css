@@ -1,27 +1,6 @@
-body{
-    height: 100vh;
-    overflow-y: hidden;
-}
 
-#app {
-  height: 95%;
-  margin: 2% auto;
-}
 
-#user-wrap {
-  height: 10%;
-}
 
-#user-wrap .wrap{
- max-width: 600px;
-}
-
-#content-wrap {
-  height: 70%;
-}
-#action-wrap {
-    height: 20%;
-}
 
 @media screen and (max-width: 600px) {
   body .container {
