@@ -7,6 +7,16 @@
     width: 100%;
     margin: 0px;
   }
+
+  #action-wrap{
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+  }
+
+  #action-wrap .btn{
+    height: 100%;
+  }
 }
 
 .gradient {
