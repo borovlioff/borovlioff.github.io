@@ -19,6 +19,7 @@ body {
 }
 
 #main #content{
+  position: relative;
   padding-top: 3rem;
   padding-bottom: 3rem;
 }
@@ -73,22 +74,7 @@ body {
 
 #instagram{
     background: #f09433;
-    background: -moz-linear-gradient(
-      45deg,
-      #f09433 0%,
-      #e6683c 25%,
-      #dc2743 50%,
-      #cc2366 75%,
-      #bc1888 100%
-    );
-    background: -webkit-linear-gradient(
-      45deg,
-      #f09433 0%,
-      #e6683c 25%,
-      #dc2743 50%,
-      #cc2366 75%,
-      #bc1888 100%
-    );
+
     background: linear-gradient(
       45deg,
       #f09433 0%,
