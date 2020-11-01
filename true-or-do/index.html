@@ -4,53 +4,57 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="stylesheet" href="/public/css/true-or-do.css">
+  <link rel="stylesheet" href="/public/css/main.css">
   <link rel="stylesheet" href="/public/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Правда или Действие</title>
 
 </head>
 
 <body class="theme-light">
-      <div class="wrap row">
-      <div class="col s8">
-        <input type="text" id="NameUserEnter" placeholder="Игрок 1">
-        <label for="NameUserEnter">Введите имя</label>
-      </div>
-      <div class="col s2">
+
+  <div id="nav">
+
+    <div class="row" id="user_form">
+      <div class="wrap">
+        <div class="input-field inline">
+          <input type="text" id="NameUserEnter" placeholder="Введите имя игрока">
+        </div>
+
         <div id="Men" class="btn-floating blue center-align">М</div>
-      </div>
-      <div class="col s2">
         <div id="Girl" class="btn-floating pink center-align">Ж</div>
+
+        <h3 id="UserName" class="center-align"></h3>
       </div>
+
     </div>
 
-    <div class="center-align">
-      <h3 id="UserName"></h3>
-      
+  </div>
+
+  
+
+  <div class="row" id='desktop'>
+
+    <div>
       <div id="OutText" class="flow-text">
         Правда или Действие?
       </div>
+    </div>
     
+    <div id="actions">
+    <div class="col s12 l6 h-red transition" id="qestion">
+      <div class="mega-text">Правда</div>
     </div>
-
-    <div id="action-wrap">
-    <div id="box-botom" class="row">
-        <div id="qestion" class="btn gradient yellow col s12">
-          Правда
-        </div>
-        <div id="action" class="btn gradient blue col s12">
-          Действие
-        </div>
-    </div>
-
-    <div id="nextUser" class="btn gradient green" style="display:none;">
-      Далее
+    <div class="col s12 l6 h-blue transition" id="action">
+      <div class="mega-text">Действие</div>
     </div>
   </div>
-
   </div>
+
+
   <script src="/public/js/true-or-do.js"></script>
+  <script src="/public/js/switche-theme.js"></script>
 </body>
 
 </html>

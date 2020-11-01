@@ -37,7 +37,10 @@ body {
 }
 
 .theme-dark #switche-theme{
-    background-color: #e1e14d;
+    background-color: #ffffff;
+}
+.theme-dark #switche-theme i{
+  color: black;
 }
 
 .theme-light #switche-theme{

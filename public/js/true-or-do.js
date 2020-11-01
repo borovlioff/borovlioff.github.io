@@ -4,7 +4,6 @@ function User(name, gender) {
 }
 var massUser = [];
 let boxBottom = document.getElementById("box-botom");
-let bottomNext = document.getElementById("nextUser");
 let GetUser = document.getElementById("NameUserEnter");
 let textUser = document.getElementById("UserName");
 let OutText = document.getElementById("OutText");
@@ -23,22 +22,23 @@ massUser.next = function () {
 function Random(mass) {
     OutText.textContent = mass.random();
 }
-bottomNext.addEventListener("click", () => {
-    ShowUserName(); OutText.textContent = "Правда или Действие?"; boxBottom.style.display = "block"; bottomNext.style.display = "none"
-});
 
 document.getElementById("qestion").addEventListener("click", () => {
-    Random(qestions); boxBottom.style.display = "none"; bottomNext.style.display = "block"
+    Random(qestions); 
+    ShowUserName();
 });
 document.getElementById("action").addEventListener("click", () => {
-    Random(actions); boxBottom.style.display = "none"; bottomNext.style.display = "block"
+    Random(actions); 
+    ShowUserName();
 });
 
 function AddUser(gender) {
-    if (GetUser.value.length == 0 || GetUser.value == null) { alert("Введите имя") }
+    if (GetUser.value.length == 0 || GetUser.value == null) { 
+        GetUser.value = `Игрок ${massUser.length+1}`;
+        massUser.push(new User(GetUser.value, gender)); console.log(`New user: ${GetUser.value}:${gender}`);
+     }
     else {
         massUser.push(new User(GetUser.value, gender)); console.log(`New user: ${GetUser.value}:${gender}`);
-        GetUser.placeholder = `Игрок ${massUser.length+1}`
     }
     GetUser.value = "";
     ShowUserName();
