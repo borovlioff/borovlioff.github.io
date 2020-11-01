@@ -5,10 +5,6 @@ body {
   user-select: none;
 }
 
-#desktop {
-  height: 100vh;
-}
-
 
 .mega-text {
   width: 100%;
@@ -37,6 +33,10 @@ body {
   top: 1rem;
 }
 
+#content{
+  height: 40vh;
+}
+
 #user_form .wrap {
   max-width: 300px;
   margin: 0 auto;
@@ -54,11 +54,10 @@ body {
 }
 
 #OutText {
-  height: 40vh;
+  height: 100%;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 8rem;
   padding-left:1rem;
   padding-right:1rem;
 }
