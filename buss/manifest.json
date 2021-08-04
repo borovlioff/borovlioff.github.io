@@ -1,0 +1,9 @@
+{
+    "name": "Транспорт Красноярск",
+    "short_name": "Транспорт",
+    "theme_color": "#b22d2b",
+    "background_color": "#b22d2b",
+    "display": "fullscreen",
+    "scope": "/",
+    "start_url": "/"
+  }
