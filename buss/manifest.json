@@ -5,7 +5,7 @@
   "background_color": "#b22d2b",
   "display": "fullscreen",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "/buss/",
   "icon": [
     {
       "src": "assets/icon/36.png",
