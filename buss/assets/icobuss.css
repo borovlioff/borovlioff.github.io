@@ -40,3 +40,38 @@
 .icon-ticket:before {
   content: "\e904";
 }
+
+.icon-qr{
+  background-image: url("./img/qr.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.icon-buss{
+  background-image: url("./img/buss.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.icon-carrier{
+  background-image: url("./img/carrier.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.icon-back {
+  background-image: url("./img/back.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+
+.icon-navigation-vertical {
+  background-image: url("./img/navigation-vertical.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}

@@ -24,7 +24,6 @@ export class TicketController {
     let oldSecond = this.startTicket.date.getTime() / 1e3;
     let interim = nowSecond - oldSecond;
     let newNumber = this.startTicket.ticketCount + Math.round(interim / this.startTicket.ticketPerSecond);
-    console.log(this.startTicket.ticketCount, interim, interim / this.startTicket.ticketPerSecond);
     return newNumber;
   }
 }
