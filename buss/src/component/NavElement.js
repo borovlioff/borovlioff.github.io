@@ -10,8 +10,7 @@ export class NavElement extends Element {
   }
   render() {
     this.node = document.createElement(`div`);
-    this.node.id = "nav";
-    this.node.classList.add(`bg-red`, `shadow`, `white`, `center-y`);
+    this.node.classList.add(`nav`, `bg-red`, `shadow`, `white`, `center-y`);
     this.backButtonElement = document.createElement(`span`);
     this.backButtonElement.classList.add(`icon-back`, `hide`);
     this.titleElement = document.createElement(`h2`);

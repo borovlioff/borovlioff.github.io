@@ -8,18 +8,7 @@ import {BuyLayerElement} from "./component/BuyLayerElement.js";
 import {ErrorPopupElement} from "./component/ErrorPopupElement.js";
 let buses = new BussController();
 buses.getBuses();
-document.addEventListener("click", function(event) {
-  let target = event.target;
-  if (!target.hasAttribute("data-fullscreen"))
-    return;
-  if (document.fullscreenElement) {
-    document.exitFullscreen();
-  } else {
-    document.documentElement.requestFullscreen();
-  }
-}, false);
 let ticketController = new TicketController();
-let ticket;
 let app = document.querySelector("#app");
 let nav = new NavElement();
 app.append(nav.render());
