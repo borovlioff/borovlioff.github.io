@@ -3,7 +3,7 @@ export class TicketController {
     this.startTicket = {
       date: new Date(2021, 7, 2, 20, 28),
       ticketCount: 297260518,
-      ticketPerSecond: 9
+      ticketPerSecond: 11
     };
   }
   createTicket({code, route, car_number, carrier}) {
@@ -20,10 +20,14 @@ export class TicketController {
   }
   getTicketNumber() {
     let nowDate = new Date();
-    let nowSecond = nowDate.getTime() / 1e3;
-    let oldSecond = this.startTicket.date.getTime() / 1e3;
+    let nowMilliseconds = nowDate.getTime();
+    console.log("file: TicketController.ts : line 27 : TicketController : getTicketNumber : nowMilliseconds", nowMilliseconds);
+    let nowSecond = nowMilliseconds / 1e3;
+    let oldMilliseconds = this.startTicket.date.getTime();
+    console.log("file: TicketController.ts : line 32 : TicketController : getTicketNumber : oldMilliseconds", oldMilliseconds);
+    let oldSecond = oldMilliseconds / 1e3;
     let interim = nowSecond - oldSecond;
-    let newNumber = this.startTicket.ticketCount + Math.round(interim / this.startTicket.ticketPerSecond);
+    let newNumber = this.startTicket.ticketCount + Math.round(interim * this.startTicket.ticketPerSecond);
     return newNumber;
   }
 }

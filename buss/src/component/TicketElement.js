@@ -34,7 +34,7 @@ export class TicketElement extends Element {
       countAndTypeElement.classList.add(`strong`);
       countAndTypeElement.textContent = `${ticket.count} (${ticket.type}) - 26,00 ₽`;
       let dateElement = document.createElement(`p`);
-      let dateNewFormat = `${ticket.date.getDay() + 1} ${ticket.date.toLocaleString("ru", {month: "long"})},  ${ticket.date.getHours()}:${ticket.date.getMinutes() > 9 ? ticket.date.getMinutes() : `0` + ticket.date.getMinutes()}`;
+      let dateNewFormat = `${ticket.date.getDate()} ${ticket.date.toLocaleString("ru", {month: "long"})},  ${ticket.date.getHours()}:${ticket.date.getMinutes() > 9 ? ticket.date.getMinutes() : `0` + ticket.date.getMinutes()}`;
       dateElement.textContent = dateNewFormat;
       current_ticket.append(carrierElement);
       current_ticket.append(routeElement);
