@@ -56,7 +56,7 @@ export class TicketPopupElement extends PopupElement {
       let dateNewFormat = `${ticket.date.getDate()} ${ticket.date.toLocaleString("ru", {month: "long"})},  ${ticket.date.getHours()}:${ticket.date.getMinutes() > 9 ? ticket.date.getMinutes() : `0` + ticket.date.getMinutes()}`;
       dateElement.textContent = dateNewFormat;
       this.ticketQR = document.createElement(`img`);
-      this.ticketQR.src = `../assets/img/qr-ticket.svg`;
+      this.ticketQR.src = `/../assets/img/qr-ticket.svg`;
       this.ticketQR.classList.add(`hide`, `qr-ticket`);
       owerlay.append(relevance);
       owerlay.append(bought);
