@@ -6,8 +6,9 @@ import {TicketLayerElement} from "./component/TicketLayerElement.js";
 import {BuyTicketPopupElement} from "./component/BuyTicketPopupElement.js";
 import {BuyLayerElement} from "./component/BuyLayerElement.js";
 import {ErrorPopupElement} from "./component/ErrorPopupElement.js";
-let buses = new BussController();
-buses.getBuses();
+import {TicketPopupElement} from "./component/TicketPopupElement.js";
+let bussController = new BussController();
+bussController.getBuses();
 let ticketController = new TicketController();
 let app = document.querySelector("#app");
 let nav = new NavElement();
@@ -22,14 +23,20 @@ let buyTicketPopupElement = new BuyTicketPopupElement();
 document.body.append(buyTicketPopupElement.render());
 let errorPopupElement = new ErrorPopupElement();
 document.body.append(errorPopupElement.render());
+let ticketPopupElement = new TicketPopupElement();
+document.body.append(ticketPopupElement.render());
 menuElement.buyElement.addEventListener("click", () => {
   buyTicketPopupElement.show();
 });
 buyTicketPopupElement.ok.addEventListener("click", async () => {
-  const buss = await buses.getById(buyTicketPopupElement.code);
+  const buss = await bussController.getById(buyTicketPopupElement.code);
   if (buss) {
     ticketController.createTicket({code: buss.code, route: buss.route, car_number: buss.car_number, carrier: buss.carrier});
     ticket_layer.ticketElement.reRender(ticketController.ticket);
+    ticketPopupElement.reRender(ticketController.ticket);
+    ticketPopupElement.node.addEventListener("click", () => {
+      ticketPopupElement.hide();
+    });
     ticket_layer.node.classList.add("hide");
     nav.next("Купить билет");
     buy_layer.reRender(ticketController.ticket);
@@ -54,4 +61,9 @@ nav.backButtonElement.addEventListener("click", () => {
   ticket_layer.node.classList.add(`smoll`);
   ticket_layer.categoryElement.classList.remove("hide");
   menuElement.node.classList.remove("hide");
+});
+ticket_layer.node.addEventListener("click", () => {
+  if (ticketController.ticket) {
+    ticketPopupElement.show();
+  }
 });

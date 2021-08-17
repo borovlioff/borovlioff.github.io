@@ -6,8 +6,7 @@ export class BuyTicketPopupElement extends PopupElement {
   }
   render() {
     this.node = document.createElement("div");
-    this.node.id = `buy_popup`;
-    this.node.classList.add("popup");
+    this.node.classList.add(`buy`, "popup");
     let owrlay = document.createElement("div");
     owrlay.classList.add(`owerlay`, `shadow`);
     let label = document.createElement("label");

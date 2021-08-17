@@ -20,7 +20,7 @@ export class TicketElement extends Element {
       ticketHeaderTitleElement.textContent = `Текущий билет`;
       owerlay.append(ticketHeaderTitleElement);
       let current_ticket = document.createElement(`div`);
-      current_ticket.id = `current_ticket`;
+      current_ticket.classList.add(`current`);
       let carrierElement = document.createElement(`p`);
       carrierElement.textContent = ticket.carrier;
       let routeElement = document.createElement(`p`);

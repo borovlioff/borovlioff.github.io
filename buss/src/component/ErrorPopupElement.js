@@ -2,8 +2,7 @@ import {PopupElement} from "./PopupElement.js";
 export class ErrorPopupElement extends PopupElement {
   render() {
     this.node = document.createElement("div");
-    this.node.id = `error_popup`;
-    this.node.classList.add("popup");
+    this.node.classList.add(`error`, "popup");
     let owerlay = document.createElement("div");
     owerlay.classList.add("owerlay");
     let title = document.createElement("h2");

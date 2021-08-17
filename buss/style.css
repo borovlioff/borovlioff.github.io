@@ -9,6 +9,7 @@ body {
   overflow: hidden;
   font-family: Roboto;
   background-color: #fff;
+  
 }
 
 h2 {
@@ -195,16 +196,16 @@ h2 {
   font-size: 12px;
 }
 
-#current_ticket {
+.current {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
-#current_ticket p {
+.current p {
   font-size: 18px;
 }
 
-#current_ticket p.mb-1 {
+.current p.mb-1 {
   margin-bottom: 1rem;
 }
 
@@ -308,7 +309,6 @@ h2 {
   padding-left: 1rem;
   padding-right: 1rem;
   padding-bottom: 1rem;
-  border-radius: 5px;
 }
 
 .action {
@@ -331,11 +331,15 @@ h2 {
   opacity: 100;
 }
 
-#buy_popup {
+.buy.popup {
   color: #b22d2b;
 }
 
-#buy_popup label {
+.buy.popup .owerlay{
+  border-radius: 5px;
+}
+
+.buy.popup label {
   background-color: #fff;
   position: relative;
   top: 10px;
@@ -345,7 +349,7 @@ h2 {
   font-size: 10px;
 }
 
-#buy_popup input {
+.buy.popup input {
   display: block;
   width: calc(100% - 4px - 1rem);
   padding-left: 0.5rem;
@@ -358,33 +362,34 @@ h2 {
   border-style: solid;
 }
 
-#buy_popup input:not(focus) {
+.buy.popup input:not(focus) {
   border-color: #b22d2b;
 }
 
-#buy_popup input:focus {
+.buy.popup input:focus {
   border-color: #b22d2b;
 }
 
-#buy_popup .error {
+.buy.popup .error {
   position: relative;
   left: 14px;
   font-size: 10px;
 }
 
-#error_popup .owerlay {
+.error.popup .owerlay {
   min-width: 60%;
+  border-radius: 5px;
 }
 
-#error_popup h2 {
+.error.popup h2 {
   font-size: 16px;
 }
 
-#error_popup p {
+.error.popup p {
   font-size: 12px;
 }
 
-#error_popup .action .close {
+.error.popup .action .close {
   position: relative;
   right: 0;
   color: #b22d2b;
@@ -447,4 +452,20 @@ h2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   border-radius: 73px;
+}
+
+.ticket-info .owerlay{
+  font-size:20px;
+  text-align: center;
+  width: 100%;
+  min-height:300px;
+}
+
+.ticket-info .owerlay .time{
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.qr-ticket{
+  width: 100%;
 }
