@@ -5,38 +5,44 @@ body {
     padding: 0;
 }
 
-nav {
-    background-color: #343a40;
-    padding: 10px 0;
-}
-
-.nav-menu {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+.nav-scroller {
+    overflow-y: hidden;
+    background-color: #fff;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  }
+  .nav-scroller__items {
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap; /* Позволяет элементам переноситься на новую строку при необходимости */
-}
-
-.nav-menu li {
-    display: inline;
-}
-
-.nav-menu a {
-    color: #ffffff;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .nav-scroller__item {
+    color: #424242;
+    display: flex;
+    padding: 0.5rem 1.25rem;
     text-decoration: none;
-    font-size: 18px;
-    padding: 10px 20px;
-    border-radius: 4px;
-}
+  }
 
-.nav-menu a:hover {
-    background-color: #495057;
-}
+  .nav-scroller__item:not(:last-child) {
+    border-right: 1px solid #eee;
+  }
+
+  .nav-scroller__item_active {
+    background-color: #fff59d;
+  }
+
+  /* для всех пунктов кроме активного */
+.nav-scroller__item:not(.nav-scroller__item_active):hover {
+    background-color: #f5f5f5;
+  }
+  /* для активного пункта */
+  .nav-scroller__item_active:hover {
+    background-color: #fff176;
+  }
 
 .container {
+    display: flex;
+    flex-wrap: wrap;
     width: 90%; /* Изменено с 80% на 90% для улучшенной адаптивности */
     max-width: 600px;
     margin: 50px auto;
@@ -54,10 +60,12 @@ form {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 }
 
 label {
     font-weight: bold;
+    width: 100%;
 }
 
 input[type="text"], textarea {
@@ -65,9 +73,11 @@ input[type="text"], textarea {
     border: 1px solid #ccc;
     border-radius: 8px;
     width: 100%;
+    max-width: 320px;
 }
 
 textarea {
+    width: 100%;
     resize: none;
     height: 100px;
 }
@@ -86,6 +96,10 @@ button:hover {
     opacity: 0.9;
 }
 
+#add-ingredient{
+    background-color: #007bff;
+}
+
 .ingredient-entry {
     display: flex;
     gap: 10px;
@@ -96,16 +110,9 @@ button:hover {
     flex: 1;
 }
 
-.learn-link {
-    display: block;
-    margin-top: 20px;
-    text-align: center;
-    color: #007bff;
-    text-decoration: none;
-}
-
-.learn-link:hover {
-    text-decoration: underline;
+.ingredient-entry {
+    display: flex;
+    align-items: center;
 }
 
 .recipe-item {
@@ -130,18 +137,21 @@ button.delete-recipe {
 
 /* Адаптивные стили */
 @media (max-width: 768px) {
-    .nav-menu {
-        flex-direction: column; /* Меняет направление на вертикальное для мобильных устройств */
-        align-items: center; /* Выравнивание по центру */
+
+    .container {
+        width: 100%; /* Изменено с 80% на 90% для улучшенной адаптивности */
+        max-width: 600px;
+        background: #fff;
+        margin: 0px auto;
+        padding: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
     }
 
     .ingredient-entry {
         flex-direction: column; /* Меняет направление на вертикальное для мобильных устройств */
     }
 
-    button {
-        width: auto; /* Снимает 100% ширины для кнопок в действиях рецепта */
-    }
 
     .recipe-item {
         flex-direction: column; /* Меняет направление на вертикальное для мобильных устройств */
@@ -152,17 +162,3 @@ button.delete-recipe {
     }
 }
 
-@media (max-width: 480px) {
-    h1, h2 {
-        font-size: 1.5em; /* Уменьшает размер заголовка для мобильных устройств */
-    }
-
-    .nav-menu a {
-        font-size: 16px; /* Уменьшает размер шрифта навигации для мобильных устройств */
-        padding: 8px 16px; /* Уменьшает отступы для мобильных устройств */
-    }
-
-    .container {
-        padding: 15px; /* Уменьшает внутренние отступы контейнера для мобильных устройств */
-    }
-}
