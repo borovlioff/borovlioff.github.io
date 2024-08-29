@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Изучение Рецептов</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Навигационное меню -->
+    <nav>
+        <ul class="nav-menu">
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="learn.html">Изучение рецептов</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Изучение Рецептов</h1>
+        <div id="recipe-question">
+            <h2 id="recipe-name"></h2>
+            <form id="learn-form">
+                <div id="ingredient-quiz"></div>
+                <button type="submit">Проверить ответ</button>
+            </form>
+        </div>
+        <div id="feedback" class="hidden"></div>
+    </div>
+
+    <script src="learn.js"></script>
+</body>
+</html>

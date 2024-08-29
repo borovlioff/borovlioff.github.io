@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Изучение Рецептов</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Навигационное меню -->
+    <nav>
+        <ul class="nav-menu">
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="learn.html">Изучение рецептов</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Изучение Рецептов</h1>
+        <form id="recipe-form">
+            <label for="recipe-name">Название рецепта:</label>
+            <input type="text" id="recipe-name" required>
+
+            <label for="ingredients">Ингредиенты:</label>
+            <div id="ingredient-list">
+                <div class="ingredient-entry">
+                    <input type="text" class="ingredient-name" placeholder="Ингредиент 1" required>
+                    <input type="text" class="ingredient-quantity" placeholder="Количество" required>
+                    <input type="text" class="ingredient-unit" placeholder="Единица измерения" required>
+                </div>
+            </div>
+            <button type="button" id="add-ingredient">Добавить ингредиент</button>
+            <button type="submit">Добавить рецепт</button>
+        </form>
+
+        <h2>Импортировать рецепты</h2>
+        <textarea id="import-area" placeholder="Вставьте ваши рецепты здесь в формате..."></textarea>
+        <button id="import-recipes">Импортировать рецепты</button>
+
+        <h2>Сохраненные рецепты</h2>
+        <ul id="recipe-list"></ul>
+
+        <h2>Экспортировать рецепты</h2>
+        <textarea id="export-area" readonly placeholder="Рецепты будут отображены здесь..."></textarea>
+        <button id="export-recipes">Экспортировать рецепты</button>
+
+        <a href="learn.html" class="learn-link">Начать изучение рецептов</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
