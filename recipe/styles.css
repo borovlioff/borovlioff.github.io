@@ -17,6 +17,7 @@ nav {
     display: flex;
     justify-content: center;
     gap: 20px;
+    flex-wrap: wrap; /* Позволяет элементам переноситься на новую строку при необходимости */
 }
 
 .nav-menu li {
@@ -36,7 +37,7 @@ nav {
 }
 
 .container {
-    width: 80%;
+    width: 90%; /* Изменено с 80% на 90% для улучшенной адаптивности */
     max-width: 600px;
     margin: 50px auto;
     background: #fff;
@@ -62,7 +63,7 @@ label {
 input[type="text"], textarea {
     padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 8px;
     width: 100%;
 }
 
@@ -78,6 +79,7 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    width: 100%; /* Сделано шириной 100% для удобства на мобильных устройствах */
 }
 
 button:hover {
@@ -124,4 +126,43 @@ button.edit-recipe {
 
 button.delete-recipe {
     background-color: #dc3545;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .nav-menu {
+        flex-direction: column; /* Меняет направление на вертикальное для мобильных устройств */
+        align-items: center; /* Выравнивание по центру */
+    }
+
+    .ingredient-entry {
+        flex-direction: column; /* Меняет направление на вертикальное для мобильных устройств */
+    }
+
+    button {
+        width: auto; /* Снимает 100% ширины для кнопок в действиях рецепта */
+    }
+
+    .recipe-item {
+        flex-direction: column; /* Меняет направление на вертикальное для мобильных устройств */
+    }
+
+    .recipe-actions {
+        justify-content: center; /* Центрирует кнопки действий в рецепте */
+    }
+}
+
+@media (max-width: 480px) {
+    h1, h2 {
+        font-size: 1.5em; /* Уменьшает размер заголовка для мобильных устройств */
+    }
+
+    .nav-menu a {
+        font-size: 16px; /* Уменьшает размер шрифта навигации для мобильных устройств */
+        padding: 8px 16px; /* Уменьшает отступы для мобильных устройств */
+    }
+
+    .container {
+        padding: 15px; /* Уменьшает внутренние отступы контейнера для мобильных устройств */
+    }
 }
