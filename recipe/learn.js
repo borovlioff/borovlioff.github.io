@@ -24,7 +24,8 @@ function displayRecipeQuiz(recipe) {
         ingredientDiv.appendChild(ingredientLabel);
 
         const ingredientInput = document.createElement('input');
-        ingredientInput.type = 'number';
+        ingredientInput.type = 'text';
+        //ingredientInput.setAttribute("step", 0.1);
         ingredientInput.className = 'ingredient-quiz-input';
         ingredientInput.dataset.index = index;
         ingredientInput.required = true;
