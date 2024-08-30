@@ -55,7 +55,7 @@ document.getElementById('add-ingredient').addEventListener('click', function() {
     newIngredientName.required = true;
 
     const newIngredientQuantity = document.createElement('input');
-    newIngredientQuantity.type = 'text';
+    newIngredientQuantity.type = 'number';
     newIngredientQuantity.className = 'ingredient-quantity';
     newIngredientQuantity.placeholder = 'Количество';
     newIngredientQuantity.required = true;

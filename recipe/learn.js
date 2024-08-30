@@ -24,7 +24,7 @@ function displayRecipeQuiz(recipe) {
         ingredientDiv.appendChild(ingredientLabel);
 
         const ingredientInput = document.createElement('input');
-        ingredientInput.type = 'text';
+        ingredientInput.type = 'number';
         ingredientInput.className = 'ingredient-quiz-input';
         ingredientInput.dataset.index = index;
         ingredientInput.required = true;

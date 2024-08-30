@@ -1,4 +1,5 @@
 body {
+    position: relative;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
@@ -41,15 +42,13 @@ body {
   }
 
 .container {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
-    width: 90%; /* Изменено с 80% на 90% для улучшенной адаптивности */
+    width: 100%; 
     max-width: 600px;
-    margin: 50px auto;
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    margin: auto;
+    padding: 50px 10px;
 }
 
 h1, h2 {
@@ -68,12 +67,11 @@ label {
     width: 100%;
 }
 
-input[type="text"], textarea {
+input, textarea {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 8px;
     width: 100%;
-    max-width: 320px;
 }
 
 textarea {
@@ -96,23 +94,33 @@ button:hover {
     opacity: 0.9;
 }
 
+/* Стили для рецептов */
+
 #add-ingredient{
     background-color: #007bff;
 }
 
 .ingredient-entry {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 10px;
+    width: 100%;
 }
 
-.ingredient-name, .ingredient-quantity, .ingredient-unit {
-    flex: 1;
-}
 
-.ingredient-entry {
+/* Стили для изучения рецептов */
+
+#ingredient-quiz{
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+}
+
+#recipe-list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .recipe-item {
@@ -120,6 +128,11 @@ button:hover {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+}
+
+.recipe-item span{
+    word-break: break-all;
+    font-size: 14px;
 }
 
 .recipe-actions {
@@ -139,17 +152,21 @@ button.delete-recipe {
 @media (max-width: 768px) {
 
     .container {
-        width: 100%; /* Изменено с 80% на 90% для улучшенной адаптивности */
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%; 
         max-width: 600px;
-        background: #fff;
-        margin: 0px auto;
-        padding: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
+        margin: auto;
+        padding: 0px;
     }
 
-    .ingredient-entry {
-        flex-direction: column; /* Меняет направление на вертикальное для мобильных устройств */
+    h1{
+        font-size: 24px;
+    }
+
+    h2{
+        font-size: 20px;
     }
 
 
