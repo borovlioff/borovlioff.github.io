@@ -1,51 +1,72 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Изучение Рецептов</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-   <!-- Навигационное меню -->
-<div class="nav-scroller">
-    <nav class="nav-scroller__items">
-      <a class="nav-scroller__item" href="index.html">Главная</a>
-      <a class="nav-scroller__item" href="learn.html">Изучение рецептов</a>
-      <a class="nav-scroller__item" href="search.html">Поиск рецептов</a>
-    </nav>
-  </div>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Навигационное меню -->
+    <div class="nav-scroller">
+      <nav class="nav-scroller__items">
+        <a class="nav-scroller__item" href="index.html">Главная</a>
+        <a class="nav-scroller__item" href="learn.html">Изучение рецептов</a>
+        <a class="nav-scroller__item" href="search.html">Поиск рецептов</a>
+      </nav>
+    </div>
 
     <div class="container">
-        <h1>Добавление рецептов</h1>
+      <h1 class="text-center">Добавление рецептов</h1>
         <form id="recipe-form">
-            <label for="recipe-name">Название рецепта:</label>
-            <input type="text" id="recipe-name" required>
+          <label for="recipe-name">Название рецепта:</label>
+          <input type="text" id="recipe-name" required />
 
-            <label for="ingredients">Ингредиенты:</label>
-            <div id="ingredient-list">
-                <div class="ingredient-entry">
-                    <input type="text" class="ingredient-name" placeholder="Ингредиент 1" required>
-                    <input type="number" class="ingredient-quantity" placeholder="Количество" required>
-                    <input type="text" class="ingredient-unit" placeholder="Единица измерения" required>
-                </div>
+          <label for="ingredients">Ингредиенты:</label>
+          <div id="ingredient-list">
+            <div class="ingredient-entry">
+              <input
+                type="text"
+                class="ingredient-name w-full"
+                placeholder="Ингредиент 1"
+                required
+              />
+              <input
+                type="number"
+                class="ingredient-quantity w-full"
+                placeholder="Количество"
+                required
+              />
+              <input
+                type="text"
+                class="ingredient-unit w-full"
+                placeholder="Единица измерения"
+                required
+              />
             </div>
-            <button type="button" id="add-ingredient">Добавить ингредиент</button>
-            <button type="submit">Добавить рецепт</button>
+          </div>
+          <button type="button" id="add-ingredient">Добавить ингредиент</button>
+          <button type="submit">Добавить рецепт</button>
         </form>
+      <h2 class="text-center">Импортировать рецепты</h2>
+      <textarea
+        id="import-area"
+        placeholder="Вставьте ваши рецепты здесь в формате..."
+      ></textarea>
+      <button id="import-recipes">Импортировать рецепты</button>
 
-        <h2>Импортировать рецепты</h2>
-        <textarea id="import-area" placeholder="Вставьте ваши рецепты здесь в формате..."></textarea>
-        <button id="import-recipes">Импортировать рецепты</button>
+      <h2 class="text-center">Сохраненные рецепты</h2>
+      <ul id="recipe-list"></ul>
 
-        <h2>Сохраненные рецепты</h2>
-        <ul id="recipe-list"></ul>
-
-        <h2>Экспортировать рецепты</h2>
-        <textarea id="export-area" readonly placeholder="Рецепты будут отображены здесь..."></textarea>
-        <button id="export-recipes">Экспортировать рецепты</button>
+      <h2 class="text-center">Экспортировать рецепты</h2>
+      <textarea
+        id="export-area"
+        readonly
+        placeholder="Рецепты будут отображены здесь..."
+      ></textarea>
+      <button id="export-recipes">Экспортировать рецепты</button>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

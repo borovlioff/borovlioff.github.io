@@ -46,23 +46,24 @@ document.getElementById('add-ingredient').addEventListener('click', function() {
     const ingredientCount = ingredientList.children.length + 1;
 
     const ingredientEntry = document.createElement('div');
-    ingredientEntry.className = 'ingredient-entry';
+    ingredientEntry.className = 'ingredient-entry w-full';
 
     const newIngredientName = document.createElement('input');
     newIngredientName.type = 'text';
-    newIngredientName.className = 'ingredient-name';
+    newIngredientName.className = 'ingredient-name w-full';
     newIngredientName.placeholder = `Ингредиент ${ingredientCount}`;
     newIngredientName.required = true;
 
     const newIngredientQuantity = document.createElement('input');
     newIngredientQuantity.type = 'number';
-    newIngredientQuantity.className = 'ingredient-quantity';
+    newIngredientQuantity.step = '0.1';
+    newIngredientQuantity.className = 'ingredient-quantity w-full';
     newIngredientQuantity.placeholder = 'Количество';
     newIngredientQuantity.required = true;
 
     const newIngredientUnit = document.createElement('input');
     newIngredientUnit.type = 'text';
-    newIngredientUnit.className = 'ingredient-unit';
+    newIngredientUnit.className = 'ingredient-unit w-full';
     newIngredientUnit.placeholder = 'Единица измерения';
     newIngredientUnit.required = true;
 
