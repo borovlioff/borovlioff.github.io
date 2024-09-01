@@ -140,21 +140,22 @@ function editRecipe(event) {
 
         const ingredientName = document.createElement('input');
         ingredientName.type = 'text';
-        ingredientName.className = 'ingredient-name';
+        ingredientName.className = 'ingredient-name w-full';
         ingredientName.placeholder = `Ингредиент ${idx + 1}`;
         ingredientName.value = ingredient.name;
         ingredientName.required = true;
 
         const ingredientQuantity = document.createElement('input');
-        ingredientQuantity.type = 'text';
-        ingredientQuantity.className = 'ingredient-quantity';
+        ingredientQuantity.type = 'number';
+        ingredientQuantity.step = '0.1';
+        ingredientQuantity.className = 'ingredient-quantity w-full';
         ingredientQuantity.placeholder = 'Количество';
         ingredientQuantity.value = ingredient.quantity;
         ingredientQuantity.required = true;
 
         const ingredientUnit = document.createElement('input');
         ingredientUnit.type = 'text';
-        ingredientUnit.className = 'ingredient-unit';
+        ingredientUnit.className = 'ingredient-unit w-full';
         ingredientUnit.placeholder = 'Единица измерения';
         ingredientUnit.value = ingredient.unit;
         ingredientUnit.required = true;
