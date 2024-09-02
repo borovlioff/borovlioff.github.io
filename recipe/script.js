@@ -187,31 +187,19 @@ document.getElementById('import-recipes').addEventListener('click', function() {
     if (!importArea) return;
 
     const lines = importArea.split('\n');
-    const recipes = {};
-    
+    const recipes = [];
+
     lines.forEach(line => {
-        const parts = line.match(/"([^"]+)"/g).map(part => part.replace(/"/g, ''));
-        const recipeName = parts[0];
-        const ingredientName = parts[2];
-        const ingredientQuantity = parts[3];
-        const ingredientUnit = parts[4];
-        
-        if (!recipes[recipeName]) {
-            recipes[recipeName] = {
-                name: recipeName,
-                ingredients: []
-            };
-        }
-        
-        recipes[recipeName].ingredients.push({
-            name: ingredientName,
-            quantity: ingredientQuantity,
-            unit: ingredientUnit
+        const [recipeName, ingredientsPart] = line.split(':');
+        const ingredientsArray = ingredientsPart.split(';').map(ing => {
+            const [name, quantity, unit] = ing.trim().split(', ');
+            return { name: name.trim(), quantity: quantity.trim(), unit: unit.trim() };
         });
+
+        recipes.push({ name: recipeName.trim(), ingredients: ingredientsArray });
     });
 
-    const recipeArray = Object.values(recipes);
-    recipeArray.forEach(recipe => saveRecipe(recipe));
+    recipes.forEach(recipe => saveRecipe(recipe));
     loadRecipes();
 
     // Очистка поля импорта после завершения
@@ -224,9 +212,8 @@ document.getElementById('export-recipes').addEventListener('click', function() {
     const exportArea = document.getElementById('export-area');
 
     const exportLines = savedRecipes.map(recipe => {
-        return recipe.ingredients.map((ingredient, index) => {
-            return `"${recipe.name}" "Ингредиент" ${index + 1} "${ingredient.name}" "${ingredient.quantity}" "${ingredient.unit}"`;
-        }).join('\n');
+        const ingredients = recipe.ingredients.map(ing => `${ing.name}, ${ing.quantity}, ${ing.unit}`).join('; ');
+        return `${recipe.name}: ${ingredients}`;
     }).join('\n');
 
     exportArea.value = exportLines;
