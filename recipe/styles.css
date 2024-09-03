@@ -121,6 +121,19 @@ button:hover {
     opacity: 0.9;
 }
 
+.bg-green {
+    background-color: #28a745;
+}
+
+.bg-red {
+    background-color: #dc3545;
+}
+
+.my-1 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 /* Стили для рецептов */
 
 #recipe-form{

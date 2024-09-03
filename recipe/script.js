@@ -181,6 +181,14 @@ function deleteRecipe(event) {
     loadRecipes();
 }
 
+// Обработчик удаления всех рецептов
+document.getElementById('delete-all-recipes').addEventListener('click', function() {
+    if (confirm('Вы уверены, что хотите удалить все рецепты?')) {
+        localStorage.removeItem('recipes');
+        loadRecipes();
+    }
+});
+
 // Обработчик импорта рецептов
 document.getElementById('import-recipes').addEventListener('click', function() {
     const importArea = document.getElementById('import-area').value.trim();
