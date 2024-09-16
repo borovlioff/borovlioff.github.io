@@ -5,6 +5,7 @@ body {
     padding: 0;
 }
 
+
 .nav-scroller {
     overflow-y: hidden;
     background-color: #fff;
@@ -61,8 +62,27 @@ body {
     display: flex;
 }
 
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.gap-2 {
+    gap: 2px;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+.items-center{
+    align-items: center;}
+
 .w-full {
     width: 100%;
+}
+
+.w-auto {
+    width: auto;
 }
 
 .text-center {

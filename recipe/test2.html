@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестирование рецептов</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Навигационное меню -->
+    <div class="nav-scroller">
+        <nav class="nav-scroller__items">
+          <p id="full-screen">А</p>
+          <a class="nav-scroller__item" href="index.html">Главная</a>
+          <a class="nav-scroller__item" href="learn.html">Изучение рецептов</a>
+          <a class="nav-scroller__item" href="test2.html">Изучение рецептов 2</a>
+          <a class="nav-scroller__item" href="search.html">Поиск рецептов</a>
+        </nav>
+      </div>
+
+    <div class="container">
+        <h1>Тестирование рецептов</h1>
+        <div id="test-question">
+            <h2 id="recipe-name"></h2>
+            <form id="test-form">
+                <div id="selected-ingredients"></div>
+                <button type="submit">Проверить ответы</button>
+            </form>
+        </div>
+
+        <div id="ingredient-options">
+            <h3>Выберите ингредиенты:</h3>
+            <div id="ingredient-buttons" class="flex flex-wrap gap-10"></div>
+        </div>
+
+        <div id="feedback" class="hidden"></div>
+    </div>
+
+    <script src="test2.js"></script>
+</body>
+</html>
