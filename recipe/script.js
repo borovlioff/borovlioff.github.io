@@ -231,6 +231,63 @@ document.getElementById('export-recipes').addEventListener('click', function() {
 window.addEventListener('load', loadRecipes);
 
 
+// Функция для экспорта рецептов в формат .txt
+function exportRecipesToText() {
+    const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+    const textLines = savedRecipes.map(recipe => {
+        const ingredients = recipe.ingredients.map(ing => `${ing.name}, ${ing.quantity}, ${ing.unit}`).join('; ');
+        return `${recipe.name}: ${ingredients}`;
+    });
+
+    return textLines.join('\n');
+}
+
+// Обработчик экспорта рецептов в файл .txt
+document.getElementById('export-to-file').addEventListener('click', function() {
+    const textContent = exportRecipesToText();
+    const blob = new Blob([textContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'recipes.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+});
+
+// Обработчик импорта рецептов из файла .txt
+document.getElementById('import-from-file').addEventListener('click', function() {
+    const input = document.getElementById('import-file');
+    const file = input.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const fileContent = event.target.result;
+            const recipes = [];
+
+            // Разбираем строки файла
+            const lines = fileContent.split('\n');
+            lines.forEach(line => {
+                const [recipeName, ingredientsPart] = line.split(':');
+                const ingredientsArray = ingredientsPart.trim().split(';').map(ing => {
+                    const [name, quantity, unit] = ing.trim().split(', ');
+                    return { name: name.trim(), quantity: quantity.trim(), unit: unit.trim() };
+                });
+
+                recipes.push({ name: recipeName.trim(), ingredients: ingredientsArray });
+            });
+
+            saveRecipes(recipes);  // Сохранение рецептов в localStorage
+            loadRecipes();         // Обновление списка рецептов
+        };
+        reader.readAsText(file);
+    } else {
+        alert('Выберите файл для импорта');
+    }
+});
+
+
 // При нажатие <button id="export-recipes-url">Экспортировать рецепты в URL</button>
 // Сжимать данные рецептов и формировать url для импорта в браузере
 // LZW-compress a string
