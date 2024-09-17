@@ -73,7 +73,8 @@ function addIngredient(ingredient) {
     span.textContent = `${ingredient.name}`;
     const input = document.createElement('input');
     input.placeholder = `Введите количество (${ingredient.unit})`;
-    input.type = 'text';
+    input.type = 'number';
+    input.step = "0.1";
     input.dataset.name = ingredient.name;
     input.required = true;
     const removeButton = document.createElement('button');
