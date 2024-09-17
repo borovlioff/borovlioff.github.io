@@ -230,7 +230,6 @@ document.getElementById('export-recipes').addEventListener('click', function() {
 // Загрузка рецептов при загрузке страницы
 window.addEventListener('load', loadRecipes);
 
-
 // Функция для экспорта рецептов в формат .txt
 function exportRecipesToText() {
     const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
@@ -247,12 +246,21 @@ document.getElementById('export-to-file').addEventListener('click', function() {
     const textContent = exportRecipesToText();
     const blob = new Blob([textContent], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
+
+    // Создаем ссылку для скачивания файла
     const a = document.createElement('a');
     a.href = url;
     a.download = 'recipes.txt';
+
+    // Программно кликаем по ссылке
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
+
+    // Убираем ссылку после скачивания
+    setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);  // Очищаем объект URL после скачивания
+    }, 0);
 });
 
 // Обработчик импорта рецептов из файла .txt
