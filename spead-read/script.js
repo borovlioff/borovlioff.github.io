@@ -27,6 +27,7 @@ function pause() {
   startButton.style.display = 'block';
   clearInterval(interval);
   isPaused = true;
+  localStorage.setItem("currentWordIndex", currentWordIndex);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   startSpeedHTML.value = startSpeed;
   endSpeed = localStorage.getItem('endSpeed') || endSpeed;
   endSpeedHTML.value = endSpeed;
+  currentWordIndex = localStorage.getItem('currentWordIndex') || 0;
 })
 
 
@@ -148,3 +150,22 @@ endSpeedHTML.addEventListener('input', (e) => {
   updateSpeed();
 })
 
+let fullscreen;
+let fsEnter = document.getElementById('full-screen');
+fsEnter.addEventListener('click', function (e) {
+    e.preventDefault();
+    if (!fullscreen) {
+        fullscreen = true;
+        document.documentElement.requestFullscreen();
+        } else {
+        fullscreen = false;
+        document.exitFullscreen();
+    }
+});
+document.addEventListener("fullscreenchange", function() { 
+    if((window.fullScreen) || (window.innerWidth == screen.width && window.innerHeight == screen.height)) {
+        fullscreen = true;
+        } else {
+        fullscreen = false;
+    }
+});  
