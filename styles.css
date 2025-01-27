@@ -1,0 +1,224 @@
+.absolute {
+    position: absolute;
+}
+
+#bg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+}
+
+.bg-black {
+    background-color: #000000;
+}
+
+.bg-dark {
+    background-color: #303030;
+}
+
+.bg-red {
+    background-color: #f44336;
+}
+
+.bg-vk {
+    background-color: #4a76a8;
+}
+
+.block {
+    display: block;
+}
+
+.block {
+    display: block;
+}
+
+.btn-large {
+    cursor: pointer;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+}
+
+.container {
+    margin: 0px auto;
+    max-width: 1024px;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.fs-3 {
+    font-size: 1.5rem;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+#github {
+    background-color: #1b1b1b;
+}
+
+.height-100vh {
+    height: 100vh;
+}
+
+.hide {
+    display: none;
+}
+
+.instagram {
+    background: linear-gradient(45deg,
+            #f09433 0%,
+            #e6683c 25%,
+            #dc2743 50%,
+            #cc2366 75%,
+            #bc1888 100%);
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.left-1 {
+    left: 1rem;
+}
+
+.telegram {
+    background-color: #0088cc;
+}
+
+.ls-03 {
+    letter-spacing: 0.3rem;
+}
+
+.m-0 {
+    margin: 0px;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+#menu-toggle:checked~#menu-wrapper {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#menu-wrapper {
+    opacity: 0;
+    pointer-events: none;
+    background-color: #000000a9;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 99;
+    width: 100%;
+    height: 100vh;
+    transition: all 100ms ease-in-out;
+}
+
+.mw-320px {
+    max-width: 320px;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.pt-3 {
+    padding-top: 3rem;
+}
+
+.py-1 {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+.py-3 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.relative {
+    position: relative;
+}
+
+.right-1 {
+    right: 1rem;
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-light {
+    font-weight: 300;
+}
+
+.text-orange {
+    color: #ef6c00;
+}
+
+.text-white {
+    color: white;
+}
+
+.top-0 {
+    top: 0px;
+}
+
+.top-1 {
+    top: 1rem;
+}
+
+.transation-300 {
+    transition: all 300ms ease-in-out;
+}
+
+.user-select-none {
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.z--1 {
+    z-index: -1;
+}
+
+.z-99 {
+    z-index: 99;
+}
+
+.z-999 {
+    z-index: 999;
+}

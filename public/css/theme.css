@@ -1,0 +1,33 @@
+body {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: black;
+        color: white;
+    }
+
+    a {
+        color: white ;
+    }
+}
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: #d8dcff;
+        color: black;
+    }
+
+    a {
+        color: black ;
+    }
+}
+
+body:has(#switch-theme:checked) {
+    background-color: #d8dcff!important;
+    color: black !important;
+}
+
+a:has(#switch-theme:checked) {
+    color: black !important;
+}
