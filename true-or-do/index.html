@@ -1,65 +1,51 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" href="/public/css/true-or-do.css">
-  <link rel="stylesheet" href="/public/css/main.css">
-  <link rel="stylesheet" href="/public/css/materialize.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Правда или Действие</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Правда или действие</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
+<body>
+  <header>
+    <div class="fullscreen-icon" id="fullscreenIcon">⛶</div>
+    <label class="burger-menu" for="menuToggle">☰</label>
+  </header>
 
-<body class="theme-light">
-
-  <div id="nav">
-
-    <div class="row" id="user_form">
-      <div class="wrap">
-        <div class="input-field inline">
-          <input type="text" id="NameUserEnter" placeholder="Введите имя игрока">
-        </div>
-
-        <div id="Men" class="btn-floating blue center-align">М</div>
-        <div id="Girl" class="btn-floating pink center-align">Ж</div>
-
-        
-      </div>
-
+  <!-- Бургер-меню -->
+  <input type="checkbox" id="menuToggle" class="hidden">
+  <div class="menu-modal">
+    <div class="menu-content">
+      <h2>Меню</h2>
+      <ul>
+        <li><a href="#" id="manageUsers">Управление пользователями</a></li>
+        <li><a href="#">Управление выбором</a></li>
+      </ul>
+      <label for="menuToggle" class="close-button">Закрыть</label>
     </div>
-
   </div>
 
-  
-
-  <div class="row" id='content'>
-    <h3 id="UserName" class="center-align"></h3>
-    <div>
-      <div id="OutText" class="flow-text">
-        Правда или Действие?
-      </div>
+  <!-- Модальное окно управления пользователями -->
+  <div id="userModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Управление пользователями</h2>
+      <input type="text" id="usernameInput" placeholder="Введите имя">
+      <button id="addUserButton">Добавить</button>
+      <ul id="userList"></ul>
+      <button id="closeUserModal">Закрыть</button>
     </div>
-    
-  
   </div>
 
+  <div class="container">
+    <p id="output" class="text-white"></p>
+    <button id="resetButton" class="hidden">Сбросить</button>
+  </div>
 
+  <div class="absolute w-full flex-wrap b-0">
+    <button id="truthButton" class="w-50">Правда</button>
+    <button id="dareButton" class="w-50">Действие</button>
+  </div>
 
-    <div class="row" id="actions">
-      <div class="col s12 l6 h-red transition" id="qestion">
-        <div class="mega-text">Правда</div>
-      </div>
-      <div class="col s12 l6 h-blue transition" id="action">
-        <div class="mega-text">Действие</div>
-      </div>
-    </div>
-
-
-
-  <script src="/public/js/true-or-do.js"></script>
-  <script src="/public/js/switche-theme.js"></script>
+  <script src="script.js"></script>
 </body>
-
 </html>
