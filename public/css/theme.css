@@ -26,8 +26,8 @@ body {
 body:has(#switch-theme:checked) {
     background-color: #d8dcff!important;
     color: black !important;
-}
+}   
 
-a:has(#switch-theme:checked) {
-    color: black !important;
+body:has(#switch-theme:checked) a {
+    color: rgb(17, 17, 17);
 }

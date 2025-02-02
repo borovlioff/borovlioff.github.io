@@ -1,0 +1,112 @@
+
+.btn {
+    cursor: pointer;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+}
+
+.btn.large {
+    cursor: pointer;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+}
+
+.btn.small {
+    cursor: pointer;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+.btn.flat {
+    border: none;
+    background-color: transparent;
+}
+
+.btn.float {
+    border-radius: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.btn.primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn.primary:hover {
+    background-color: #0069d9;
+}
+
+.btn.danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn.danger:hover {
+    background-color: #c82333;
+}
+
+.btn.success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn.success:hover {
+    background-color: #1e7e34;
+}
+
+.btn.warning {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.btn.warning:hover {
+    background-color: #e0a800;
+}
+
+.btn.info {
+    background-color: #17a2b8;
+    color: #fff;
+}    
+
+.btn.info:hover {
+    background-color: #138496;
+}
+
+
+.modal-togle {
+    cursor: pointer;
+}
+
+.modal-togle input{
+    display: none;
+   
+}
+
+.modal {
+    position: fixed;
+    background-color: inherit;
+    opacity: 0;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+}
+
+.modal-togle input:checked ~ .modal {
+    background-color: inherit;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+.overlay {
+    background: rgba(255, 255, 255, 0.5); /* Полупрозрачный фон */
+    backdrop-filter: blur(5px); /* Размытие фона */
+}

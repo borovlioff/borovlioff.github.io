@@ -35,12 +35,7 @@
     display: block;
 }
 
-.btn-large {
-    cursor: pointer;
-    border-radius: 1rem;
-    padding: 1rem 2rem;
-    font-size: 1.5rem;
-}
+
 
 .container {
     margin: 0px auto;
@@ -134,6 +129,10 @@
     max-width: 320px;
 }
 
+.ml-auto {
+    margin-left: auto;
+}
+
 .overflow-hidden {
     overflow: hidden;
 }
@@ -142,13 +141,25 @@
     cursor: pointer;
 }
 
+.mr-1 {
+    margin-right: 1rem;
+}
+
+.ml-1 {
+    margin-left: 1rem;
+}
+
+.p-1{
+    padding: 1rem;
+}
+
 .pt-3 {
     padding-top: 3rem;
 }
 
 .py-1 {
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .py-3 {
@@ -185,7 +196,7 @@
 }
 
 .text-white {
-    color: white;
+    color: white !important;
 }
 
 .top-0 {

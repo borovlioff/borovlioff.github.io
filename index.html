@@ -9,11 +9,14 @@
     <meta name="Keywords" content="Borovlioff - Александр Боровлев">
     <link rel="stylesheet" href="/public/css/theme.css">
     <link rel="stylesheet" href="/public/css/main.css">
+    <link rel="stylesheet" href="/public/css/components.css">
     <link rel="stylesheet" href="/public/css/social.css">
     <link rel="stylesheet" href="/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="shortcut icon" href="/public/img/fire.png" type="image/png">
     <script type="text/javascript">
@@ -33,25 +36,31 @@
         <div><img src="https://mc.yandex.ru/watch/74085493" style="position:absolute; left:-9999px;" alt="" /></div>
     </noscript>
 </head>
+
 <body class="relative overflow-hidden user-select-none">
-    <label for="menu-toggle" class="absolute z-999 top-1 left-1 pointer">
+    <label class="absolute z-999 top-1 left-1 pointer modal-togle">
         <i class="material-icons">menu</i>
-        <input type="checkbox" id="menu-toggle" class="hide">
-        <div id="menu-wrapper" class="flex flex-wrap gap-2">
-            <div class="btn-large">
-                <i class="material-icons">close</i>
+        <input type="checkbox">
+        <div class="modal overlay">
+            <div class="w-full flex gap-2 py-1">
+                <div class="btn-large ml-1">
+                    <i class="material-icons">close</i>
+                </div>
+                <label for="switch-theme" class="pointer ml-auto mr-1">
+                    <i class="material-icons">brightness_4</i>
+                    <input type="checkbox" id="switch-theme" class="hide">
+                </label>
+
             </div>
-            <a class="btn-large text-center mw-320px w-full" href="/clean-semantics/">Очистка семантики</a>
-            <a class="btn-large text-center mw-320px w-full" href="/recipe/">Изучение рецептов</a>
-            <a class="btn-large text-center mw-320px w-full" href="spead-read/">Скоростное чтение</a>
-            <a class="btn-large text-center mw-320px w-full" href="true-or-do/">Правда или действие</a>
+
+            <div class="flex flex-wrap gap-2 container">
+                <a class="btn large text-center w-full" href="/clean-semantics/">Очистка семантики</a>
+                <a class="btn large text-center w-full" href="/recipe/">Изучение рецептов</a>
+                <a class="btn large text-center w-full" href="spead-read/">Скоростное чтение</a>
+                <a class="btn large text-center w-full" href="true-or-do/">Правда или действие</a>
+            </div>
 
         </div>
-    </label>
-
-    <label for="switch-theme" class="absolute z-999 top-1 right-1 pointer">
-        <i class="material-icons">brightness_4</i>
-        <input type="checkbox" id="switch-theme" class="hide">
     </label>
 
     <div class="container height-100vh flex justify-center items-center" id="main">
@@ -59,18 +68,25 @@
         <div id="content">
             <div class="">
                 <div class="flex justify-center">
-                    <img class="rounded-full" src="https://sun1-86.userapi.com/impg/JPqVTMpwZTb_oFkQBA7Pi5Wn12pIAr1wy0UFgQ/6t7qnRDNQ8M.jpg?size=200x0&quality=90&crop=475,177,1322,1322&sign=3b0a5220b1fa32668e8b4b013c8d9b4b&ava=1"
+                    <img class="rounded-full"
+                        src="https://sun1-86.userapi.com/impg/JPqVTMpwZTb_oFkQBA7Pi5Wn12pIAr1wy0UFgQ/6t7qnRDNQ8M.jpg?size=200x0&quality=90&crop=475,177,1322,1322&sign=3b0a5220b1fa32668e8b4b013c8d9b4b&ava=1"
                         alt="borovlioff">
                 </div>
-                <h4 class=" w-full text-center fs-3 ls-03 text-light">borovli<span class="text-orange text-bold">off</span></h4>
+                <h4 class=" w-full text-center fs-3 ls-03 text-light">borovli<span
+                        class="text-orange text-bold">off</span></h4>
             </div>
 
             <div class="flex flex-wrap justify-center gap-2">
-                <a class="btn-large text-center w-full mw-320px mb-1 instagram" id='instagram' href="https://www.instagram.com/borovlioff">Instagram</a>
-                <a class="btn-large text-center w-full mw-320px mb-1 telegram relative" id='telegram' href="https://t.me/borovlioff">Telegram</a>
-                <a class="btn-large text-center w-full mw-320px mb-1 bg-vk" id='vk' href="https://vk.com/borovlioff">V kontakte</a>
-                <a class="btn-large text-center w-full mw-320px mb-1 bg-red" id='email' href="mailto:borovliov.alex@ya.ru">borovliov.alex@ya.ru</a>
-                <a class="btn-large text-center w-full mw-320px mb-1 relative" id='github' href="https://github.com/borovlioff">github</a>
+                <a class="btn large text-white text-center w-full mw-320px mb-1 instagram" id='instagram'
+                    href="https://www.instagram.com/borovlioff">Instagram</a>
+                <a class="btn large text-white text-center w-full mw-320px mb-1 telegram relative" id='telegram'
+                    href="https://t.me/borovlioff">Telegram</a>
+                <a class="btn large text-white text-center w-full mw-320px mb-1 bg-vk" id='vk'
+                    href="https://vk.com/borovlioff">V kontakte</a>
+                <a class="btn large text-white text-center w-full mw-320px mb-1 bg-red" id='email'
+                    href="mailto:borovliov.alex@ya.ru">borovliov.alex@ya.ru</a>
+                <a class="btn large text-white text-center w-full mw-320px mb-1 relative" id='github'
+                    href="https://github.com/borovlioff">github</a>
             </div>
 
         </div>
