@@ -38,19 +38,19 @@
 </head>
 
 <body class="relative overflow-hidden user-select-none">
-    <label class="absolute z-999 top-1 left-1 pointer modal-togle">
+    <label class="absolute z-999 top-1 right-1 pointer modal-togle">
         <i class="material-icons">menu</i>
         <input type="checkbox">
         <div class="modal overlay">
+            
             <div class="w-full flex gap-2 py-1">
-                <div class="btn-large ml-1">
-                    <i class="material-icons">close</i>
-                </div>
-                <label for="switch-theme" class="pointer ml-auto mr-1">
+                <label for="switch-theme" class="pointer ml-1">
                     <i class="material-icons">brightness_4</i>
                     <input type="checkbox" id="switch-theme" class="hide">
                 </label>
-
+                <div class="pointer ml-auto mr-1">
+                    <i class="material-icons">close</i>
+                </div>
             </div>
 
             <div class="flex flex-wrap gap-2 container">
