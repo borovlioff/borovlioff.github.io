@@ -30,15 +30,3 @@
     grid-template-rows: 33px auto 60px; /* Первая строка - 33px, вторая - авто, третья - 60px */
 }
 
-@media screen and (max-width: 768px) {
-    .grid-container {
-        display: grid;
-        grid-template-rows: 133px auto 60px; /* Первая строка - 33px, вторая - авто, третья - 60px */
-        height: 100vh; /* Высота контейнера */
-    }
-    
-    .grid-container2 {
-        display: grid;
-        grid-template-rows: 133px auto 60px; /* Первая строка - 33px, вторая - авто, третья - 60px */
-    }
-}
