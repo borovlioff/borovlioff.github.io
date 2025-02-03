@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Schema Markup Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>The Schema Markup Generator</h1>
+        <p>Generate JSON-LD schema markup for your website.</p>
+
+        <!-- Type Selection -->
+        <div class="form-group">
+            <label for="schemaType">Choose a Schema Type:</label>
+            <select id="schemaType" class="form-control">
+                <option value="article">Article</option>
+                <option value="organization">Organization</option>
+                <option value="product">Product</option>
+            </select>
+        </div>
+
+        <!-- Dynamic Form Fields -->
+        <div id="formFields"></div>
+
+        <!-- Generate Button -->
+        <button id="generateButton" class="btn">Generate Schema</button>
+
+        <!-- Result Area -->
+        <div id="resultArea" class="hidden">
+            <h2>Generated Schema Markup:</h2>
+            <textarea id="schemaOutput" readonly rows="10" class="form-control"></textarea>
+            <button id="copyButton" class="btn">Copy to Clipboard</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

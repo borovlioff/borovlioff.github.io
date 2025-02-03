@@ -1,0 +1,14 @@
+textarea{
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    resize: none;
+    overflow-y: auto;
+    background-color: inherit;
+    color: inherit;
+    border: none;
+}
+
+textarea:focus {
+    outline: none;
+}

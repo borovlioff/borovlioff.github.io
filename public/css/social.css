@@ -1,3 +1,26 @@
+.instagram {
+    background: linear-gradient(45deg,
+            #f09433 0%,
+            #e6683c 25%,
+            #dc2743 50%,
+            #cc2366 75%,
+            #bc1888 100%);
+}
+
+.telegram {
+    background-color: #0088cc;
+}
+
+
+#github {
+    background-color: #1b1b1b;
+}
+
+.bg-vk {
+    background-color: #4a76a8;
+}
+
+
 #email {
     position: relative;
     display: inline-block;

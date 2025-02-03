@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Текстовый редактор</title>
+    <link rel="stylesheet" href="/public/css/theme.css">
+    <link rel="stylesheet" href="/public/css/fonts.css">
+    <link rel="stylesheet" href="/components/textarea.css">
+    <link rel="stylesheet" href="/components/btn.css">
+    <link rel="stylesheet" href="/public/css/tailwind.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-PNR2S4H2');</script>
+    <!-- End Google Tag Manager -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PNR2S4H2" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="shortcut icon" href="/public/img/fire.png" type="image/png">
+    <script type="text/javascript">
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+            m[i].l = 1 * new Date(); k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+        })
+            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(74085493, "init", {
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true
+        });
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/74085493" style="position:absolute; left:-9999px;" alt="" /></div>
+    </noscript>
+</head>
+
+<body>
+    <div class="flex flex-wrap">
+        <button class="btn small" onclick="capitalizeText()">Строки с заглавной буквы</button>
+        <button class="btn small" onclick="uppercaseText()">Все буквы заглавные</button>
+        <button class="btn small" onclick="lowercaseText()">Все буквы маленькие</button>
+        <button class="btn small" onclick="cleanPhoneNumbers()">Очистка номеров телефонов</button>
+        <button class="btn small" onclick="convertToJsonArray()">Превращение в массив JSON</button>
+        <button class="btn small" onclick="convertToJsonObject()">Превращение в объект JSON</button>
+        <button class="btn small" onclick="sortAlphabetically()">Сортировка по алфавиту</button>
+        <button class="btn small" onclick="sortReverseAlphabetically()">Сортировка обратно алфавиту</button>
+        <button class="btn small" onclick="generateQRCode()">Генерация QR-кода</button>
+        <button class="btn small" onclick="removeExtraSpaces()">Удаление лишних пробелов</button>
+        <button class="btn small" onclick="countCharacters()">Подсчет символов</button>
+        <button class="btn small" onclick="generateBase64()">Генерация Base64</button>
+        <button class="btn small" onclick="decodeBase64()">Декодирование из Base64</button>
+        <button class="btn small" onclick="generateSlug()">Генерация Slug</button>
+        <button class="btn small" onclick="removeHtmlTags()">Удаление HTML тегов</button>
+        <button class="btn small" onclick="convertToTranslit()">Перевод в транслит</button>
+        <button class="btn small" onclick="removeDuplicates()">Удаление дубликатов</button>
+        <button class="btn small" onclick="replaceNewLineWithTab()">Замена переноса на табуляцию</button>
+        <button class="btn small" onclick="replaceCommaWithTab()">Замена запятой на табуляцию</button>
+        <button class="btn small" onclick="replaceSemicolonWithTab()">Замена ";" на табуляцию</button>
+        <button class="btn small" onclick="randomizeText()">Рандомизация текста</button>
+        <button class="btn small" onclick="copyText()">Копировать текст</button>
+    </div>
+    <textarea id="textArea" class="w-full border-none" placeholder="Введите текст здесь..."></textarea>
+    <script src="script.js"></script>
+</body>
+
+</html>
