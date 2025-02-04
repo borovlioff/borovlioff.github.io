@@ -17,7 +17,7 @@
 
 <body class="grid-container user-select-none">
   <header class="flex gap-2 items-center m-auto-child">
-    <div class="fullscreen-icon" id="fullscreenIcon">⛶</div>
+    <div class="fullscreen-icon" id="full-screen">⛶</div>
     <label class="modal-togle ">
       <i class="material-icons">group_add</i>
       <input type="checkbox" class="show">
@@ -26,10 +26,7 @@
         <h2 class="text-center w-full ">Добавление пользователей</h2>
         <input type="text" id="usernameInput" placeholder="Введите имя" class="w-full text-center py-1 px-1 my-2">
         <button id="addUserButton" class="w-full btn">Добавить</button>
-        <ul id="userList"></ul>
-        <ul>
-          <!-- Список пользователей -->
-        </ul>
+        <ul id="userList" class="mt-2"></ul>
        </div>
       </div>
     </label>
@@ -44,9 +41,11 @@
           <button id="addQuestionButton">Добавить вопросы</button>
           <button id="addDareButton">Добавить действие</button>
         </div>
-      
-        <ul id="questionList"></ul>
-        <ul id="dareList"></ul>
+        <div class="container h-full mt-2">
+          <ul id="questionList" class="overflow-y-auto"></ul>
+          <ul id="dareList" class="overflow-y-auto"></ul>
+        </div>
+        
       </div>
       </div>
     </label>

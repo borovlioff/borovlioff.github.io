@@ -300,3 +300,14 @@ input:focus{
     margin-bottom: 2rem;
 }
 
+.mt-2{
+    margin-top: 2rem;
+}
+
+.overflow-y-auto{
+    overflow-y: auto;
+}
+
+.max-h-50vh{
+    max-height: 50vh;
+}

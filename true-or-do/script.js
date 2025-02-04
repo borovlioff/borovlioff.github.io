@@ -378,7 +378,56 @@ document.addEventListener('DOMContentLoaded', () => {
     partnes.forEach((participant, index) => {
       const li = document.createElement('li');
       li.textContent = participant;
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Удалить';
+      deleteButton.classList.add('btn', 'danger',"ml-1", 'delete-btn');
+      deleteButton.onclick = () => {
+        partnes.splice(index, 1); // Удаляем пользователя по индексу
+        updateParticipantList(); // Обновляем список
+        saveToLocalStorage(); // Сохраняем изменения
+      };
+      li.appendChild(deleteButton);
       userList.appendChild(li);
+    });
+  }
+
+  // Обновление списка вопросов
+  function updateQuestionList() {
+    const questionList = document.getElementById('questionList');
+    questionList.innerHTML = "";
+    questions.forEach((question, index) => {
+      const li = document.createElement('li');
+      li.textContent = question;
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Удалить';
+      deleteButton.classList.add('btn', 'danger',"ml-1", 'delete-btn');
+      deleteButton.onclick = () => {
+        questions.splice(index, 1); // Удаляем вопрос по индексу
+        updateQuestionList(); // Обновляем список
+        saveToLocalStorage(); // Сохраняем изменения
+      };
+      li.appendChild(deleteButton);
+      questionList.appendChild(li);
+    });
+  }
+
+  // Обновление списка действий
+  function updateDareList() {
+    const dareList = document.getElementById('dareList');
+    dareList.innerHTML = "";
+    dare.forEach((action, index) => {
+      const li = document.createElement('li');
+      li.textContent = action;
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Удалить';
+      deleteButton.classList.add('btn', 'danger',"ml-1", 'delete-btn');
+      deleteButton.onclick = () => {
+        dare.splice(index, 1); // Удаляем действие по индексу
+        updateDareList(); // Обновляем список
+        saveToLocalStorage(); // Сохраняем изменения
+      };
+      li.appendChild(deleteButton);
+      dareList.appendChild(li);
     });
   }
 
@@ -397,7 +446,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Кнопка "Правда"
   truthButton.addEventListener('click', () => {
-  
     if (questions.length === 0) {
       alert("Добавьте вопросы!");
       return;
@@ -409,7 +457,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Кнопка "Действие"
   dareButton.addEventListener('click', () => {
-   
     if (dare.length === 0) {
       alert("Добавьте действия!");
       return;
@@ -427,8 +474,38 @@ document.addEventListener('DOMContentLoaded', () => {
     patner.textContent = "";
     output.textContent = "";
     updateParticipantList();
+    updateQuestionList();
+    updateDareList();
     saveToLocalStorage(); // Сохранение пустых массивов
     alert("Все данные были сброшены!");
+  });
+
+  // Добавление вопроса
+  document.getElementById('addQuestionButton').addEventListener('click', () => {
+    const questionInput = document.getElementById('questionInput');
+    const question = questionInput.value.trim();
+    if (question !== "") {
+      questions.push(question);
+      questionInput.value = '';
+      updateQuestionList();
+      saveToLocalStorage();
+    } else {
+      alert("Введите вопрос!");
+    }
+  });
+
+  // Добавление действия
+  document.getElementById('addDareButton').addEventListener('click', () => {
+    const questionInput = document.getElementById('questionInput');
+    const action = questionInput.value.trim();
+    if (action !== "") {
+      dare.push(action);
+      questionInput.value = '';
+      updateDareList();
+      saveToLocalStorage();
+    } else {
+      alert("Введите действие!");
+    }
   });
 
   // Показ кнопки сброса, если есть участники
@@ -438,4 +515,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Восстановление данных при загрузке страницы
   updateParticipantList();
+  updateQuestionList();
+  updateDareList();
 });
