@@ -38,12 +38,12 @@
         <h2 class="text-center w-full">Добавить вопрос или действие</h2>
         <input type="text" id="questionInput" placeholder="Введите вопрос или действие" class="w-full text-center py-1 px-1 my-2">
         <div class="flex gap-2 w-full">
-          <button id="addQuestionButton">Добавить вопросы</button>
-          <button id="addDareButton">Добавить действие</button>
+          <button id="addQuestionButton" class="bg-green">Добавить вопросы</button>
+          <button id="addDareButton" class="bg-red">Добавить действие</button>
         </div>
-        <div class="container h-full mt-2">
-          <ul id="questionList" class="overflow-y-auto"></ul>
-          <ul id="dareList" class="overflow-y-auto"></ul>
+        <div class="container h-full mt-2 max-h-300px overflow-y-auto">
+          <ul id="questionList" ></ul>
+          <ul id="dareList" ></ul>
         </div>
         
       </div>
