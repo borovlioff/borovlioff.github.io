@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="RU">
 <head>
     <meta charset="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
     <title>Очистка Семантического Ядра</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/src/clean-semantics.css">
 </head>
 <body>
-    <div class="container">
-        <h1 class="wmax">Очистка Семантического Ядра</h1>
-        <button id="clear-btn">Очистить состояние</button>
-        <div class="input-output-container">
+    <div class="flex flex-wrap">
+        <h1 class="w-full px-2 text-2xl pb-2">Очистка Семантического Ядра</h1>
+        <button id="clear-btn" cl>Очистить состояние</button>
+        <div class="w-full">
             <textarea id="query-input" placeholder="Вставьте поисковые запросы, разделенные переносом"></textarea>
             <div id="unique-words-container">
                 <h2>Уникальные слова</h2>
@@ -23,5 +24,6 @@
         <textarea id="result-output" readonly></textarea>
     </div>
     <script src="script.js"></script>
+    <script src="/src/theme.cjs" type="module"></script>
 </body>
 </html>

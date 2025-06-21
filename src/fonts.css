@@ -49,10 +49,13 @@
 body{
   font-family: "Ubuntu", serif;
   margin: 0px;
+  font-size: var(--text-font-size);
+  color: var(--text-color);
 }
 
 a {
-  color: inherit;
+  color: var(--link-color);
+  font-size: var(--text-font-size);
   text-decoration: none;
   transition: color 0.3s ease-in-out;
 }

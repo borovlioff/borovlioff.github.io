@@ -1,0 +1,6 @@
+
+sidebar {
+background-color: var(--bg2-color);
+backdrop-filter: blur(var(--bg2-backdrop-filter));
+float: left;
+}

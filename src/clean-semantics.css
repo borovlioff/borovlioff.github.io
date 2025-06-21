@@ -1,0 +1,6 @@
+@import url("/src/body.css");
+@import url("/src/fonts.css");
+@import url("/src/btn.css");
+@import url("/src/textarea.css");
+@import url("/src/input.css");
+@import "tailwindcss"

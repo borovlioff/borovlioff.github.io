@@ -1,0 +1,24 @@
+input{
+    border: none;
+    background-color: var(--input-bg-color);
+    color: var(--input-text-color);
+    backdrop-filter: var(--input-backdrop-filter);
+}
+
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"]
+{
+    border: none;
+    border-bottom: var(--input-border-width) solid var(--input-border-color);
+    border-radius: var(--input-border-radius);
+}
+
+input:focus{
+    outline: none;
+}

@@ -1,0 +1,86 @@
+
+
+button, .btn{
+    cursor: pointer;
+    border-radius: var(--button-border-radius);
+    border-width: var(--button-border-width);
+    border-color: var(--button-border-color);
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    backdrop-filter: var(--button-backdrop-filter);
+    padding: 0.5rem 1rem;
+}
+
+
+.btn-large {
+    cursor: pointer;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+}
+
+.btn-small {
+    cursor: pointer;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+.btn-float {
+display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  font-size: 1em;
+  min-width: 2.5em; /* Минимальный размер кнопки */
+  min-height: 2.5em;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background-color: #1e7e34;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: #fff;
+}    
+
+.btn-info:hover {
+    background-color: #138496;
+}

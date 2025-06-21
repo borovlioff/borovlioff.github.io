@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/src/theme.css">
+</head>
+
+<body class="mt-2">
+    <nav class="fixed top-0 left-0 z-999 w-full "> 
+        <a href="#">Item</a> 
+        <a href="#">Item</a>
+        <a href="#">Item</a>
+        <a href="#">Item</a>
+        <a href="#">Item</a>
+        <a href="#">Item</a>
+        <a href="#">Item</a>
+        <a href="#">Item</a>
+    </nav>
+
+    <div class="max-w-7xl mx-auto">
+
+        <h1>Настройка темы</h1>
+
+        <section class="py-1">
+            <h2>Кнопки</h2>
+            <label>Скругление кнопок:
+                <input type="range" id="buttonBorderRadius" min="0" max="100" value="4">
+            </label>
+            <label>Толщина рамки кнопок:
+                <input type="range" id="buttonBorderWidth" min="0" max="10" value="1">
+            </label>
+            <label>Цвет рамки кнопок:
+                <input type="color" id="buttonBorderColor" value="#333333">
+            </label>
+            <label>Цвет фона кнопок:
+                <input type="color" id="buttonBgColor" value="#f0f0f0">
+            </label>
+            <label>Прозрачность фона кнопок:
+                <input type="range" id="buttonBgAlpha" min="0" max="1" step="0.1" value="1">
+            </label>
+            <label>Цвет текста кнопок:
+                <input type="color" id="buttonTextColor" value="#000000">
+            </label>
+            <label>Размытие кнопок:
+                <input type="range" id="buttonBackdropBlur" min="0" max="20" value="0">
+            </label>
+        </section>
+
+        <section class="py-1">
+            <button class="btn btn-large">Button</button>
+            <button>Button</button>
+            <button class="btn btn-primary">Button</button>
+            <button class="btn btn-success">Button</button>
+            <button class="btn btn-danger">Button</button>
+            <button class="btn btn-warning">Button</button>
+            <button class="btn btn-info">Button</button>
+            <button class="btn btn-float">+</button>
+            <button class="btn btn-small">Button</button>
+        </section>
+
+        <section class="py-1">
+            <h2>Поля</h2>
+            <label>Скругление полей:
+                <input type="range" id="inputBorderRadius" min="0" max="100" value="4">
+            </label>
+            <label>Толщина рамки полей:
+                <input type="range" id="inputBorderWidth" min="0" max="10" value="1">
+            </label>
+            <label>Цвет рамки полей:
+                <input type="color" id="inputBorderColor" value="#cccccc">
+            </label>
+            <label>Цвет фона полей:
+                <input type="color" id="inputBgColor" value="#ffffff">
+            </label>
+            <label>Прозрачность фона полей:
+                <input type="range" id="inputBgAlpha" min="0" max="1" step="0.1" value="1">
+            </label>
+            <label>Цвет текста полей:
+                <input type="color" id="inputTextColor" value="#000000">
+            </label>
+            <label>Размытие полей:
+                <input type="range" id="inputBackdropBlur" min="0" max="20" value="0">
+            </label>
+        </section>
+
+        <section class="py-1">
+            <label>Input text<input type="text" placeholder="Text" class="ml-1"></label>
+        </section>
+
+        <section class="py-1">
+            <label>Checkbox<input type="checkbox" class="ml-1"></label>
+        </section>
+
+        <section class="py-1">
+            <label>Yes<input type="radio" name="radio" class="ml-1"></label>
+            <label>NO<input type="radio" name="radio" class="ml-1"></label>
+        </section>
+
+        <section class="py-1">
+            <label>Select
+                <select class="ml-1">
+                    <option>Option</option>
+                    <option>Option</option>
+                    <option>Option</option>
+                </select>
+            </label>
+
+            <section class="py-1">
+                <label>Number<input type="number" placeholder="0" class="ml-1"></label>
+            </section>
+
+            <section class="py-1">
+                <label>Range<input type="range" class="ml-1"></label>
+            </section>
+
+            <section class="py-1">
+                <label>Color<input type="color" class="ml-1"></label>
+            </section>
+
+            <section class="py-1">
+                <label>Date<input type="date" class="ml-1"></label>
+            </section>
+
+            <section class="py-1">
+                <label>Datetime-local<input type="datetime-local" class="ml-1"></label>
+            </section>
+
+            <section class="py-1">
+                <label>Email<input type="email" class="ml-1"></label>
+            </section>
+
+            <section class="py-1">
+                <label>File<input type="file" class="ml-1"></label>
+            </section>
+
+            <section class="py-1">
+                <label>Password<input type="password" class="ml-1"></label>
+            </section>
+
+            <section class="py-1">
+                <label>Search<input type="search" class="ml-1"></label>
+            </section>
+
+            <section class="py-1">
+                <label>Tel<input type="tel" class="ml-1"></label>
+            </section>
+
+
+            <section class="py-1">
+                <h2>Ссылки</h2>
+                <label>Цвет ссылок:
+                    <input type="color" id="linkColor" value="#0000ff">
+                </label>
+            </section>
+
+            <section class="py-1">
+                <h2>Текст</h2>
+                <label>Цвет основного текста:
+                    <input type="color" id="textColor" value="#000000">
+                </label>
+                <label>Размер текста:
+                    <input type="range" id="textFontSize" min="12" max="30" value="16">
+                </label>
+            </section>
+
+            <section class="py-1">
+                <h2>Фон</h2>
+                <label>Цвет фона:
+                    <input type="color" id="bgColor" value="#ffffff">
+                </label>
+                <label>Прозрачность фона:
+                    <input type="range" id="bgAlpha" min="0" max="1" step="0.01" value="1">
+                </label>
+                <label>Размытие фона:
+                    <input type="range" id="bgBackdropBlur" min="0" max="20" value="0">
+                </label>
+            </section>
+
+            <section class="py-1">
+                <h2>Второстепенный фон</h2>
+                <label>Цвет второго фона:
+                    <input type="color" id="bg2Color" value="#c0c0c0">
+                </label>
+                <label>Прозрачность второго фона:
+                    <input type="range" id="bg2Alpha" min="0" max="1" step="0.01" value="0.3">
+                </label>
+                <label>Размытие второго фона:
+                    <input type="range" id="bg2BackdropBlur" min="0" max="20" value="0">
+                </label>
+            </section>
+    </div>
+
+    <script type="module" src="/src/theme-setting.cjs"></script>
+</body>
+
+</html>

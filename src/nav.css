@@ -1,0 +1,40 @@
+nav {
+    width: 100%;
+    display: flex;
+    padding: 0.5rem 1rem;
+    background: var(--bg2-color);
+    backdrop-filter: blur(var(--bg2-backdrop-filter));
+    z-index: 2;
+    
+    flex-wrap: nowrap;
+    gap: 1rem;
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+nav::after {
+    content: "";
+    width: 2rem;
+    height: 100%;
+    position: fixed;
+    background-image: linear-gradient(to left, var(--bg2-color),  rgba(255, 255, 255, 0));
+
+    /* background: var(--bg2-color);
+    backdrop-filter: blur(var(--bg2-backdrop-filter)); */
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+
+nav::before {
+    content: "";
+    width: 2rem;
+    height: 100%;
+    position: fixed;
+    background-image: linear-gradient(to right, var(--bg2-color),  rgba(255, 255, 255, 0));
+    /* background: var(--bg2-color);
+    backdrop-filter: blur(var(--bg2-backdrop-filter)); */
+    top: 0;
+    left: 0;
+    z-index: 1;
+}

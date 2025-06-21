@@ -7,13 +7,7 @@
     <title>borovlioff 🚀</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="Keywords" content="Borovlioff - Александр Боровлев">
-    <link rel="stylesheet" href="/public/css/theme.css">
-    <link rel="stylesheet" href="/public/css/fonts.css">
-    <link rel="stylesheet" href="/components/btn.css">
-    <link rel="stylesheet" href="/components/modal.css">
-    <link rel="stylesheet" href="/public/css/social.css">
-    <link rel="stylesheet" href="/public/css/tailwind.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="/src/index.css">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Google Tag Manager -->
     <script>(function (w, d, s, l, i) {
@@ -25,31 +19,13 @@
                     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-PNR2S4H2');</script>
     <!-- End Google Tag Manager -->
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PNR2S4H2" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+    
     <link
         href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="shortcut icon" href="/public/img/fire.png" type="image/png">
-    <script type="text/javascript">
-        (function (m, e, t, r, i, k, a) {
-            m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
-            m[i].l = 1 * new Date(); k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
-        })
-            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-        ym(74085493, "init", {
-            clickmap: true,
-            trackLinks: true,
-            accurateTrackBounce: true
-        });
-    </script>
-    <noscript>
-        <div><img src="https://mc.yandex.ru/watch/74085493" style="position:absolute; left:-9999px;" alt="" /></div>
-    </noscript>
+    <link rel="shortcut icon" href="/public/fire.png" type="image/png">
+   
 </head>
 
 <body class="relative overflow-hidden user-select-none">
@@ -59,16 +35,13 @@
         <div class="modal overlay">
 
             <div class="w-full flex gap-2 py-1">
-                <label for="switch-theme" class="pointer ml-1">
-                    <i class="material-icons">brightness_4</i>
-                    <input type="checkbox" id="switch-theme" class="hide">
-                </label>
+                <a href="/theme.html" class="pointer ml-1"><i class="material-icons">brightness_4</i></a>
                 <div class="pointer ml-auto mr-1">
                     <i class="material-icons">close</i>
                 </div>
             </div>
 
-            <div class="flex flex-wrap gap-2 container">
+            <div class="flex flex-wrap max-w-7xl mx-auto gap-2 h-full container">
                 <a class="btn large text-center w-full" href="/clean-semantics/">Очистка семантики</a>
                 <a class="btn large text-center w-full" href="/recipe/">Изучение рецептов</a>
                 <a class="btn large text-center w-full" href="/spead-read/">Скоростное чтение</a>
@@ -82,7 +55,7 @@
         </div>
     </label>
 
-    <div class="container height-100vh flex justify-center items-center" id="main">
+    <div class="w-full max-w-7xl mx-auto h-svh flex justify-center items-center" id="main">
 
         <div id="content">
             <div class="">
@@ -110,7 +83,7 @@
 
         </div>
     </div>
-    <script src="public/js/tree.js"></script>
+    <script src="src/main.cjs" type="module"></script>
 </body>
 
 </html>
