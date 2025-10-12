@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+
+input[type="range"]::-webkit-slider-thumb {
+    height: 1rem; /* h-4 */
+    width: 1rem;  /* w-4 */
+    background-color: #3b82f6; /* bg-blue-500 */
+    border-radius: 9999px; /* rounded-full */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+    cursor: pointer;
+    transition-property: background-color;
+    transition-duration: 150ms;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    background-color: #60a5fa; /* bg-blue-400 */
+}
+
+input[type="range"]::-moz-range-thumb {
+    height: 1rem; /* h-4 */
+    width: 1rem;  /* w-4 */
+    background-color: #3b82f6; /* bg-blue-500 */
+    border-radius: 9999px; /* rounded-full */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+    border: 0;
+    cursor: pointer;
+    transition-property: background-color;
+    transition-duration: 150ms;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+    background-color: #60a5fa; /* bg-blue-400 */
+}

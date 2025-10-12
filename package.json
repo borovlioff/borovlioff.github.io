@@ -1,0 +1,35 @@
+{
+  "name": "borovlioff.github.io",
+  "homepage": "https://github.com/borovlioff/borovlioff.github.io#readme",
+  "version": "1.0.0",
+  "main": "script.js",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/borovlioff/borovlioff.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/borovlioff/borovlioff.github.io/issues"
+  },
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^24.7.1",
+    "autoprefixer": "^10.4.21",
+    "gh-pages": "^6.3.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.14",
+    "vite": "^7.1.9",
+    "vite-plugin-html-inject": "^1.1.2"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.14"
+  }
+}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Правда или Действие</title>
+    <link rel="shortcut icon" href="./public/img/fire.png" type="image/png">
+<load src="/gtm-head.html"/>
+
+</head>
+<body class="bg-black text-white flex flex-col ">
+
+    <!-- Фоновые эффекты -->
+    <div class="absolute inset-0 pointer-events-none opacity-10">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    </div>
+
+    <!-- Заголовок -->
+    <header class="relative z-10 p-4 text-center border-b border-gray-800 flex items-center justify-between">
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-pink-400 bg-clip-text text-transparent" id="title">
+            Правда или Действие
+        </h1>
+        <button id="openPanelButton"
+                class="ml-4 px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm transition flex items-center gap-1">
+            ⚙️ <span class="hidden sm:inline">Настройки</span>
+        </button>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="flex-1 relative z-10 flex flex-col lg:flex-row overflow-hidden">
+
+        <!-- Центральная зона -->
+        <section class="flex-1 flex flex-col items-center justify-center px-6 pb-20 pt-6 text-center space-y-6">
+            <h2 class="text-lg text-blue-400 font-semibold">Сейчас играет:</h2>
+            <p id="patner" class="text-3xl md:text-5xl font-bold text-green-400">—</p>
+
+            <div class="flex-1 flex items-center justify-center px-4 w-full">
+                <p id="output"
+                   class="text-2xl md:text-4xl lg:text-5xl font-bold leading-relaxed max-w-3xl mx-auto break-words text-center">
+                    Нажмите «Правда» или «Действие»
+                </p>
+            </div>
+        </section>
+
+        <aside id="controlPanel"
+       class="fixed inset-y-0 right-0 w-full sm:w-80 max-w-xs bg-gray-900/95 backdrop-blur-md border-l border-gray-700 transform translate-x-full transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:block z-30 shadow-2xl">
+    <div class="p-5 h-full flex flex-col space-y-6 overflow-y-auto">
+
+        <!-- Кнопка закрытия -->
+        <div class="lg:hidden flex justify-end text-2xl">
+            <button id="closePanelButton" class="focus:outline-none">&times;</button>
+        </div>
+
+        <!-- Участники -->
+        <div class="mb-6">
+            <h2 class="text-lg font-semibold text-blue-400 mb-4">Участники</h2>
+            <div class="flex gap-2 mb-4">
+                <input type="text" id="usernameInput"
+                       placeholder="Имя участника"
+                       class="flex-1 p-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 outline-none">
+                <button id="addUserButton" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg btn">➕</button>
+            </div>
+            <ul id="userList" class="space-y-2 text-sm"></ul>
+        </div>
+
+        <!-- Вопросы -->
+        <div class="mb-6">
+            <h2 class="text-lg font-semibold text-green-400 mb-4">Добавить вопрос</h2>
+            <div class="flex gap-2 mb-4">
+                <input type="text" id="questionInput"
+                       placeholder="Новый вопрос"
+                       class="flex-1 p-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-green-500 outline-none">
+                <button id="addQuestionButton" class="px-4 py-2 bg-green-600 hover:bg-green-500 rounded-lg btn">➕</button>
+            </div>
+        </div>
+
+        <!-- Действия -->
+        <div class="mb-6">
+            <h2 class="text-lg font-semibold text-pink-400 mb-4">Добавить действие</h2>
+            <div class="flex gap-2 mb-4">
+                <input type="text" id="dareInput"
+                       placeholder="Новое действие"
+                       class="flex-1 p-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-pink-500 outline-none">
+                <button id="addDareButton" class="px-4 py-2 bg-pink-600 hover:bg-pink-500 rounded-lg btn">➕</button>
+            </div>
+        </div>
+
+        <!-- Экспорт / Импорт -->
+        <div class="space-y-3 mt-auto">
+            <button id="exportDataButton"
+                    class="w-full py-2 bg-yellow-600 hover:bg-yellow-500 text-white text-sm rounded-lg transition">
+                📥 Экспортировать данные
+            </button>
+            <label for="importFile" class="block w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm rounded-lg cursor-pointer text-center transition">
+                📤 Импортировать данные
+            </label>
+            <input type="file" id="importFile" accept=".json" class="hidden">
+        </div>
+
+        <!-- Сброс -->
+        <div class="mt-6">
+            <button id="resetButton"
+                    class="w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-sm rounded-lg transition hidden">
+                🗑️ Сбросить всё
+            </button>
+        </div>
+    </div>
+</aside>
+    </main>
+
+    <!-- Фиксированная нижняя панель -->
+    <div class="fixed bottom-0 left-0 right-0 bg-gray-900/90 backdrop-blur-md border-t border-gray-700 p-4 z-50">
+        <div class="max-w-md mx-auto flex gap-3">
+            <button id="truthButton"
+                    class="flex-1 py-4 bg-blue-600 hover:bg-blue-500 text-lg font-medium rounded-xl shadow btn transition">
+                🎯 Правда
+            </button>
+            <button id="dareButton"
+                    class="flex-1 py-4 bg-pink-600 hover:bg-pink-500 text-lg font-medium rounded-xl shadow btn transition">
+                💥 Действие
+            </button>
+        </div>
+    </div>
+
+    <!-- Подключение скрипта -->
+
+
+    <script type="module" src="./script.js"></script>
+</body>
+</html>

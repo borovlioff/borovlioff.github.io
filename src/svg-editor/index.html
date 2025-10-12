@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SVG → Base64 Конвертер</title>
+   <link rel="shortcut icon" href="./public/img/fire.png" type="image/png">
+   <load src="/gtm-head.html"/>
+</head>
+<body class="bg-black text-white min-h-screen flex flex-col font-sans relative overflow-x-hidden">
+
+    <!-- Фоновые эффекты -->
+    <div class="fixed inset-0 pointer-events-none opacity-10">
+        <div class="absolute top-20 left-1/4 w-64 h-64 bg-purple-500 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-20 right-1/4 w-64 h-64 bg-cyan-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    </div>
+
+    <!-- Заголовок -->
+    <header class="relative z-10 p-5 text-center border-b border-gray-800">
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            SVG → Base64 Конвертер
+        </h1>
+        <p class="text-sm text-gray-400 mt-1">Загрузите или вставьте SVG — получите Base64 строку</p>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="flex-1 p-4 md:p-6 space-y-6 max-w-5xl mx-auto w-full">
+
+        <!-- Блок загрузки -->
+        <section class="bg-gray-900/70 backdrop-blur-md border border-gray-700 rounded-xl p-5 space-y-4">
+            <h2 class="text-lg font-semibold text-blue-400">1. Введите или загрузите SVG</h2>
+
+            <label for="upload" class="block text-sm text-gray-300">Загрузить файл</label>
+            <input type="file" id="upload" accept=".svg"
+                   class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-white file:mr-2 file:py-1 file:px-3 file:bg-blue-600 file:text-white file:rounded file:hover:bg-blue-500">
+
+            <div class="mt-3">
+                <label for="svg-text" class="block text-sm text-gray-300">Или вставьте код SVG</label>
+                <textarea id="svg-text"
+                          placeholder="<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; ... ></svg>"
+                          class="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-sm text-green-100 font-mono resize-y h-32 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+
+            <button id="preview-btn"
+                    class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg shadow transition active:scale-95">
+                🔍 Предпросмотр
+            </button>
+        </section>
+
+        <!-- Настройки и предпросмотр -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <!-- Настройки цвета и масштаба -->
+            <section class="bg-gray-900/70 backdrop-blur-md border border-gray-700 rounded-xl p-5 space-y-5">
+                <h2 class="text-lg font-semibold text-blue-400">2. Настройки</h2>
+
+                <div class="space-y-2">
+                    <label for="color-picker" class="block text-sm text-gray-300">Цвет заливки</label>
+                    <input type="color" id="color-picker" value="#000000"
+                           class="w-12 h-10 rounded cursor-pointer border border-gray-600">
+                </div>
+
+                <div class="space-y-2">
+                    <label for="scale-input" class="block text-sm text-gray-300">Масштаб: <span id="scale-value">1.0x</span></label>
+                    <input type="range" id="scale-input" min="0.1" max="3" step="0.1" value="1"
+                           class="w-full h-2 bg-gray-700 rounded-lg appearance-none slider">
+                </div>
+            </section>
+
+            <!-- Предпросмотр SVG -->
+            <section class="bg-gray-900/70 backdrop-blur-md border border-gray-700 rounded-xl p-5">
+                <h2 class="text-lg font-semibold text-blue-400 mb-4">Предпросмотр</h2>
+                <div id="svg-preview"
+                     class="w-full h-48 flex items-center justify-center bg-gray-800/50 rounded-lg border border-gray-600 overflow-hidden">
+                    <p class="text-gray-500 text-sm">SVG отобразится здесь</p>
+                </div>
+            </section>
+        </div>
+
+        <section class="bg-gray-900/70 backdrop-blur-md border border-gray-700 rounded-xl p-5 space-y-3">
+            <h2 class="text-lg font-semibold text-green-400">3. Результат (Base64)</h2>
+            <button id="convert-btn"
+                    class="w-full py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-medium rounded-lg shadow-lg transform active:scale-95 transition">
+                🔄 Конвертировать в Base64
+            </button>
+            <textarea id="base64-output"
+                      readonly
+                      placeholder="Результат появится здесь..."
+                      class="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-xs text-green-200 font-mono resize-y h-28 focus:outline-none focus:ring-2 focus:ring-green-500 opacity-90"></textarea>
+            <button id="copy-result"
+                    class="w-full py-2 bg-gray-700 hover:bg-gray-600 text-white text-sm rounded-lg transition active:scale-95">
+                📋 Копировать
+            </button>
+        </section>
+    </main>
+
+ 
+    <script type="module" src="./script.js"></script>
+</body>
+</html>

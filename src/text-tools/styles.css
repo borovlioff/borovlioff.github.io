@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+.btn:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+    transform: scale(1.05);
+    transition-property: box-shadow, transform;
+    transition-duration: 150ms;
+}
+
+.btn:active {
+    transform: scale(0.95);
+    transition-property: transform;
+    transition-duration: 150ms;
+}
+
+textarea {
+    scrollbar-width: thin;
+}

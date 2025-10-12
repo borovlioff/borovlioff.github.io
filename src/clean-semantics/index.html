@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Очистка Семантического Ядра</title>
+     <link rel="shortcut icon" href="/src/public/img/fire.png" type="image/png">
+     <load src="/gtm-head.html"/>
+</head>
+<body class="bg-black text-white min-h-screen w-full m-0 p-0">
+
+
+    <div class="bg-gray-900 px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-gray-700">
+        <h1 class="text-2xl font-bold text-center sm:text-left">Очистка Семантического Ядра</h1>
+
+        <div class="flex flex-wrap gap-2 justify-center">
+            <button id="process-btn"
+                    class="bg-blue-600 hover:bg-blue-700 text-white text-sm md:text-base px-4 py-1.5 rounded-md shadow transition">
+                Обработать
+            </button>
+            <button id="result-btn"
+                    class="bg-green-600 hover:bg-green-700 text-white text-sm md:text-base px-4 py-1.5 rounded-md shadow transition hidden">
+                Результат
+            </button>
+            <button id="sort-btn"
+                    class="bg-gray-600 hover:bg-gray-500 text-white text-sm md:text-base px-4 py-1.5 rounded-md shadow transition hidden">
+                Сортировать
+            </button>
+            <button id="clear-btn"
+                    class="bg-red-600 hover:bg-red-700 text-white text-sm md:text-base px-4 py-1.5 rounded-md shadow transition">
+                Очистить состояние
+            </button>
+        </div>
+    </div>
+
+
+    <div class="flex flex-col lg:flex-row gap-4 p-4 mt-0">
+     
+        <textarea id="query-input"
+                  placeholder="Вставьте поисковые запросы, разделенные переносом"
+                  class="flex-1 w-full h-60 p-3 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none">
+        </textarea>
+
+        <div id="unique-words-container" class="flex-1 w-full">
+            <h2 class="text-lg font-semibold mb-2">Уникальные слова</h2>
+            <div id="unique-words"
+                 class="flex flex-wrap gap-2 p-3 bg-gray-800 border border-gray-600 rounded-md min-h-24">
+            </div>
+        </div>
+    </div>
+
+    <div class="px-4 mb-6">
+        <h2 class="text-xl font-semibold mb-2">Результат</h2>
+        <textarea id="result-output"
+                  readonly
+                  class="w-full h-60 p-3 bg-gray-800 border border-gray-600 rounded-md text-white resize-none">
+        </textarea>
+    </div>
+
+    <script type="module" src="./script.js"></script>
+</body>
+</html>
