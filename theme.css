@@ -1,0 +1,46 @@
+:root {
+    --primary-color: #007bff; /* Основной цвет */
+    --secondary-color: #6c757d; /* Второстепенный цвет */
+    --background-color: #ffffff; /* Цвет фона для светлой темы */
+    --text-color: #252525; /* Цвет текста для светлой темы */
+    --link-color: #007bff; /* Цвет ссылок для светлой темы */
+    --button-color: #007bff; /* Цвет кнопок для светлой темы */
+    --button-text-color: #ffffff; /* Цвет текста кнопок для светлой темы */
+    --background-dark-color: #343a40; /* Цвет фона для темной темы */
+    --text-dark-color: #ffffff; /* Цвет текста для темной темы */
+}
+
+
+body {
+    transition: all 0.3s ease-in-out;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: var(--background-dark-color);
+        color: var(--text-dark-color);
+    }
+
+    a {
+        color: var(--text-dark-color) ;
+    }
+}
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+
+    a {
+        color: var(--text-color) ;
+    }
+}
+
+body:has(#switch-theme:checked) {
+    background-color: var(--background-color)!important;
+    color: var(--text-color) !important;
+}   
+
+body:has(#switch-theme:checked) a {
+    color: var(--text-color) !important;
+}

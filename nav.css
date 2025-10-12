@@ -1,0 +1,41 @@
+
+nav {
+    width: 100%;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.03); /* Полупрозрачный фон */
+    backdrop-filter: blur(3px); /* Размытие фона */
+    z-index: 2;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+nav::after {
+    content: "";
+    width: 2rem;
+    height: 1rem;
+    position: fixed;
+    background: rgba(255, 255, 255, 0.03); /* Полупрозрачный фон */
+    backdrop-filter: blur(3px); /* Размытие фона */
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+
+nav::before {
+    content: "";
+    width: 2rem;
+    height: 1rem;
+    position: fixed;
+    background: rgba(255, 255, 255, 0.03); /* Полупрозрачный фон */
+    backdrop-filter: blur(3px); /* Размытие фона */
+    top: 0;
+    left: 0;
+    z-index: 1;
+}

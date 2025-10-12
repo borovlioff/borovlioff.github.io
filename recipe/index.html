@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Изучение Рецептов</title>
+    <link rel="stylesheet" crossorigin href="/assets/recipe-BC59E4as.css">
+  </head>
+  <body>
+    <!-- Навигационное меню -->
+    <div class="nav-scroller">
+      <nav class="nav-scroller__items">
+        <p id="full-screen">А</p>
+        <a class="nav-scroller__item" href="index.html">Главная</a>
+        <a class="nav-scroller__item" href="learn.html">Изучение рецептов</a>
+        <a class="nav-scroller__item" href="test2.html">Изучение рецептов 2</a>
+        <a class="nav-scroller__item" href="search.html">Поиск рецептов</a>
+      </nav>
+    </div>
+
+    <div class="container">
+      <h1 class="text-center">Добавление рецептов</h1>
+        <form id="recipe-form">
+          <label for="recipe-name">Название рецепта:</label>
+          <input type="text" id="recipe-name" required />
+
+          <label for="ingredients">Ингредиенты:</label>
+          <div id="ingredient-list">
+            <div class="ingredient-entry">
+              <input
+                type="text"
+                class="ingredient-name w-full"
+                placeholder="Ингредиент 1"
+                required
+              />
+              <input
+                type="number"
+                class="ingredient-quantity w-full"
+                placeholder="Количество"
+                step="0.1"
+                required
+              />
+              <input
+                type="text"
+                class="ingredient-unit w-full"
+                placeholder="Единица измерения"
+                required
+              />
+            </div>
+          </div>
+          <button type="button" id="add-ingredient">Добавить ингредиент</button>
+          <button type="submit">Добавить рецепт</button>
+        </form>
+      <h2 class="text-center">Импортировать рецепты</h2>
+      <textarea
+        id="import-area"
+        placeholder="Вставьте ваши рецепты здесь в формате..."
+      ></textarea>
+      <button id="import-recipes">Импортировать рецепты</button>
+      <input type="file" id="import-file" accept=".txt">
+        <button id="import-from-file">Импортировать из файла</button>
+
+      <h2 class="text-center">Сохраненные рецепты</h2>
+      <button id="delete-all-recipes" class="bg-red my-1">Удалить все рецепты</button>
+      <ul id="recipe-list"></ul>
+
+      <h2 class="text-center">Экспортировать рецепты</h2>
+      <textarea
+        id="export-area"
+        readonly
+        placeholder="Рецепты будут отображены здесь..."
+      ></textarea>
+      <button id="export-recipes">Экспортировать рецепты</button>
+      <button id="export-recipes-url">Экспортировать рецепты в URL</button>
+      <button id="export-to-file">Экспортировать в файл</button>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="/public/js/full-screen.js"></script>
+  </body>
+</html>
