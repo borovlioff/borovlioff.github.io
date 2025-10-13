@@ -15,7 +15,8 @@ const getEntries = () => {
     'schema-markup',
     'recipe',
     'piu',
-    'clean-semantics'
+    'clean-semantics',
+    'wim-hof'
   ]
 
   const input: Record<string, string> = {

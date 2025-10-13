@@ -1,0 +1,69 @@
+@import "tailwindcss";
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Фон с плавным переходом */
+#app-body {
+  transition: background 1s ease-in-out;
+}
+
+/* Анимация дыхания */
+#breath-animation {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 4px solid #60a5fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  #breath-animation {
+    width: 240px;
+    height: 240px;
+  }
+}
+
+/* Анимация появления кнопки */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Пульсирующий эффект для вдоха */
+@keyframes breathe-glow {
+  0% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    opacity: 0.8;
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.7), inset 0 0 60px rgba(255, 255, 255, 0.2);
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    opacity: 0.8;
+  }
+}
+
+.breathe-anim {
+  animation: breathe-glow 2s ease-in-out infinite;
+}
