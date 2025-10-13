@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full bg-black">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Вим Хоф Дыхание</title>
+    <link rel="manifest" href="/assets/manifest-CfgcI5cH.json">
+    
+      <link rel="shortcut icon" href="/assets/fire-syY9ZyRM.png" type="image/png">
+  <script type="module" crossorigin src="/assets/wim-hof-Bv-B4xYd.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
+  <link rel="stylesheet" crossorigin href="/assets/wim-hof-DZlhFExz.css">
+</head>
+<body class="h-full flex items-center justify-center p-6 text-white overflow-hidden">
+
+  <!-- Экран приветствия -->
+  <div id="welcome-screen" class="absolute inset-0 flex flex-col items-center justify-center text-center transition-opacity duration-500 opacity-100">
+    <h1 class="text-3xl md:text-5xl font-bold mb-6">Дыхание Вима Хофа</h1>
+    <p class="max-w-lg text-lg mb-8 opacity-90">
+      Сделайте 30–40 глубоких вдохов, затем задержите дыхание. Повторите несколько кругов.
+    </p>
+
+    <div class="mb-8 w-full max-w-md space-y-6">
+  <!-- Количество кругов -->
+  <div>
+    <label class="block mb-2 text-sm opacity-80">Количество кругов:</label>
+    <input type="number" id="rounds" class="w-full px-4 py-2 rounded bg-gray-800 text-white text-center"
+           min="1" max="5" value="3" />
+  </div>
+
+  <!-- Этап 1: Количество вдохов -->
+  <div>
+    <label class="block mb-2 text-sm opacity-80">Вдохов за круг (30–50):</label>
+    <input type="number" id="breathCount" class="w-full px-4 py-2 rounded bg-gray-800 text-white text-center"
+           min="30" max="50" value="35" />
+  </div>
+
+  <!-- Этап 2: Задержка после выдоха -->
+  <div>
+    <label class="block mb-2 text-sm opacity-80">Задержка после выдоха (сек):</label>
+    <input type="number" id="holdAfterExhaleSec" class="w-full px-4 py-2 rounded bg-gray-800 text-white text-center"
+           min="30" max="300" value="120" />
+  </div>
+
+  <!-- Этап 3: Задержка после вдоха -->
+  <div>
+    <label class="block mb-2 text-sm opacity-80">Задержка после вдоха (сек):</label>
+    <input type="number" id="holdAfterInhaleSec" class="w-full px-4 py-2 rounded bg-gray-800 text-white text-center"
+           min="5" max="30" value="15" />
+  </div>
+</div>
+
+
+    <button id="start-btn" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-full text-xl font-semibold transition transform hover:scale-105">
+      Начать сессию
+    </button>
+  </div>
+
+  <!-- Экран сессии -->
+  <div id="session-screen" class="hidden absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-500 opacity-0">
+
+    <!-- Управление -->
+    <div class="absolute top-6 right-6 flex gap-3">
+      <button id="pause-btn" class="text-2xl opacity-70 hover:opacity-100" title="Пауза/Продолжить">
+        <span id="pause-icon">⏸️</span>
+      </button>
+      <button id="stop-btn" class="text-2xl opacity-50 hover:opacity-100" title="Остановить">⏹️</button>
+    </div>
+
+    <!-- Этап -->
+    <h2 id="stage-text" class="text-2xl md:text-3xl mb-4 font-light"></h2>
+    <p id="round-info" class="text-lg opacity-80 mb-10"></p>
+
+    <!-- Анимация дыхания -->
+    <div id="breath-animation" class="relative mb-10">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <span id="animation-text" class="text-lg font-medium"></span>
+      </div>
+    </div>
+
+    <!-- Счётчик -->
+    <div id="counter" class="text-6xl md:text-8xl font-mono font-bold tracking-wider"></div>
+     <!-- Кнопка "Далее" (видна только на этапе задержки после выдоха) -->
+    <button id="next-btn" class="hidden px-8 py-3 bg-green-600 hover:bg-green-700 rounded-full text-xl font-semibold transition transform hover:scale-105 opacity-0 animate-fade-in">
+      Продолжить
+    </button>
+  </div>
+
+</body>
+</html>
