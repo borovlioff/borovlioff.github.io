@@ -173,7 +173,7 @@ async function doBreathingPhase() {
 
       if (newCount !== breathCount && newCount < breathCountGoal) {
         breathCount = newCount;
-        counter.textContent = breathCount + 1;
+        counter.textContent = breathCount ;
 
         if (breathCount % 2 === 0) {
           // Вдох
