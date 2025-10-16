@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import htmlInjection from 'vite-plugin-html-inject'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -36,6 +37,14 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     htmlInjection(),
+      viteStaticCopy({
+      targets: [
+        {
+          src: './public/img', // исходная папка с изображениями
+          dest: './assets/'             // папка в dist, куда будут скопированы файлы
+        }
+      ]
+    })
   ],
   resolve: {
     alias: [{ find: '@', replacement: '/src' }],
