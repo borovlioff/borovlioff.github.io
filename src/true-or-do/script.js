@@ -1,5 +1,5 @@
 import './styles.css';
-const questions =  JSON.parse(localStorage.getItem('questions')) ||[
+let questions =  JSON.parse(localStorage.getItem('questions')) ||[
     "Кто твоя первая любовь?",
     "Когда ты первый раз поцеловал человека другого пола?",
     "Какова твоя самая смелая фантазия в сексе?",
@@ -248,7 +248,7 @@ const questions =  JSON.parse(localStorage.getItem('questions')) ||[
     "За кем последний раз тайком подглядывал?"
   ];
 
-const dare = JSON.parse(localStorage.getItem('dare')) || [
+let dare = JSON.parse(localStorage.getItem('dare')) || [
     "Сесть на колени к соседу справа и попрыгай на нем.",
     "Станцевать в одиночку.",
     "Спеть забавную песенку.",
