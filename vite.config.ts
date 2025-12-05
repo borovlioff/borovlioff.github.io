@@ -16,7 +16,8 @@ const getEntries = () => {
     'recipe',
     'piu',
     'clean-semantics',
-    'wim-hof'
+    'wim-hof',
+    'tic-tac-toe',
   ]
 
   const input: Record<string, string> = {
