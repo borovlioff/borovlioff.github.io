@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Крестики-нолики</title>
+  <link rel="shortcut icon" href="/assets/fire-syY9ZyRM.png" type="image/png">
+  <!-- Google Tag Manager --> 
+     <script>(function (w, d, s, l, i) {w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src ='https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);})(window, document, 'script', 'dataLayer', 'GTM-PNR2S4H2');</script> 
+     <!-- End Google Tag Manager -->
+
+  <script type="module" crossorigin src="/assets/tic-tac-toe-CRRO-JF6.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
+  <link rel="stylesheet" crossorigin href="/assets/schema-markup-C0B0kzKy.css">
+</head>
+<body class="min-h-screen bg-gray-950 text-gray-100 flex flex-col items-center justify-center p-4 font-sans">
+  <div class="status text-2xl font-bold mb-6 text-primary">Ходит: X</div>
+  
+  <div class="grid grid-cols-3 gap-3 w-full max-w-[80vh] flex-1" id="board">
+    <div class="cell bg-gray-800 border-2 border-gray-700 rounded-xl flex items-center justify-center text-7xl font-extrabold cursor-pointer transition-all duration-200 hover:bg-gray-700 active:scale-95" data-row="0" data-col="0"></div>
+    <div class="cell bg-gray-800 border-2 border-gray-700 rounded-xl flex items-center justify-center text-7xl font-extrabold cursor-pointer transition-all duration-200 hover:bg-gray-700 active:scale-95" data-row="0" data-col="1"></div>
+    <div class="cell bg-gray-800 border-2 border-gray-700 rounded-xl flex items-center justify-center text-7xl font-extrabold cursor-pointer transition-all duration-200 hover:bg-gray-700 active:scale-95" data-row="0" data-col="2"></div>
+    <div class="cell bg-gray-800 border-2 border-gray-700 rounded-xl flex items-center justify-center text-7xl font-extrabold cursor-pointer transition-all duration-200 hover:bg-gray-700 active:scale-95" data-row="1" data-col="0"></div>
+    <div class="cell bg-gray-800 border-2 border-gray-700 rounded-xl flex items-center justify-center text-7xl font-extrabold cursor-pointer transition-all duration-200 hover:bg-gray-700 active:scale-95" data-row="1" data-col="1"></div>
+    <div class="cell bg-gray-800 border-2 border-gray-700 rounded-xl flex items-center justify-center text-7xl font-extrabold cursor-pointer transition-all duration-200 hover:bg-gray-700 active:scale-95" data-row="1" data-col="2"></div>
+    <div class="cell bg-gray-800 border-2 border-gray-700 rounded-xl flex items-center justify-center text-7xl font-extrabold cursor-pointer transition-all duration-200 hover:bg-gray-700 active:scale-95" data-row="2" data-col="0"></div>
+    <div class="cell bg-gray-800 border-2 border-gray-700 rounded-xl flex items-center justify-center text-7xl font-extrabold cursor-pointer transition-all duration-200 hover:bg-gray-700 active:scale-95" data-row="2" data-col="1"></div>
+    <div class="cell bg-gray-800 border-2 border-gray-700 rounded-xl flex items-center justify-center text-7xl font-extrabold cursor-pointer transition-all duration-200 hover:bg-gray-700 active:scale-95" data-row="2" data-col="2"></div>
+  </div>
+
+  <div class="controls mt-8 flex flex-wrap justify-center gap-4 w-full max-w-md">
+    <button class="history-btn bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 w-full sm:w-auto" id="toggleHistory">
+      Показать историю
+    </button>
+    <button class="reset-btn bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 w-full sm:w-auto" id="reset">
+      Новая игра
+    </button>
+  </div>
+
+  <div class="history mt-6 max-h-40 overflow-y-auto w-full max-w-md bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl border border-gray-700 hidden" id="history"></div>
+
+  </script>
+</body>
+</html>
