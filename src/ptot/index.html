@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>CodeMinifier</title>
+    <link rel="shortcut icon" href="../public/img/fire.png" type="image/png" />
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <load src="/gtm-head.html" />
+  </head>
+  <body>
+    <header>
+      <h1 class="font-bold text-accent truncate">CodeMinifier</h1>
+      <div class="btn-group">
+        <button id="copyBtn" class="btn-secondary" disabled title="Копировать">
+          📋
+        </button>
+        <button id="downloadBtn" class="btn-primary" disabled title="Скачать">
+          ⬇️
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Source Section -->
+      <section>
+        <div id="dropZone" class="mb-3">
+          <p class="text-xs text-slate-400">📁 Файлы: клик или перетащите</p>
+          <input type="file" id="fileInput" multiple class="hidden" />
+        </div>
+
+        <!-- ЕДИНЫЙ список файлов -->
+        <div id="fileList" class="mb-3"></div>
+
+        <!-- Controls -->
+        <div class="mobile-stack mb-3">
+          <input
+            type="text"
+            id="ignoreInput"
+            placeholder="Игнор: node_modules,.git"
+            class="input-base flex-1"
+          />
+          <button id="processBtn" class="btn-accent">Обработать</button>
+        </div>
+
+        <!-- Preview контента файла -->
+        <div class="output-area">
+          <pre
+            id="sourcePreview"
+            data-placeholder="Выберите файл для предпросмотра"
+            class="text-slate-400 whitespace-pre-wrap"
+          ></pre>
+        </div>
+      </section>
+
+      <!-- Output Section -->
+      <section>
+        <div class="mb-3 flex items-center justify-between">
+          <h2 class="text-sm font-semibold">Результат</h2>
+          <span id="stats" class="text-[10px] text-slate-400"></span>
+        </div>
+        <div class="output-area">
+          <pre
+            id="output"
+            data-placeholder="Результат обработки"
+            class="text-emerald-400 whitespace-pre-wrap"
+          ></pre>
+        </div>
+      </section>
+    </main>
+
+    <footer
+      class="p-2 text-center text-[10px] text-slate-500 border-t border-slate-700"
+    >
+      JS • TS • Vue • Svelte • CSS • HTML • JSON • Py • Java • C/C++ • PHP
+    </footer>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
