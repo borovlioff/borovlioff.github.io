@@ -19,6 +19,7 @@ const getEntries = () => {
     "wim-hof",
     "tic-tac-toe",
     "ptot",
+    "openapi",
   ];
 
   const input: Record<string, string> = {

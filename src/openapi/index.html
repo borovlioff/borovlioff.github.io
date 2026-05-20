@@ -1,0 +1,4194 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenAPI Visual Editor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+    <style>
+      ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+      }
+
+      .field {
+        background: #0a1628;
+        border: 1px solid #1e293b;
+        color: #e2e8f0;
+        border-radius: 6px;
+        padding: 8px 12px;
+        width: 100%;
+        transition: all 0.15s;
+        font-size: 13px;
+        font-family: inherit;
+      }
+      .field:focus {
+        border-color: #3b82f6;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+        background: #0c1a32;
+      }
+      .field::placeholder {
+        color: #3d5068;
+      }
+      select.field {
+        cursor: pointer;
+      }
+      select.field option {
+        background: #0a1628;
+      }
+      textarea.field {
+        resize: vertical;
+      }
+      .field-mono {
+        font-family: "Menlo", "Monaco", "Courier New", monospace;
+        font-size: 12px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 7px 14px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.15s;
+        border: 1px solid transparent;
+        user-select: none;
+      }
+      .btn:active {
+        transform: scale(0.97);
+      }
+      .btn-primary {
+        background: #1d4ed8;
+        color: #fff;
+        border-color: #2563eb;
+      }
+      .btn-primary:hover {
+        background: #2563eb;
+      }
+      .btn-secondary {
+        background: #1e293b;
+        color: #94a3b8;
+        border-color: #334155;
+      }
+      .btn-secondary:hover {
+        background: #334155;
+        color: #e2e8f0;
+      }
+      .btn-danger {
+        background: #1c0707;
+        color: #f87171;
+        border-color: #7f1d1d;
+      }
+      .btn-danger:hover {
+        background: #7f1d1d;
+        color: #fecaca;
+      }
+      .btn-ghost {
+        background: transparent;
+        color: #64748b;
+        border: none;
+        padding: 5px 8px;
+      }
+      .btn-ghost:hover {
+        color: #e2e8f0;
+        background: #1e293b;
+      }
+      .btn-sm {
+        padding: 4px 10px;
+        font-size: 12px;
+      }
+      .btn-xs {
+        padding: 2px 7px;
+        font-size: 11px;
+      }
+
+      .badge-GET {
+        background: #042010;
+        color: #4ade80;
+        border: 1px solid #155724;
+      }
+      .badge-POST {
+        background: #07152f;
+        color: #60a5fa;
+        border: 1px solid #1a3a6e;
+      }
+      .badge-PUT {
+        background: #1e1000;
+        color: #fb923c;
+        border: 1px solid #7c3500;
+      }
+      .badge-DELETE {
+        background: #1a0202;
+        color: #f87171;
+        border: 1px solid #7f1d1d;
+      }
+      .badge-PATCH {
+        background: #120626;
+        color: #c084fc;
+        border: 1px solid #5b21b6;
+      }
+      .badge-HEAD {
+        background: #001520;
+        color: #38bdf8;
+        border: 1px solid #024d70;
+      }
+      .badge-OPTIONS {
+        background: #07071e;
+        color: #a5b4fc;
+        border: 1px solid #3730a3;
+      }
+
+      .method-tab {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        border: 1px solid #1e293b;
+        background: #0a1628;
+        color: #475569;
+        transition: all 0.15s;
+      }
+      .method-tab:hover {
+        background: #1e293b;
+        color: #94a3b8;
+      }
+      .tab-active-GET {
+        background: #042010 !important;
+        color: #4ade80 !important;
+        border-color: #155724 !important;
+      }
+      .tab-active-POST {
+        background: #07152f !important;
+        color: #60a5fa !important;
+        border-color: #1a3a6e !important;
+      }
+      .tab-active-PUT {
+        background: #1e1000 !important;
+        color: #fb923c !important;
+        border-color: #7c3500 !important;
+      }
+      .tab-active-DELETE {
+        background: #1a0202 !important;
+        color: #f87171 !important;
+        border-color: #7f1d1d !important;
+      }
+      .tab-active-PATCH {
+        background: #120626 !important;
+        color: #c084fc !important;
+        border-color: #5b21b6 !important;
+      }
+      .tab-active-HEAD {
+        background: #001520 !important;
+        color: #38bdf8 !important;
+        border-color: #024d70 !important;
+      }
+      .tab-active-OPTIONS {
+        background: #07071e !important;
+        color: #a5b4fc !important;
+        border-color: #3730a3 !important;
+      }
+
+      .tip {
+        position: relative;
+        display: inline-flex;
+        cursor: help;
+      }
+      .tip-icon {
+        width: 15px;
+        height: 15px;
+        background: #0c2448;
+        color: #60a5fa;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 9px;
+        font-weight: 800;
+        flex-shrink: 0;
+        border: 1px solid #1d4ed8;
+        line-height: 1;
+      }
+      .tip:hover .tip-box {
+        display: block;
+      }
+      .tip-box {
+        display: none;
+        position: absolute;
+        bottom: calc(100% + 6px);
+        left: 0;
+        background: #0a1628;
+        color: #cbd5e1;
+        border: 1px solid #334155;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 11px;
+        line-height: 1.6;
+        width: 260px;
+        z-index: 9999;
+        pointer-events: none;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        font-weight: 400;
+      }
+      .tip-box::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 10px;
+        border: 5px solid transparent;
+        border-top-color: #334155;
+      }
+
+      .lbl {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #7c8fa8;
+        font-size: 11px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        letter-spacing: 0.02em;
+      }
+      .req {
+        color: #f87171;
+        font-size: 13px;
+        line-height: 1;
+      }
+      .hint {
+        font-size: 11px;
+        color: #3d5068;
+        margin-top: 3px;
+        line-height: 1.5;
+      }
+
+      .card {
+        background: #091220;
+        border: 1px solid #1e293b;
+        border-radius: 10px;
+        padding: 18px;
+      }
+      .card-dark {
+        background: #060d18;
+        border: 1px solid #1a2640;
+        border-radius: 8px;
+        padding: 14px;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        color: #5a7090;
+        transition: all 0.15s;
+        font-size: 13px;
+        font-weight: 500;
+        margin-bottom: 2px;
+        white-space: nowrap;
+      }
+      .nav-item:hover {
+        background: #0f1e30;
+        color: #94a3b8;
+      }
+      .nav-item.active {
+        background: #0c2048;
+        color: #60a5fa;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+      }
+      .nav-item .badge-count {
+        margin-left: auto;
+        background: #1e293b;
+        color: #475569;
+        font-size: 10px;
+        padding: 1px 6px;
+        border-radius: 10px;
+        font-weight: 600;
+      }
+
+      .path-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 7px;
+        padding: 9px 10px;
+        border-radius: 7px;
+        cursor: pointer;
+        transition: all 0.15s;
+        border: 1px solid transparent;
+        margin-bottom: 3px;
+      }
+      .path-item:hover {
+        background: #091220;
+        border-color: #1e293b;
+      }
+      .path-item.active {
+        background: #08182e;
+        border-color: #1d4ed8;
+      }
+
+      .accordion {
+        border: 1px solid #1e293b;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+      .accordion-hdr {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 11px 15px;
+        cursor: pointer;
+        background: #091220;
+        transition: background 0.15s;
+        user-select: none;
+      }
+      .accordion-hdr:hover {
+        background: #0f1e30;
+      }
+      .accordion-body {
+        border-top: 1px solid #1e293b;
+        padding: 16px;
+        background: #05101d;
+      }
+      .acc-arrow {
+        transition: transform 0.2s;
+        flex-shrink: 0;
+      }
+      .acc-open .acc-arrow {
+        transform: rotate(90deg);
+      }
+
+      .st-2xx {
+        background: #042010;
+        color: #4ade80;
+        border: 1px solid #155724;
+      }
+      .st-3xx {
+        background: #0e1a00;
+        color: #a3e635;
+        border: 1px solid #3a5c00;
+      }
+      .st-4xx {
+        background: #1e0e00;
+        color: #fb923c;
+        border: 1px solid #7c3500;
+      }
+      .st-5xx {
+        background: #1a0202;
+        color: #f87171;
+        border: 1px solid #7f1d1d;
+      }
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 1px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        font-family: "Menlo", monospace;
+      }
+
+      .tag-chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 9px;
+        background: #1e293b;
+        color: #64748b;
+        border-radius: 100px;
+        font-size: 11px;
+        cursor: pointer;
+        border: 1px solid #334155;
+        transition: all 0.15s;
+        user-select: none;
+      }
+      .tag-chip:hover {
+        border-color: #3b82f6;
+        color: #93c5fd;
+      }
+      .tag-chip.on {
+        background: #0c2048;
+        color: #60a5fa;
+        border-color: #1d4ed8;
+      }
+
+      .fade-in {
+        animation: fadeIn 0.15s ease;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .prop-row {
+        background: #050e1b;
+        border: 1px solid #1a2640;
+        border-radius: 7px;
+        padding: 10px;
+      }
+      .prop-row:hover {
+        border-color: #283d5c;
+      }
+      .prop-row.req-prop {
+        border-color: #1a3a6e;
+      }
+
+      @media (max-width: 768px) {
+        #sidebar {
+          width: 52px !important;
+          overflow: hidden;
+        }
+        #sidebar .nav-label {
+          display: none;
+        }
+        #sidebar .nav-item {
+          justify-content: center;
+          padding: 10px;
+        }
+        #sidebar .badge-count {
+          display: none;
+        }
+        #preview {
+          display: none;
+        }
+        #preview.mob-show {
+          display: flex;
+          position: fixed;
+          inset: 0;
+          z-index: 50;
+          flex-direction: column;
+        }
+      }
+      @media (max-width: 640px) {
+        #main-content {
+          padding: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="h-screen flex flex-col overflow-hidden text-sm"
+    style="background: #030c18; color: #cbd5e1"
+  >
+    <!-- TOAST -->
+    <div
+      id="toast"
+      class="fixed top-4 right-4 z-50 opacity-0 transition-all duration-300 pointer-events-none"
+      style="transform: translateY(-8px)"
+    >
+      <div
+        class="flex items-center gap-2 px-4 py-2.5 rounded-lg shadow-2xl"
+        style="background: #042010; border: 1px solid #155724; color: #4ade80"
+      >
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+        <span id="toast-msg" class="text-sm font-medium"></span>
+      </div>
+    </div>
+
+    <!-- HEADER -->
+    <header
+      class="flex items-center justify-between px-4 py-2.5 flex-shrink-0"
+      style="background: #060e1c; border-bottom: 1px solid #1a2640"
+    >
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 select-none">
+          <div
+            class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+            style="background: linear-gradient(135deg, #1d4ed8, #7c3aed)"
+          >
+            <svg
+              class="w-4 h-4 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+              />
+            </svg>
+          </div>
+          <span class="font-bold text-white text-sm hidden sm:block"
+            >OpenAPI</span
+          >
+          <span class="text-slate-600 hidden sm:block">Editor</span>
+        </div>
+        <div
+          class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg"
+          style="background: #0a1628; border: 1px solid #1e293b"
+        >
+          <span class="text-xs" style="color: #3d5068">spec</span>
+          <select
+            id="oa-ver"
+            onchange="updatePreview()"
+            class="text-xs font-mono text-blue-400 bg-transparent border-none outline-none cursor-pointer"
+            style="padding: 0"
+          >
+            <option value="3.0.3">3.0.3</option>
+            <option value="3.1.0">3.1.0</option>
+            <option value="3.0.0">3.0.0</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <button
+          onclick="doImport()"
+          class="btn btn-secondary btn-sm hidden sm:inline-flex"
+          title="Импорт JSON/YAML"
+        >
+          <svg
+            class="w-3.5 h-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+            />
+          </svg>
+          Импорт
+        </button>
+        <button
+          onclick="doNew()"
+          class="btn btn-secondary btn-sm hidden sm:inline-flex"
+          title="Новый API"
+        >
+          <svg
+            class="w-3.5 h-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+          Новый
+        </button>
+        <button
+          onclick="copyAs('json')"
+          class="btn btn-secondary btn-sm"
+          title="Копировать JSON"
+        >
+          <svg
+            class="w-3.5 h-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+            />
+          </svg>
+          JSON
+        </button>
+        <button
+          onclick="copyAs('yaml')"
+          class="btn btn-secondary btn-sm"
+          title="Копировать YAML"
+        >
+          <svg
+            class="w-3.5 h-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+            />
+          </svg>
+          YAML
+        </button>
+        <button onclick="doDownload()" class="btn btn-primary btn-sm">
+          <svg
+            class="w-3.5 h-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+            />
+          </svg>
+          <span class="hidden sm:inline">Скачать</span>
+        </button>
+        <button
+          onclick="togglePreviewPanel()"
+          class="btn btn-ghost lg:hidden"
+          title="Preview"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- LAYOUT -->
+    <div class="flex flex-1 overflow-hidden">
+      <!-- SIDEBAR -->
+      <nav
+        id="sidebar"
+        class="flex-shrink-0 flex flex-col py-3 overflow-y-auto transition-all"
+        style="
+          width: 210px;
+          background: #060e1c;
+          border-right: 1px solid #1a2640;
+        "
+      >
+        <div class="px-3">
+          <p
+            class="text-xs font-semibold uppercase tracking-widest px-3 mb-2"
+            style="color: #1e3a5f"
+          >
+            Структура
+          </p>
+          <div id="nav-menu"></div>
+        </div>
+        <div class="mt-auto px-3">
+          <div
+            id="api-stats"
+            class="px-3 py-2 text-xs space-y-0.5"
+            style="color: #2a4a6e"
+          ></div>
+        </div>
+      </nav>
+
+      <!-- MAIN -->
+      <main
+        id="main-content"
+        class="flex-1 overflow-y-auto"
+        style="background: #040b15"
+      ></main>
+
+      <!-- PREVIEW -->
+      <aside
+        id="preview"
+        class="flex-shrink-0 hidden lg:flex flex-col"
+        style="
+          width: 360px;
+          background: #060e1c;
+          border-left: 1px solid #1a2640;
+        "
+      >
+        <div
+          class="flex items-center justify-between px-4 py-2.5 flex-shrink-0"
+          style="border-bottom: 1px solid #1a2640"
+        >
+          <span class="text-xs font-semibold" style="color: #3d6080"
+            >PREVIEW</span
+          >
+          <div class="flex items-center gap-1.5">
+            <button
+              id="fmt-json"
+              onclick="setFmt('json')"
+              class="px-2.5 py-1 rounded text-xs font-semibold transition-all"
+              style="
+                background: #0c2048;
+                color: #60a5fa;
+                border: 1px solid #1d4ed8;
+              "
+            >
+              JSON
+            </button>
+            <button
+              id="fmt-yaml"
+              onclick="setFmt('yaml')"
+              class="px-2.5 py-1 rounded text-xs font-semibold transition-all"
+              style="
+                background: #1e293b;
+                color: #475569;
+                border: 1px solid #334155;
+              "
+            >
+              YAML
+            </button>
+            <button
+              onclick="copyPreview()"
+              class="btn btn-ghost btn-sm"
+              title="Копировать"
+            >
+              <svg
+                class="w-3.5 h-3.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <pre
+          id="preview-code"
+          class="flex-1 overflow-auto p-4 leading-relaxed"
+          style="
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 11.5px;
+            background: #030c18;
+            color: #546e8a;
+          "
+        ></pre>
+      </aside>
+    </div>
+
+    <input
+      type="file"
+      id="file-inp"
+      accept=".json,.yaml,.yml"
+      class="hidden"
+      onchange="handleImport(event)"
+    />
+
+    <script>
+      // ═══════════════════════════════════════════════════════════
+      // STATE
+      // ═══════════════════════════════════════════════════════════
+      let S = {
+        info: {
+          title: "My API",
+          description: "",
+          version: "1.0.0",
+          termsOfService: "",
+          contact: { name: "", email: "", url: "" },
+          license: { name: "", url: "" },
+        },
+        externalDocs: { url: "", description: "" },
+        servers: [
+          { url: "https://api.example.com/v1", description: "Production" },
+        ],
+        tags: [],
+        paths: {},
+        components: {
+          schemas: {},
+          securitySchemes: {},
+          responses: {},
+          parameters: {},
+        },
+        security: [],
+      };
+
+      let UI = {
+        sec: "info",
+        path: null,
+        method: null,
+        schema: null,
+        secScheme: null,
+        fmt: "json",
+        acc: {},
+        expandedPath: {},
+        selectedPaths: new Set(),
+      };
+
+      const METHODS = [
+        "get",
+        "post",
+        "put",
+        "delete",
+        "patch",
+        "head",
+        "options",
+      ];
+      const HTTP_STATUS = {
+        200: "OK",
+        201: "Created",
+        202: "Accepted",
+        204: "No Content",
+        301: "Moved Permanently",
+        302: "Found",
+        304: "Not Modified",
+        400: "Bad Request",
+        401: "Unauthorized",
+        403: "Forbidden",
+        404: "Not Found",
+        405: "Method Not Allowed",
+        409: "Conflict",
+        410: "Gone",
+        422: "Unprocessable Entity",
+        429: "Too Many Requests",
+        500: "Internal Server Error",
+        502: "Bad Gateway",
+        503: "Service Unavailable",
+        504: "Gateway Timeout",
+        default: "Default",
+      };
+      const CONTENT_TYPES = [
+        "application/json",
+        "application/xml",
+        "application/x-www-form-urlencoded",
+        "multipart/form-data",
+        "text/plain",
+        "text/html",
+        "application/octet-stream",
+        "application/pdf",
+        "image/png",
+        "image/jpeg",
+        "application/zip",
+      ];
+      const SCHEMA_TYPES = [
+        "string",
+        "number",
+        "integer",
+        "boolean",
+        "object",
+        "array",
+      ];
+      const STRING_FORMATS = [
+        "",
+        "date",
+        "date-time",
+        "email",
+        "uuid",
+        "uri",
+        "hostname",
+        "ipv4",
+        "ipv6",
+        "password",
+        "byte",
+        "binary",
+      ];
+      const NUM_FORMATS = ["", "int32", "int64", "float", "double"];
+
+      // ═══════════════════════════════════════════════════════════
+      // HELPERS
+      // ═══════════════════════════════════════════════════════════
+
+      function keepOnlyPath(enc) {
+        const p = decodeURIComponent(enc);
+        if (!S.paths[p]) return;
+        if (
+          !confirm(
+            `Оставить только "${p}"? Остальные пути и неиспользуемые схемы будут удалены.`
+          )
+        )
+          return;
+
+        S.paths = { [p]: S.paths[p] };
+        const used = findUsedSchemas();
+
+        Object.keys(S.components.schemas).forEach((n) => {
+          if (!used.has(n)) delete S.components.schemas[n];
+        });
+
+        if (UI.schema && !S.components.schemas[UI.schema]) UI.schema = null;
+        UI.path = p;
+        UI.method = null;
+        render();
+      }
+
+      function cleanupUnusedSchemas() {
+        const used = new Set();
+        const walk = (o) => {
+          if (!o || typeof o !== "object") return;
+          if (o.$ref) {
+            const m = o.$ref.match(/#\/components\/schemas\/(.+)$/);
+            if (m) used.add(m[1]);
+          }
+          Array.isArray(o) ? o.forEach(walk) : Object.values(o).forEach(walk);
+        };
+        walk(S.paths);
+        Object.keys(S.components.schemas).forEach((n) => {
+          if (!used.has(n)) delete S.components.schemas[n];
+        });
+        if (UI.schema && !S.components.schemas[UI.schema]) UI.schema = null;
+      }
+
+      const $ = (id) => document.getElementById(id);
+      const esc = (s) =>
+        typeof s === "string"
+          ? s
+              .replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#39;")
+          : s ?? "";
+      const tip = (t, pos = "left") =>
+        `<span class="tip"><span class="tip-icon">?</span><span class="tip-box" style="${
+          pos === "right" ? "left:auto;right:0" : "left:0"
+        }">${t}</span></span>`;
+      const lbl = (text, req, tipText = "", tipPos = "left") =>
+        `<div class="lbl">${text}${req ? '<span class="req">*</span>' : ""}${
+          tipText ? tip(tipText, tipPos) : ""
+        }</div>`;
+      const hint = (t) => (t ? `<div class="hint">${t}</div>` : "");
+      const fld = (label, req, inputHtml, hintText = "", tipText = "") =>
+        `<div class="mb-4">${lbl(
+          label,
+          req,
+          tipText
+        )}<div>${inputHtml}</div>${hint(hintText)}</div>`;
+
+      function inp(val = "", placeholder = "", dataPath = "", type = "text") {
+        return `<input type="${esc(type)}" class="field" value="${esc(
+          val
+        )}" placeholder="${esc(placeholder)}" data-p="${esc(
+          dataPath
+        )}" oninput="fp(this)">`;
+      }
+      function ta(val = "", placeholder = "", dataPath = "", rows = 3) {
+        return `<textarea rows="${rows}" class="field" placeholder="${esc(
+          placeholder
+        )}" data-p="${esc(dataPath)}" oninput="fp(this)">${esc(
+          val
+        )}</textarea>`;
+      }
+      function sel(opts, current, dataPath, onChange = "") {
+        const handler = onChange
+          ? `onchange="${onChange}"`
+          : `onchange="fp(this)"`;
+        return `<select class="field" data-p="${esc(dataPath)}" ${handler}>
+    ${opts
+      .map((o) => {
+        const [v, l] = Array.isArray(o) ? o : [o, o];
+        return `<option value="${esc(v)}" ${
+          current === v ? "selected" : ""
+        }>${esc(l)}</option>`;
+      })
+      .join("")}
+  </select>`;
+      }
+      function numInp(
+        val,
+        placeholder,
+        dataPath,
+        min = "",
+        max = "",
+        step = "1"
+      ) {
+        return `<input type="number" class="field" value="${
+          val ?? ""
+        }" placeholder="${placeholder}" data-p="${esc(
+          dataPath
+        )}" min="${min}" max="${max}" step="${step}" oninput="fp(this)">`;
+      }
+      function chk(checked, label, onChange, tipText = "") {
+        return `<label class="flex items-center gap-2 cursor-pointer select-none mt-1">
+    <input type="checkbox" class="w-3.5 h-3.5 cursor-pointer" ${
+      checked ? "checked" : ""
+    } onchange="${onChange}">
+    <span class="text-xs" style="color:#7c8fa8">${label}</span>
+    ${tipText ? tip(tipText) : ""}
+  </label>`;
+      }
+
+      function getNestedPath(obj, path) {
+        return path
+          .split(".")
+          .reduce((o, k) => (o && o[k] !== undefined ? o[k] : ""), obj);
+      }
+      function setNestedPath(obj, path, val) {
+        const ks = path.split(".");
+        let o = obj;
+        for (let i = 0; i < ks.length - 1; i++) {
+          if (!o[ks[i]]) o[ks[i]] = {};
+          o = o[ks[i]];
+        }
+        if (val === "" || val === undefined) {
+          // keep empty strings for text fields
+          o[ks[ks.length - 1]] = val;
+        } else {
+          o[ks[ks.length - 1]] = val;
+        }
+      }
+
+      // field-path update
+      function fp(el) {
+        const p = el.dataset.p;
+        if (!p) return;
+        const v = el.type === "checkbox" ? el.checked : el.value;
+        setNestedPath(S, p, v);
+        updatePreview();
+        renderStats();
+      }
+
+      function showToast(msg) {
+        const t = $("toast"),
+          m = $("toast-msg");
+        m.textContent = msg;
+        t.style.opacity = "1";
+        t.style.transform = "translateY(0)";
+        t.style.pointerEvents = "auto";
+        setTimeout(() => {
+          t.style.opacity = "0";
+          t.style.transform = "translateY(-8px)";
+          t.style.pointerEvents = "none";
+        }, 2200);
+      }
+
+      function findUsedSchemas() {
+        const used = new Set();
+        const queue = [
+          S.paths,
+          S.components.responses || {},
+          S.components.parameters || {},
+        ];
+        const visited = new WeakSet();
+
+        while (queue.length) {
+          const node = queue.shift();
+          if (!node || typeof node !== "object" || visited.has(node)) continue;
+          visited.add(node);
+
+          if (node.$ref) {
+            const m = node.$ref.match(/^#\/components\/schemas\/(.+)$/);
+            if (m) {
+              const name = m[1];
+              if (S.components.schemas[name] && !used.has(name)) {
+                used.add(name);
+                queue.push(S.components.schemas[name]); // Рекурсивный обход вложенных схем
+              }
+            }
+          }
+
+          const vals = Array.isArray(node) ? node : Object.values(node);
+          for (const v of vals) if (v && typeof v === "object") queue.push(v);
+        }
+        return used;
+      }
+      function deleteSelectedPaths() {
+        if (!UI.selectedPaths.size) return;
+        if (!confirm(`Удалить ${UI.selectedPaths.size} выбранных путей?`))
+          return;
+        UI.selectedPaths.forEach((p) => {
+          delete S.paths[p];
+          if (UI.path === p) {
+            UI.path = null;
+            UI.method = null;
+          }
+        });
+        UI.selectedPaths.clear();
+        render();
+      }
+
+      function deleteUnusedSchemas() {
+        const used = findUsedSchemas();
+        const unused = Object.keys(S.components.schemas).filter(
+          (n) => !used.has(n)
+        );
+        if (!unused.length) return showToast("Нет неиспользуемых схем");
+        if (!confirm(`Удалить ${unused.length} неиспользуемых схем?`)) return;
+        unused.forEach((n) => {
+          delete S.components.schemas[n];
+          if (UI.schema === n) UI.schema = null;
+        });
+        render();
+      }
+
+      function togglePathSelect(enc) {
+        const p = decodeURIComponent(enc);
+        UI.selectedPaths.has(p)
+          ? UI.selectedPaths.delete(p)
+          : UI.selectedPaths.add(p);
+        renderPaths();
+      }
+
+      // ═══════════════════════════════════════════════════════════
+      // NAVIGATION
+      // ═══════════════════════════════════════════════════════════
+      const NAV = [
+        {
+          id: "info",
+          icon: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+          label: "Информация",
+        },
+        {
+          id: "servers",
+          icon: "M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2",
+          label: "Серверы",
+        },
+        {
+          id: "tags",
+          icon: "M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z",
+          label: "Теги",
+        },
+        {
+          id: "security",
+          icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z",
+          label: "Безопасность",
+        },
+        {
+          id: "paths",
+          icon: "M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z",
+          label: "Пути",
+        },
+        {
+          id: "schemas",
+          icon: "M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4",
+          label: "Схемы",
+        },
+      ];
+
+      function renderNav() {
+        const pathCount = Object.keys(S.paths).length;
+        const schemaCount = Object.keys(S.components.schemas).length;
+        const secCount = Object.keys(S.components.securitySchemes).length;
+        $("nav-menu").innerHTML = NAV.map(
+          (n) => `
+    <div class="nav-item ${
+      UI.sec === n.id ? "active" : ""
+    }" onclick="setSection('${n.id}')">
+      <svg class="w-4 h-4 flex-shrink-0 nav-label" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="${
+        n.icon
+      }"/></svg>
+      <svg class="w-4 h-4 flex-shrink-0" style="display:none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="${
+        n.icon
+      }"/></svg>
+      <span class="nav-label text-sm">${n.label}</span>
+      ${
+        n.id === "paths"
+          ? `<span class="badge-count nav-label">${pathCount}</span>`
+          : ""
+      }
+      ${
+        n.id === "schemas"
+          ? `<span class="badge-count nav-label">${schemaCount}</span>`
+          : ""
+      }
+      ${
+        n.id === "security"
+          ? `<span class="badge-count nav-label">${secCount}</span>`
+          : ""
+      }
+    </div>`
+        ).join("");
+      }
+
+      function renderStats() {
+        const pc = Object.keys(S.paths).length;
+        const oc = Object.values(S.paths).reduce(
+          (a, p) => a + METHODS.filter((m) => p[m]).length,
+          0
+        );
+        const sc = Object.keys(S.components.schemas).length;
+        $(
+          "api-stats"
+        ).innerHTML = `<div>${pc} путей · ${oc} операций</div><div>${sc} схем</div>`;
+      }
+
+      function setSection(sec) {
+        UI.sec = sec;
+        UI.path = null;
+        UI.method = null;
+        UI.schema = null;
+        UI.secScheme = null;
+        renderNav();
+        render();
+      }
+
+      // ═══════════════════════════════════════════════════════════
+      // ACCORDION
+      // ═══════════════════════════════════════════════════════════
+      function acc(id, titleHtml, bodyHtml, footerHtml = "") {
+        const open = UI.acc[id] !== false;
+        return `<div class="accordion ${open ? "acc-open" : ""}">
+    <div class="accordion-hdr" onclick="toggleAcc('${id}')">
+      <span class="text-sm font-medium" style="color:#94a3b8">${titleHtml}</span>
+      <svg class="acc-arrow w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:#3d5068"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </div>
+    ${
+      open
+        ? `<div class="accordion-body">${bodyHtml}${
+            footerHtml
+              ? `<div class="mt-3 pt-3" style="border-top:1px solid #1a2640">${footerHtml}</div>`
+              : ""
+          }</div>`
+        : ""
+    }
+  </div>`;
+      }
+      function toggleAcc(id) {
+        UI.acc[id] = UI.acc[id] === false ? true : false;
+        render();
+      }
+
+      // ═══════════════════════════════════════════════════════════
+      // RENDER DISPATCHER
+      // ═══════════════════════════════════════════════════════════
+      function render() {
+        const mc = $("main-content");
+        const map = {
+          info: renderInfo,
+          servers: renderServers,
+          tags: renderTags,
+          security: renderSecurity,
+          paths: renderPaths,
+          schemas: renderSchemas,
+        };
+        mc.innerHTML = `<div class="fade-in">${(
+          map[UI.sec] || renderInfo
+        )()}</div>`;
+        updatePreview();
+      }
+
+      // ═══════════════════════════════════════════════════════════
+      // INFO
+      // ═══════════════════════════════════════════════════════════
+      function renderInfo() {
+        const i = S.info;
+        return `<div class="p-5" style="max-width:680px">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#0a1e40;border:1px solid #1d4ed8">
+        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <div><h2 class="font-bold text-white text-base">Информация об API</h2><p class="text-xs" style="color:#3d5068">Метаданные спецификации OpenAPI</p></div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="flex items-center gap-2 mb-4"><span class="w-1 h-4 rounded-full inline-block" style="background:#3b82f6"></span><span class="text-sm font-semibold text-white">Основное</span></div>
+      ${fld(
+        "Название API",
+        true,
+        inp(i.title, "Petstore API", "info.title"),
+        "Краткое человекочитаемое имя",
+        "Обязательное поле. Отображается как заголовок документации. Используется кодогенераторами как имя клиента."
+      )}
+      ${fld(
+        "Версия API",
+        true,
+        inp(i.version, "1.0.0", "info.version"),
+        "Версия вашего API (не версия OpenAPI spec)",
+        "Формат: semver (1.0.0) или произвольный. Обязательное поле. Не смешивайте с версией OpenAPI спецификации."
+      )}
+      ${fld(
+        "Описание",
+        false,
+        ta(
+          i.description,
+          "Подробное описание API. Поддерживает **Markdown**.",
+          "info.description",
+          4
+        ),
+        "Поддерживает CommonMark Markdown. Отображается на главной странице документации.",
+        "Используйте Markdown для форматирования: **жирный**, *курсив*, `код`, ссылки, списки."
+      )}
+      ${fld(
+        "Условия использования",
+        false,
+        inp(
+          i.termsOfService,
+          "https://example.com/terms",
+          "info.termsOfService"
+        ),
+        "URL страницы с условиями",
+        "Должен быть абсолютным URL. Отображается в Swagger UI в шапке документации."
+      )}
+    </div>
+
+    <div class="card mb-4">
+      <div class="flex items-center gap-2 mb-4"><span class="w-1 h-4 rounded-full inline-block" style="background:#a855f7"></span><span class="text-sm font-semibold text-white">Контакты</span></div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div>${fld(
+          "Имя",
+          false,
+          inp(i.contact.name, "Команда поддержки", "info.contact.name"),
+          "",
+          "Имя контактного лица или организации"
+        )}</div>
+        <div>${fld(
+          "Email",
+          false,
+          inp(
+            i.contact.email,
+            "support@example.com",
+            "info.contact.email",
+            "email"
+          ),
+          "",
+          "Должен быть валидным email адресом"
+        )}</div>
+        <div>${fld(
+          "URL",
+          false,
+          inp(i.contact.url, "https://example.com/support", "info.contact.url"),
+          "",
+          "URL страницы поддержки или формы обратной связи"
+        )}</div>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="flex items-center gap-2 mb-4"><span class="w-1 h-4 rounded-full inline-block" style="background:#eab308"></span><span class="text-sm font-semibold text-white">Лицензия</span></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>${fld(
+          "Название",
+          false,
+          inp(i.license.name, "Apache 2.0", "info.license.name"),
+          "",
+          "Примеры: MIT, Apache 2.0, GPL-3.0, Proprietary"
+        )}</div>
+        <div>${fld(
+          "URL",
+          false,
+          inp(
+            i.license.url,
+            "https://apache.org/licenses/LICENSE-2.0.html",
+            "info.license.url"
+          ),
+          "",
+          "URL полного текста лицензии"
+        )}</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="flex items-center gap-2 mb-4"><span class="w-1 h-4 rounded-full inline-block" style="background:#06b6d4"></span><span class="text-sm font-semibold text-white">Внешняя документация</span></div>
+      ${fld(
+        "URL",
+        false,
+        inp(S.externalDocs.url, "https://docs.example.com", "externalDocs.url"),
+        "",
+        'Ссылка на полную документацию. Отображается в Swagger UI как кнопка "More Info".'
+      )}
+      ${fld(
+        "Описание",
+        false,
+        inp(
+          S.externalDocs.description,
+          "Полная документация",
+          "externalDocs.description"
+        ),
+        "",
+        "Краткое описание внешней документации"
+      )}
+    </div>
+  </div>`;
+      }
+
+      // ═══════════════════════════════════════════════════════════
+      // SERVERS
+      // ═══════════════════════════════════════════════════════════
+      function renderServers() {
+        return `<div class="p-5" style="max-width:680px">
+    <div class="flex items-center justify-between mb-5">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#042010;border:1px solid #155724">
+          <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/></svg>
+        </div>
+        <div><h2 class="font-bold text-white text-base">Серверы</h2><p class="text-xs" style="color:#3d5068">Базовые URL для всех операций API</p></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="addServer()">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>Добавить
+      </button>
+    </div>
+    <div class="mb-4 p-3 rounded-lg text-xs" style="background:#071520;border:1px solid #0c3d6e;color:#60a5fa">
+      <strong>💡 Совет:</strong> Серверы определяют базовые URL для всех операций. Можно добавить несколько серверов (prod, staging, dev). URL может содержать переменные: <code class="field-mono px-1 rounded" style="background:#0a1628">https://{env}.api.com/v{version}</code>
+    </div>
+    ${
+      S.servers.length === 0
+        ? `<div class="text-center py-12" style="color:#2a4a6e">
+      <p class="mb-3">Серверы не добавлены</p>
+      <button class="btn btn-secondary btn-sm" onclick="addServer()">Добавить первый сервер</button>
+    </div>`
+        : S.servers
+            .map(
+              (s, i) => `
+    <div class="card mb-3">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <span class="text-xs px-2 py-0.5 rounded font-mono" style="background:#1e293b;color:#475569">#${
+            i + 1
+          }</span>
+          <span class="text-sm font-medium truncate" style="max-width:300px;color:#94a3b8">${
+            esc(s.url) || "Новый сервер"
+          }</span>
+        </div>
+        <button class="btn btn-danger btn-xs" onclick="removeServer(${i})">Удалить</button>
+      </div>
+      ${fld(
+        "URL",
+        true,
+        `<input type="url" class="field" value="${esc(
+          s.url
+        )}" placeholder="https://api.example.com/v1" oninput="S.servers[${i}].url=this.value;updatePreview()">`,
+        "",
+        "Базовый URL. Используйте {переменная} для параметризации: https://{env}.example.com/v{version}"
+      )}
+      ${fld(
+        "Описание",
+        false,
+        `<input class="field" value="${esc(
+          s.description || ""
+        )}" placeholder="Production server" oninput="S.servers[${i}].description=this.value;updatePreview()">`,
+        "",
+        "Например: Production, Staging, Development, Mock"
+      )}
+      ${renderSrvVars(s, i)}
+      <button class="btn btn-secondary btn-xs" onclick="addSrvVar(${i})">+ Переменная URL</button>
+    </div>`
+            )
+            .join("")
+    }
+  </div>`;
+      }
+      function renderSrvVars(s, si) {
+        const v = s.variables || {};
+        const ks = Object.keys(v);
+        if (!ks.length) return "";
+        return `<div class="mb-3">${lbl(
+          "Переменные",
+          false,
+          "Переменные используются в URL как {varName}. Например url: https://{env}.api.com, переменная env со значениями prod, staging."
+        )}
+    <div class="space-y-2 mt-1">
+    ${ks
+      .map(
+        (k) => `<div class="card-dark">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-xs font-mono text-blue-400">{${esc(k)}}</span>
+        <button class="btn btn-danger btn-xs" onclick="removeSrvVar(${si},'${esc(
+          k
+        )}')">×</button>
+      </div>
+      <div class="grid grid-cols-3 gap-2">
+        <div><div class="lbl" style="font-size:10px">Default *</div><input class="field" style="padding:4px 8px;font-size:12px" value="${esc(
+          v[k].default || ""
+        )}" oninput="S.servers[${si}].variables['${esc(
+          k
+        )}'].default=this.value;updatePreview()"></div>
+        <div><div class="lbl" style="font-size:10px">Enum (через ",")</div><input class="field" style="padding:4px 8px;font-size:12px" value="${esc(
+          (v[k].enum || []).join(",")
+        )}" oninput="S.servers[${si}].variables['${esc(
+          k
+        )}'].enum=this.value.split(',').map(x=>x.trim()).filter(Boolean);updatePreview()"></div>
+        <div><div class="lbl" style="font-size:10px">Описание</div><input class="field" style="padding:4px 8px;font-size:12px" value="${esc(
+          v[k].description || ""
+        )}" oninput="S.servers[${si}].variables['${esc(
+          k
+        )}'].description=this.value;updatePreview()"></div>
+      </div>
+    </div>`
+      )
+      .join("")}
+    </div></div>`;
+      }
+      function addServer() {
+        S.servers.push({ url: "", description: "", variables: {} });
+        render();
+      }
+      function removeServer(i) {
+        S.servers.splice(i, 1);
+        render();
+      }
+      function addSrvVar(si) {
+        const n = prompt("Имя переменной:");
+        if (!n) return;
+        if (!S.servers[si].variables) S.servers[si].variables = {};
+        S.servers[si].variables[n] = { default: "", description: "", enum: [] };
+        render();
+      }
+      function removeSrvVar(si, k) {
+        delete S.servers[si].variables[k];
+        render();
+      }
+
+      // ═══════════════════════════════════════════════════════════
+      // TAGS
+      // ═══════════════════════════════════════════════════════════
+      function renderTags() {
+        return `<div class="p-5" style="max-width:680px">
+    <div class="flex items-center justify-between mb-5">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#1e0e00;border:1px solid #7c3500">
+          <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+        </div>
+        <div><h2 class="font-bold text-white text-base">Теги</h2><p class="text-xs" style="color:#3d5068">Группировка операций в документации</p></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="addTag()">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>Добавить
+      </button>
+    </div>
+    <div class="mb-4 p-3 rounded-lg text-xs" style="background:#0c1000;border:1px solid #3a5c00;color:#a3e635">
+      <strong>💡 Теги</strong> группируют операции в разделы документации. Операции ссылаются на теги по имени. Порядок тегов определяет порядок разделов в Swagger UI.
+    </div>
+    ${
+      S.tags.length === 0
+        ? `<div class="text-center py-12" style="color:#2a4a6e"><p class="mb-3">Теги не добавлены</p><button class="btn btn-secondary btn-sm" onclick="addTag()">Добавить первый тег</button></div>`
+        : S.tags
+            .map(
+              (t, i) => `<div class="card mb-3">
+      <div class="flex items-center justify-between mb-3">
+        <span class="px-2.5 py-1 rounded text-xs font-bold" style="background:#1e0e00;color:#fb923c;border:1px solid #7c3500">${
+          esc(t.name) || "Без имени"
+        }</span>
+        <button class="btn btn-danger btn-xs" onclick="removeTag(${i})">Удалить</button>
+      </div>
+      ${fld(
+        "Имя тега",
+        true,
+        `<input class="field" value="${esc(
+          t.name
+        )}" placeholder="users" oninput="S.tags[${i}].name=this.value;render()">`,
+        "",
+        "Используется в операциях как идентификатор. Рекомендуется camelCase или kebab-case: users, auth, order-management"
+      )}
+      ${fld(
+        "Описание",
+        false,
+        `<textarea class="field" rows="2" placeholder="Управление пользователями" oninput="S.tags[${i}].description=this.value;updatePreview()">${esc(
+          t.description || ""
+        )}</textarea>`,
+        "Поддерживает Markdown. Отображается как описание раздела в Swagger UI."
+      )}
+      ${fld(
+        "Ссылка на документацию",
+        false,
+        `<input class="field" value="${esc(
+          (t.externalDocs || {}).url || ""
+        )}" placeholder="https://docs.example.com/users" oninput="if(!S.tags[${i}].externalDocs)S.tags[${i}].externalDocs={};S.tags[${i}].externalDocs.url=this.value;updatePreview()">`,
+        "",
+        "URL внешней документации для этого тега"
+      )}
+    </div>`
+            )
+            .join("")
+    }
+  </div>`;
+      }
+      function addTag() {
+        S.tags.push({ name: "", description: "" });
+        render();
+      }
+      function removeTag(i) {
+        S.tags.splice(i, 1);
+        render();
+      }
+
+      // ═══════════════════════════════════════════════════════════
+      // SECURITY SCHEMES
+      // ═══════════════════════════════════════════════════════════
+      function renderSecurity() {
+        const sc = S.components.securitySchemes;
+        const names = Object.keys(sc);
+        return `<div class="p-5 fade-in">
+    <div class="flex items-center justify-between mb-5">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#1a0202;border:1px solid #7f1d1d">
+          <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        </div>
+        <div><h2 class="font-bold text-white text-base">Безопасность</h2><p class="text-xs" style="color:#3d5068">Схемы аутентификации и глобальные настройки</p></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="addSecScheme()">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>Добавить схему
+      </button>
+    </div>
+    <div class="flex gap-4">
+      <div class="flex-shrink-0" style="width:200px">
+        <div class="text-xs font-semibold uppercase tracking-wider mb-2 px-2" style="color:#2a4a6e">Схемы</div>
+        ${names
+          .map(
+            (n) => `<div class="path-item mb-1 ${
+              UI.secScheme === n ? "active" : ""
+            }" onclick="UI.secScheme='${esc(n)}';render()">
+          <span class="text-xs" style="color:#2a4a6e">🔐</span>
+          <div class="min-w-0"><div class="text-sm truncate ${
+            UI.secScheme === n ? "text-blue-300" : "text-slate-400"
+          }">${esc(n)}</div>
+          <div class="text-xs" style="color:#2a4a6e">${
+            sc[n].type || "?"
+          }</div></div>
+        </div>`
+          )
+          .join("")}
+        ${
+          names.length === 0
+            ? '<div class="text-xs px-2" style="color:#2a4a6e">Нет схем</div>'
+            : ""
+        }
+        <div class="mt-4 px-2">
+          <div class="text-xs font-semibold uppercase tracking-wider mb-2" style="color:#2a4a6e">Глобальная защита ${tip(
+            "Применяется ко всем операциям по умолчанию. Операции могут переопределить."
+          )}</div>
+          ${names
+            .map(
+              (
+                n
+              ) => `<label class="flex items-center gap-2 mb-1 cursor-pointer">
+            <input type="checkbox" class="w-3 h-3 cursor-pointer" ${
+              (S.security || []).some((x) => x[n] !== undefined)
+                ? "checked"
+                : ""
+            } onchange="toggleGlobalSec('${esc(n)}',this.checked)">
+            <span class="text-xs" style="color:#5a7090">${esc(n)}</span>
+          </label>`
+            )
+            .join("")}
+        </div>
+      </div>
+      <div class="flex-1">
+        ${
+          UI.secScheme && sc[UI.secScheme]
+            ? renderSecEditor(UI.secScheme, sc[UI.secScheme])
+            : `<div class="flex flex-col items-center justify-center h-full py-16" style="color:#2a4a6e">
+          <svg class="w-12 h-12 mb-3 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          <p class="text-sm">Выберите схему или создайте новую</p>
+        </div>`
+        }
+      </div>
+    </div>
+  </div>`;
+      }
+      function renderSecEditor(name, sc) {
+        const typeOpts = [
+          ["apiKey", "API Key"],
+          ["http", "HTTP (Basic/Bearer)"],
+          ["oauth2", "OAuth 2.0"],
+          ["openIdConnect", "OpenID Connect"],
+          ["mutualTLS", "Mutual TLS"],
+        ];
+        return `<div class="card fade-in">
+    <div class="flex items-center justify-between mb-4">
+      <span class="text-white font-bold">${esc(name)}</span>
+      <button class="btn btn-danger btn-xs" onclick="removeSecScheme('${esc(
+        name
+      )}')">Удалить</button>
+    </div>
+    ${fld(
+      "Тип",
+      true,
+      `<select class="field" onchange="S.components.securitySchemes['${esc(
+        name
+      )}'].type=this.value;render()">${typeOpts
+        .map(
+          ([v, l]) =>
+            `<option value="${v}" ${
+              sc.type === v ? "selected" : ""
+            }>${l}</option>`
+        )
+        .join("")}</select>`,
+      "",
+      "apiKey — ключ в заголовке/query/cookie; http — Basic или Bearer токен; oauth2 — полноценный OAuth 2.0; openIdConnect — OIDC discovery"
+    )}
+    ${fld(
+      "Описание",
+      false,
+      `<textarea class="field" rows="2" oninput="S.components.securitySchemes['${esc(
+        name
+      )}'].description=this.value;updatePreview()">${esc(
+        sc.description || ""
+      )}</textarea>`,
+      "Поясняет пользователям как получить и использовать учётные данные"
+    )}
+    ${
+      sc.type === "apiKey"
+        ? `
+      ${fld(
+        "Имя параметра",
+        true,
+        `<input class="field" value="${esc(
+          sc.name || ""
+        )}" placeholder="X-API-Key" oninput="S.components.securitySchemes['${esc(
+          name
+        )}'].name=this.value;updatePreview()">`,
+        "",
+        "Имя заголовка, query-параметра или куки. Например: X-API-Key, api_key, Authorization"
+      )}
+      ${fld(
+        "Расположение",
+        true,
+        `<select class="field" onchange="S.components.securitySchemes['${esc(
+          name
+        )}'].in=this.value;updatePreview()">
+        ${["header", "query", "cookie"]
+          .map(
+            (v) =>
+              `<option value="${v}" ${
+                sc.in === v ? "selected" : ""
+              }>${v}</option>`
+          )
+          .join("")}
+      </select>`,
+        "",
+        "header — в HTTP заголовке; query — в параметре URL (?api_key=...); cookie — в куки"
+      )}
+    `
+        : ""
+    }
+    ${
+      sc.type === "http"
+        ? `
+      ${fld(
+        "HTTP схема",
+        true,
+        `<select class="field" onchange="S.components.securitySchemes['${esc(
+          name
+        )}'].scheme=this.value;render()">
+        ${["bearer", "basic", "digest", "negotiate"]
+          .map(
+            (v) =>
+              `<option value="${v}" ${
+                sc.scheme === v ? "selected" : ""
+              }>${v}</option>`
+          )
+          .join("")}
+      </select>`,
+        "bearer — Authorization: Bearer <token>; basic — Base64(user:pass); digest — Digest Auth"
+      )}
+      ${
+        sc.scheme === "bearer"
+          ? fld(
+              "Bearer Format",
+              false,
+              `<input class="field" value="${esc(
+                sc.bearerFormat || ""
+              )}" placeholder="JWT" oninput="S.components.securitySchemes['${esc(
+                name
+              )}'].bearerFormat=this.value;updatePreview()">`,
+              "Информационное поле для документации. Не влияет на валидацию.",
+              "Примеры: JWT, opaque, PASETO"
+            )
+          : ""
+      }
+    `
+        : ""
+    }
+    ${
+      sc.type === "openIdConnect"
+        ? fld(
+            "OpenID Connect URL",
+            true,
+            `<input type="url" class="field" value="${esc(
+              sc.openIdConnectUrl || ""
+            )}" placeholder="https://example.com/.well-known/openid-configuration" oninput="S.components.securitySchemes['${esc(
+              name
+            )}'].openIdConnectUrl=this.value;updatePreview()">`,
+            "",
+            "URL discovery-документа OpenID Connect (openid-configuration endpoint)"
+          )
+        : ""
+    }
+    ${sc.type === "oauth2" ? renderOAuth2(name, sc) : ""}
+  </div>`;
+      }
+      function renderOAuth2(name, sc) {
+        const flows = sc.flows || {};
+        const FT = [
+          ["implicit", "Implicit (User redirect)"],
+          ["authorizationCode", "Authorization Code"],
+          ["clientCredentials", "Client Credentials"],
+          ["password", "Password (Resource Owner)"],
+        ];
+        return `<div class="mb-2">${lbl(
+          "OAuth2 Flows",
+          false,
+          "Выберите один или несколько OAuth2 flow. authorizationCode — наиболее безопасный для веб-приложений. clientCredentials — для server-to-server. implicit — устаревший, не рекомендуется."
+        )}
+  ${FT.map(([fk, fl]) => {
+    const f = flows[fk];
+    return `<div class="accordion mb-2">
+    <div class="accordion-hdr" style="padding:8px 12px">
+      <div class="flex items-center gap-2">
+        <input type="checkbox" class="w-3 h-3 cursor-pointer" ${
+          f ? "checked" : ""
+        } onchange="toggleOauthFlow('${esc(
+      name
+    )}','${fk}',this.checked)" onclick="event.stopPropagation()">
+        <span class="text-xs font-semibold" style="color:#94a3b8">${fl}</span>
+      </div>
+      ${
+        f
+          ? `<svg class="acc-arrow w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:#3d5068"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>`
+          : ""
+      }
+    </div>
+    ${
+      f
+        ? `<div class="accordion-body">
+      ${
+        fk !== "clientCredentials" && fk !== "password"
+          ? `<div class="mb-3">${lbl("Authorization URL", true)}
+        <input class="field" value="${esc(
+          f.authorizationUrl || ""
+        )}" placeholder="https://auth.example.com/authorize" oninput="S.components.securitySchemes['${esc(
+              name
+            )}'].flows['${fk}'].authorizationUrl=this.value;updatePreview()"></div>`
+          : ""
+      }
+      ${
+        fk !== "implicit"
+          ? `<div class="mb-3">${lbl("Token URL", true)}
+        <input class="field" value="${esc(
+          f.tokenUrl || ""
+        )}" placeholder="https://auth.example.com/token" oninput="S.components.securitySchemes['${esc(
+              name
+            )}'].flows['${fk}'].tokenUrl=this.value;updatePreview()"></div>`
+          : ""
+      }
+      <div class="mb-3">${lbl(
+        "Refresh URL",
+        false,
+        "Необязательный URL для обновления токена"
+      )}
+        <input class="field" value="${esc(
+          f.refreshUrl || ""
+        )}" placeholder="https://auth.example.com/refresh" oninput="S.components.securitySchemes['${esc(
+            name
+          )}'].flows['${fk}'].refreshUrl=this.value;updatePreview()"></div>
+      <div class="flex items-center justify-between mb-2">${lbl(
+        "Scopes",
+        true,
+        "Разрешения OAuth2. Формат: name — описание. Например: read:users — Чтение данных пользователей"
+      )}
+        <button class="btn btn-secondary btn-xs" onclick="addOauthScope('${esc(
+          name
+        )}','${fk}')">+ Scope</button></div>
+      ${Object.entries(f.scopes || {})
+        .map(
+          ([k, v]) => `<div class="flex gap-2 mb-1">
+        <input class="field flex-1" style="padding:4px 8px;font-size:11px;font-family:monospace" value="${esc(
+          k
+        )}" placeholder="read:users" onblur="renameScope('${esc(
+            name
+          )}','${fk}','${esc(k)}',this.value)">
+        <input class="field flex-1" style="padding:4px 8px;font-size:11px" value="${esc(
+          v
+        )}" placeholder="Описание" oninput="S.components.securitySchemes['${esc(
+            name
+          )}'].flows['${fk}'].scopes['${esc(k)}']=this.value;updatePreview()">
+        <button class="btn btn-danger btn-xs" onclick="removeScope('${esc(
+          name
+        )}','${fk}','${esc(k)}')">×</button>
+      </div>`
+        )
+        .join("")}
+    </div>`
+        : ""
+    }
+  </div>`;
+  }).join("")}</div>`;
+      }
+      function addSecScheme() {
+        const n = prompt("Имя схемы (напр. BearerAuth, ApiKey, OAuth2):");
+        if (!n) return;
+        S.components.securitySchemes[n] = {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+          description: "",
+        };
+        UI.secScheme = n;
+        render();
+      }
+      function removeSecScheme(n) {
+        if (!confirm(`Удалить схему "${n}"?`)) return;
+        delete S.components.securitySchemes[n];
+        if (UI.secScheme === n) UI.secScheme = null;
+        render();
+      }
+      function toggleGlobalSec(n, on) {
+        if (!S.security) S.security = [];
+        if (on) {
+          if (!S.security.some((x) => x[n] !== undefined))
+            S.security.push({ [n]: [] });
+        } else {
+          S.security = S.security.filter((x) => x[n] === undefined);
+        }
+        updatePreview();
+      }
+      function toggleOauthFlow(name, fk, on) {
+        if (!S.components.securitySchemes[name].flows)
+          S.components.securitySchemes[name].flows = {};
+        if (on) S.components.securitySchemes[name].flows[fk] = { scopes: {} };
+        else delete S.components.securitySchemes[name].flows[fk];
+        render();
+      }
+      function addOauthScope(name, fk) {
+        const k = prompt("Имя scope (напр. read:users):");
+        if (!k) return;
+        S.components.securitySchemes[name].flows[fk].scopes[k] = "";
+        render();
+      }
+      function removeScope(name, fk, k) {
+        delete S.components.securitySchemes[name].flows[fk].scopes[k];
+        render();
+      }
+      function renameScope(name, fk, old, nw) {
+        if (old === nw || !nw) return;
+        const s = S.components.securitySchemes[name].flows[fk].scopes;
+        s[nw] = s[old];
+        delete s[old];
+        render();
+      }
+
+      // ═══════════════════════════════════════════════════════════
+      // PATHS
+      // ═══════════════════════════════════════════════════════════
+      function renderPaths() {
+        const paths = S.paths;
+        const pk = Object.keys(paths);
+        return `<div class="flex h-full">
+<div class="flex-shrink-0 flex flex-col" style="width:230px;background:#060e1c;border-right:1px solid #1a2640">
+  <div class="flex items-center justify-between px-3 py-2.5 flex-shrink-0" style="border-bottom:1px solid #1a2640">
+    <span class="text-xs font-semibold uppercase tracking-wider" style="color:#2a4a6e">Пути (${
+      pk.length
+    })</span>
+    <button class="btn btn-primary btn-xs" onclick="addPath()">+ Путь</button>
+  </div>
+  ${
+    UI.selectedPaths.size > 0
+      ? `<div class="px-2 py-1.5 flex-shrink-0" style="background:#1a0202;border-bottom:1px solid #331111">
+    <div class="flex items-center justify-between mb-1"><span class="text-xs text-red-400">Выбрано: ${UI.selectedPaths.size}</span>
+    <button class="btn btn-danger btn-xs" onclick="deleteSelectedPaths()">Удалить</button></div>
+  </div>`
+      : ""
+  }
+  <div class="flex-1 overflow-y-auto p-2">
+  ${
+    pk.length === 0
+      ? `<div class="text-center py-8 text-xs" style="color:#2a4a6e"><p class="mb-2">Нет путей</p><button class="btn btn-secondary btn-xs" onclick="addPath()">Создать путь</button></div>`
+      : pk
+          .map((p) => {
+            const ms = METHODS.filter((m) => paths[p][m]);
+            const sel = UI.selectedPaths.has(p);
+            return `<div class="path-item group ${
+              UI.path === p ? "active" : ""
+            }" onclick="selectPath('${encodeURIComponent(p)}')">
+      <input type="checkbox" class="w-3 h-3 mr-2 cursor-pointer flex-shrink-0 mt-1" ${
+        sel ? "checked" : ""
+      } onclick="togglePathSelect('${encodeURIComponent(
+              p
+            )}');event.stopPropagation()">
+      <div class="flex-1 min-w-0">
+        <div class="text-xs font-mono truncate ${
+          UI.path === p ? "text-blue-300" : "text-slate-400"
+        }">${esc(p)}</div>
+        <div class="flex gap-1 mt-1 flex-wrap">${ms
+          .map(
+            (m) =>
+              `<span class="method-badge badge-${m.toUpperCase()} text-xs" style="font-size:9px;padding:1px 4px;border-radius:3px">${m.toUpperCase()}</span>`
+          )
+          .join("")}</div>
+      </div>
+      <div class="flex items-center gap-1 flex-shrink-0">
+        <button class="btn btn-ghost opacity-0 group-hover:opacity-100" style="padding:2px 4px;color:#3b82f6" onclick="keepOnlyPath('${encodeURIComponent(
+          p
+        )}');event.stopPropagation()" title="Оставить только этот путь">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+        </button>
+        <button class="btn btn-ghost opacity-0 group-hover:opacity-100" style="padding:2px 4px" onclick="removePath('${encodeURIComponent(
+          p
+        )}');event.stopPropagation()">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>`;
+          })
+          .join("")
+  }
+  </div>
+</div>
+<div class="flex-1 overflow-y-auto">
+  ${
+    UI.path && paths[UI.path] !== undefined
+      ? renderPathEditor(UI.path, paths[UI.path])
+      : `<div class="flex flex-col items-center justify-center h-full" style="color:#2a4a6e"><svg class="w-16 h-16 mb-4 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><p>Выберите путь или создайте новый</p></div>`
+  }
+</div>
+</div>`;
+      }
+
+      function renderPathEditor(pk, pObj) {
+        const existMs = METHODS.filter((m) => pObj[m]);
+        const curM =
+          UI.method && pObj[UI.method] ? UI.method : existMs[0] || null;
+        if (curM && UI.method !== curM) UI.method = curM;
+        return `<div class="p-5">
+    <div class="flex items-center gap-2 mb-4">
+      <div class="flex items-center gap-1 flex-1 px-3 py-2 rounded-lg" style="background:#091220;border:1px solid #1e293b">
+        <span class="text-slate-600 text-sm flex-shrink-0">/</span>
+        <input class="bg-transparent flex-1 outline-none font-mono text-sm text-blue-300" style="min-width:0" value="${esc(
+          pk.replace(/^\//, "")
+        )}" placeholder="users/{userId}" onblur="renamePath('${encodeURIComponent(
+          pk
+        )}','/'+this.value)" onkeydown="if(event.key==='Enter')this.blur()">
+      </div>
+      ${tip(
+        "Путь начинается с /. Для path-параметров используйте {name}: /users/{userId}/posts/{postId}. Параметры должны быть объявлены в секции Parameters.",
+        "right"
+      )}
+    </div>
+
+    <!-- Path-level params -->
+    <div class="mb-4">
+      <div class="flex items-center justify-between mb-2">
+        <div class="lbl" style="margin:0">Общие параметры пути ${tip(
+          "Наследуются всеми методами этого пути. Используйте для path-параметров из URL."
+        )}</div>
+        <button class="btn btn-secondary btn-xs" onclick="addPathParam('${encodeURIComponent(
+          pk
+        )}')">+ Параметр пути</button>
+      </div>
+      ${(pObj.parameters || [])
+        .map(
+          (p, i) => `
+        <div class="flex items-center gap-2 mb-1 px-2 py-1.5 rounded" style="background:#091220;border:1px solid #1e293b">
+          <span class="text-xs font-mono text-yellow-400">{${esc(
+            p.name || "?"
+          )}}</span>
+          <span class="text-xs px-1.5 rounded" style="background:#1e293b;color:#475569">${
+            p.in
+          }</span>
+          <span class="text-xs flex-1 truncate" style="color:#3d5068">${esc(
+            p.description || ""
+          )}</span>
+          <button class="btn btn-danger btn-xs" onclick="S.paths['${esc(
+            pk
+          )}'].parameters.splice(${i},1);render()">×</button>
+        </div>`
+        )
+        .join("")}
+    </div>
+
+    <!-- Method Tabs -->
+    <div class="flex flex-wrap gap-1.5 mb-4">
+      ${METHODS.map((m) => {
+        const ex = !!pObj[m];
+        const act = UI.method === m && ex;
+        return `<button class="method-tab ${
+          act ? "tab-active-" + m.toUpperCase() : ""
+        }" onclick="${
+          ex
+            ? `selectMethod('${m}')`
+            : `addMethod('${encodeURIComponent(pk)}','${m}')`
+        }" title="${
+          ex
+            ? "Редактировать " + m.toUpperCase()
+            : "Добавить " + m.toUpperCase()
+        }">
+          ${!ex ? '<span style="opacity:.5">+</span>' : ""}${m.toUpperCase()}
+          ${
+            ex
+              ? `<span onclick="removeMethod('${encodeURIComponent(
+                  pk
+                )}','${m}');event.stopPropagation()" class="ml-1 opacity-50 hover:opacity-100" style="font-size:14px;line-height:1">×</span>`
+              : ""
+          }
+        </button>`;
+      }).join("")}
+    </div>
+
+    ${
+      curM && pObj[curM]
+        ? renderMethodEditor(pk, curM, pObj[curM])
+        : '<div class="text-center py-8 text-sm" style="color:#2a4a6e">Выберите или добавьте HTTP метод</div>'
+    }
+  </div>`;
+      }
+
+      function renderMethodEditor(pk, m, op) {
+        const ak = `${pk}_${m}`;
+        const tagNames = S.tags.map((t) => t.name).filter(Boolean);
+        return `<div class="fade-in">
+    <div class="card mb-3">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="method-badge badge-${m.toUpperCase()} text-xs font-bold">${m.toUpperCase()}</span>
+        <span class="text-sm font-semibold text-white">Основная информация</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>${fld(
+          "Summary",
+          false,
+          `<input class="field" value="${esc(
+            op.summary || ""
+          )}" placeholder="Получить пользователя по ID" oninput="S.paths['${esc(
+            pk
+          )}']['${m}'].summary=this.value;updatePreview()">`,
+          "",
+          "Краткое описание операции. Отображается как заголовок в документации. До 120 символов."
+        )}</div>
+        <div>${fld(
+          "Operation ID",
+          false,
+          `<input class="field field-mono" value="${esc(
+            op.operationId || ""
+          )}" placeholder="getUserById" oninput="S.paths['${esc(
+            pk
+          )}']['${m}'].operationId=this.value;updatePreview()">`,
+          "Уникальный идентификатор",
+          "Используется кодогенераторами для имён методов. camelCase, уникален во всём API. Например: getUser, createPost, deleteComment."
+        )}</div>
+      </div>
+      ${fld(
+        "Description",
+        false,
+        `<textarea class="field" rows="2" placeholder="Подробное описание. Поддерживает **Markdown**." oninput="S.paths['${esc(
+          pk
+        )}']['${m}'].description=this.value;updatePreview()">${esc(
+          op.description || ""
+        )}</textarea>`,
+        "Поддерживает CommonMark Markdown",
+        "Расширенное описание операции, бизнес-логика, примеры использования, особые случаи."
+      )}
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          ${lbl(
+            "Теги",
+            "",
+            tagNames.length
+              ? "Нажмите для выбора/снятия тега. Теги определяются в разделе «Теги»"
+              : "Определите теги в разделе «Теги»"
+          )}
+          <div class="flex flex-wrap gap-1.5 mt-1 p-2 rounded-lg min-h-8" style="background:#091220;border:1px solid #1e293b">
+            ${tagNames
+              .map(
+                (t) =>
+                  `<span class="tag-chip ${
+                    (op.tags || []).includes(t) ? "on" : ""
+                  }" onclick="toggleOpTag('${esc(pk)}','${m}','${esc(
+                    t
+                  )}')">${esc(t)}</span>`
+              )
+              .join("")}
+            ${
+              tagNames.length === 0
+                ? `<span class="text-xs" style="color:#2a4a6e">Нет тегов → добавьте в разделе Теги</span>`
+                : ""
+            }
+          </div>
+        </div>
+        <div>
+          ${lbl("Флаги")}
+          ${chk(
+            !!op.deprecated,
+            "Deprecated — помечает операцию устаревшей",
+            `S.paths['${esc(
+              pk
+            )}']['${m}'].deprecated=this.checked;updatePreview()`,
+            "Устаревшие операции выделяются в документации. Использовать не рекомендуется."
+          )}
+          ${chk(
+            op.externalDocs !== undefined,
+            "Внешняя документация",
+            `if(this.checked){S.paths['${esc(
+              pk
+            )}']['${m}'].externalDocs={url:'',description:''}}else{delete S.paths['${esc(
+              pk
+            )}']['${m}'].externalDocs;}render()`
+          )}
+          ${
+            op.externalDocs !== undefined
+              ? `<input class="field mt-1" style="padding:4px 8px;font-size:11px" value="${esc(
+                  op.externalDocs.url || ""
+                )}" placeholder="https://docs.example.com/..." oninput="S.paths['${esc(
+                  pk
+                )}']['${m}'].externalDocs.url=this.value;updatePreview()">`
+              : ""
+          }
+        </div>
+      </div>
+    </div>
+
+    ${acc(
+      ak + "_p",
+      `<div class="flex items-center gap-2">Параметры<span class="px-1.5 py-0.5 rounded text-xs" style="background:#1e293b;color:#475569">${
+        (op.parameters || []).length
+      }</span>${tip(
+        "query, path, header, cookie параметры. Не используйте для тела запроса — для этого есть Request Body."
+      )}</div>`,
+      renderParams(pk, m, op.parameters || []),
+      `<button class="btn btn-secondary btn-sm" onclick="addParam('${encodeURIComponent(
+        pk
+      )}','${m}')">+ Добавить параметр</button>`
+    )}
+
+    ${
+      ["post", "put", "patch"].includes(m)
+        ? acc(
+            ak + "_rb",
+            `<div class="flex items-center gap-2">Request Body${
+              op.requestBody
+                ? '<span class="w-2 h-2 rounded-full inline-block" style="background:#3b82f6"></span>'
+                : ""
+            }${tip(
+              "Тело HTTP запроса. Используется для POST, PUT, PATCH. Определяет Content-Type и схему данных."
+            )}</div>`,
+            renderReqBody(pk, m, op.requestBody || null)
+          )
+        : ""
+    }
+
+    ${acc(
+      ak + "_r",
+      `<div class="flex items-center gap-2">Ответы<span class="px-1.5 py-0.5 rounded text-xs" style="background:#1e293b;color:#475569">${
+        Object.keys(op.responses || {}).length
+      }</span>${tip(
+        "HTTP ответы операции. Минимум один обязателен. Опишите успешные (2xx) и ошибочные (4xx,5xx) ответы."
+      )}</div>`,
+      renderResponses(pk, m, op.responses || {}),
+      `<button class="btn btn-secondary btn-sm" onclick="addResponse('${encodeURIComponent(
+        pk
+      )}','${m}')">+ Добавить ответ</button>`
+    )}
+
+    ${acc(
+      ak + "_s",
+      `<div class="flex items-center gap-2">Безопасность${
+        op.security !== undefined
+          ? '<span class="text-xs text-blue-400">(переопределено)</span>'
+          : '<span class="text-xs" style="color:#3d5068">(глобальная)</span>'
+      }${tip(
+        "По умолчанию наследуется из глобальных настроек. Включите переопределение для индивидуальной конфигурации операции."
+      )}</div>`,
+      renderOpSecurity(pk, m, op)
+    )}
+  </div>`;
+      }
+
+      function renderParams(pk, m, params) {
+        if (!params.length)
+          return '<div class="text-xs" style="color:#2a4a6e">Нет параметров</div>';
+        return `<div class="space-y-2">${params
+          .map((p, i) => renderParamCard(pk, m, p, i))
+          .join("")}</div>`;
+      }
+
+      function renderParamCard(pk, m, p, i) {
+        const tp = p.schema?.type || "string";
+        const fmts = {
+          string: STRING_FORMATS,
+          integer: NUM_FORMATS,
+          number: NUM_FORMATS,
+        };
+        const fmt = fmts[tp] || [""];
+        return `<div class="card-dark">
+    <div class="flex items-center justify-between mb-2">
+      <div class="flex items-center gap-1.5">
+        <span class="text-xs font-mono text-yellow-300">${esc(
+          p.name || "?"
+        )}</span>
+        <span class="text-xs px-1.5 rounded font-mono" style="background:#1e293b;color:#64748b">${
+          p.in || "query"
+        }</span>
+        ${
+          p.required
+            ? '<span class="text-xs px-1.5 rounded" style="background:#1a0202;color:#f87171">required</span>'
+            : ""
+        }
+        ${
+          p.deprecated
+            ? '<span class="text-xs px-1.5 rounded" style="background:#1e0e00;color:#fb923c">deprecated</span>'
+            : ""
+        }
+      </div>
+      <button class="btn btn-danger btn-xs" onclick="S.paths['${esc(
+        pk
+      )}']['${m}'].parameters.splice(${i},1);render()">×</button>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2">
+      <div><div class="lbl" style="font-size:10px">Имя <span class="req">*</span></div>
+        <input class="field" style="padding:4px 8px;font-size:12px;font-family:monospace" value="${esc(
+          p.name || ""
+        )}" placeholder="userId" oninput="S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].name=this.value;updatePreview()"></div>
+      <div><div class="lbl" style="font-size:10px">В <span class="req">*</span> ${tip(
+        "path — часть URL /users/{id}; query — ?filter=; header — HTTP заголовок; cookie — куки"
+      )}</div>
+        <select class="field" style="padding:4px 8px;font-size:12px" onchange="S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].in=this.value;if(this.value==='path')S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].required=true;render()">
+          ${["query", "path", "header", "cookie"]
+            .map(
+              (v) =>
+                `<option value="${v}" ${
+                  p.in === v ? "selected" : ""
+                }>${v}</option>`
+            )
+            .join("")}</select></div>
+      <div><div class="lbl" style="font-size:10px">Тип ${tip(
+        "Тип данных параметра. string — строка, integer/number — числа, boolean — булево, array — список."
+      )}</div>
+        <select class="field" style="padding:4px 8px;font-size:12px" onchange="if(!S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].schema)S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].schema={};S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].schema.type=this.value;render()">
+          ${SCHEMA_TYPES.map(
+            (t) =>
+              `<option value="${t}" ${tp === t ? "selected" : ""}>${t}</option>`
+          ).join("")}</select></div>
+      <div><div class="lbl" style="font-size:10px">Формат ${tip(
+        "Уточняет тип. date — дата, date-time — дата и время, uuid — UUID, email — email адрес и т.д."
+      )}</div>
+        <select class="field" style="padding:4px 8px;font-size:12px" onchange="if(!S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].schema)S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].schema={};S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].schema.format=this.value;updatePreview()">
+          ${fmt
+            .map(
+              (f) =>
+                `<option value="${f}" ${
+                  (p.schema?.format || "") === f ? "selected" : ""
+                }>${f || "—"}</option>`
+            )
+            .join("")}</select></div>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-2">
+      <div class="sm:col-span-2"><div class="lbl" style="font-size:10px">Описание</div>
+        <input class="field" style="padding:4px 8px;font-size:12px" value="${esc(
+          p.description || ""
+        )}" placeholder="Описание параметра" oninput="S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].description=this.value;updatePreview()"></div>
+      <div><div class="lbl" style="font-size:10px">Пример ${tip(
+        "Пример значения параметра. Отображается в Swagger UI"
+      )}</div>
+        <input class="field" style="padding:4px 8px;font-size:12px" value="${esc(
+          p.example ?? p.schema?.example ?? ""
+        )}" placeholder="abc-123" oninput="S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].example=this.value;updatePreview()"></div>
+    </div>
+    ${
+      tp === "string"
+        ? `<div class="mb-2"><div class="lbl" style="font-size:10px">Enum (допустимые значения, через запятую) ${tip(
+            "Ограничивает параметр перечнем допустимых значений"
+          )}</div>
+      <input class="field" style="padding:4px 8px;font-size:12px" value="${esc(
+        (p.schema?.enum || []).join(",")
+      )}" placeholder="asc,desc" oninput="if(!S.paths['${esc(
+            pk
+          )}']['${m}'].parameters[${i}].schema)S.paths['${esc(
+            pk
+          )}']['${m}'].parameters[${i}].schema={};S.paths['${esc(
+            pk
+          )}']['${m}'].parameters[${i}].schema.enum=this.value.split(',').map(x=>x.trim()).filter(Boolean);updatePreview()"></div>`
+        : ""
+    }
+    ${
+      tp === "array"
+        ? `<div class="grid grid-cols-2 gap-2 mb-2">
+      <div><div class="lbl" style="font-size:10px">Тип элементов (items)</div>
+        <select class="field" style="padding:4px 8px;font-size:12px" onchange="if(!S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].schema.items)S.paths['${esc(
+            pk
+          )}']['${m}'].parameters[${i}].schema.items={};S.paths['${esc(
+            pk
+          )}']['${m}'].parameters[${i}].schema.items.type=this.value;updatePreview()">
+          ${SCHEMA_TYPES.filter((t) => t !== "array")
+            .map(
+              (t) =>
+                `<option value="${t}" ${
+                  (p.schema?.items?.type || "string") === t ? "selected" : ""
+                }>${t}</option>`
+            )
+            .join("")}</select></div>
+      <div><div class="lbl" style="font-size:10px">Style ${tip(
+        "Определяет способ сериализации: form — ?ids=1&ids=2 (explode) или ?ids=1,2; spaceDelimited — пробелы; pipeDelimited — |"
+      )}</div>
+        <select class="field" style="padding:4px 8px;font-size:12px" onchange="S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].style=this.value;updatePreview()">
+          ${["form", "spaceDelimited", "pipeDelimited", "deepObject"]
+            .map(
+              (s) =>
+                `<option value="${s}" ${
+                  p.style === s ? "selected" : ""
+                }>${s}</option>`
+            )
+            .join("")}</select></div>
+    </div>`
+        : ""
+    }
+    <div class="flex flex-wrap gap-3 mt-1">
+      <label class="flex items-center gap-1.5 cursor-pointer text-xs" style="color:#5a7090">
+        <input type="checkbox" class="w-3 h-3" ${p.required ? "checked" : ""} ${
+          p.in === "path" ? "disabled" : ""
+        } onchange="S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].required=this.checked;updatePreview()">required ${tip(
+          "Обязательные параметры типа path всегда required:true. query/header/cookie могут быть необязательными."
+        )}
+      </label>
+      <label class="flex items-center gap-1.5 cursor-pointer text-xs" style="color:#5a7090">
+        <input type="checkbox" class="w-3 h-3" ${
+          p.deprecated ? "checked" : ""
+        } onchange="S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].deprecated=this.checked;updatePreview()">deprecated
+      </label>
+      <label class="flex items-center gap-1.5 cursor-pointer text-xs" style="color:#5a7090">
+        <input type="checkbox" class="w-3 h-3" ${
+          p.allowEmptyValue ? "checked" : ""
+        } onchange="S.paths['${esc(
+          pk
+        )}']['${m}'].parameters[${i}].allowEmptyValue=this.checked;updatePreview()">allowEmptyValue ${tip(
+          "Разрешает передавать пустое строковое значение. Применимо только для query параметров."
+        )}
+      </label>
+      ${
+        p.schema?.type === "object" || p.schema?.type === "array"
+          ? `<label class="flex items-center gap-1.5 cursor-pointer text-xs" style="color:#5a7090">
+        <input type="checkbox" class="w-3 h-3" ${
+          p.explode !== false ? "checked" : ""
+        } onchange="S.paths['${esc(
+              pk
+            )}']['${m}'].parameters[${i}].explode=this.checked;updatePreview()">explode ${tip(
+              "Для array/object: true — каждый элемент отдельным key=value; false — одним параметром через разделитель."
+            )}
+      </label>`
+          : ""
+      }
+    </div>
+  </div>`;
+      }
+
+      function renderReqBody(pk, m, rb) {
+        if (!rb)
+          return `<div class="flex items-center justify-between"><span class="text-xs" style="color:#2a4a6e">Request Body не задан</span>
+    <button class="btn btn-secondary btn-sm" onclick="S.paths['${esc(
+      pk
+    )}']['${m}'].requestBody={required:true,description:'',content:{'application/json':{schema:{type:'object'}}}};render()">Добавить</button></div>`;
+        return `<div>
+    <div class="flex items-center justify-between mb-3">
+      ${chk(
+        !!rb.required,
+        "Обязательное тело запроса",
+        `S.paths['${esc(
+          pk
+        )}']['${m}'].requestBody.required=this.checked;updatePreview()`,
+        "Если true, клиент обязан передать тело запроса"
+      )}
+      <button class="btn btn-danger btn-xs" onclick="delete S.paths['${esc(
+        pk
+      )}']['${m}'].requestBody;render()">Удалить</button>
+    </div>
+    ${fld(
+      "Описание",
+      false,
+      `<input class="field" value="${esc(
+        rb.description || ""
+      )}" placeholder="Данные для создания ресурса" oninput="S.paths['${esc(
+        pk
+      )}']['${m}'].requestBody.description=this.value;updatePreview()">`,
+      ""
+    )}
+    <div class="flex items-center justify-between mb-2">
+      ${lbl(
+        "Content Types",
+        "",
+        "Форматы тела запроса. application/json — наиболее распространённый. multipart/form-data — для загрузки файлов."
+      )}
+      <select class="field" style="width:auto;padding:4px 8px;font-size:12px" onchange="addCT('${encodeURIComponent(
+        pk
+      )}','${m}','req',this.value);this.selectedIndex=0">
+        <option value="">+ Content-Type</option>${CONTENT_TYPES.map(
+          (ct) => `<option value="${ct}">${ct}</option>`
+        ).join("")}
+      </select>
+    </div>
+    ${Object.entries(rb.content || {})
+      .map(([ct, ctv]) => renderCT(pk, m, "req", ct, ctv))
+      .join("")}
+  </div>`;
+      }
+
+      function renderResponses(pk, m, resps) {
+        if (!Object.keys(resps).length)
+          return '<div class="text-xs" style="color:#2a4a6e">Нет ответов. Добавьте минимум один.</div>';
+        return `<div class="space-y-2">${Object.entries(resps)
+          .map(([code, r]) => {
+            const n = parseInt(code);
+            const cls =
+              n >= 500
+                ? "st-5xx"
+                : n >= 400
+                ? "st-4xx"
+                : n >= 300
+                ? "st-3xx"
+                : "st-2xx";
+            return `<div class="card-dark">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="status-badge ${cls}">${esc(code)}</span>
+          <span class="text-xs" style="color:#3d5068">${
+            HTTP_STATUS[code] || ""
+          }</span>
+        </div>
+        <button class="btn btn-danger btn-xs" onclick="delete S.paths['${esc(
+          pk
+        )}']['${m}'].responses['${code}'];render()">×</button>
+      </div>
+      <div class="mb-2"><div class="lbl" style="font-size:10px">Описание <span class="req">*</span> ${tip(
+        "Обязательное поле. Краткое описание ответа."
+      )}</div>
+        <input class="field" style="padding:4px 8px;font-size:12px" value="${esc(
+          r.description || ""
+        )}" placeholder="${
+              HTTP_STATUS[code] || "Описание ответа"
+            }" oninput="S.paths['${esc(
+              pk
+            )}']['${m}'].responses['${code}'].description=this.value;updatePreview()"></div>
+      <div class="flex items-center justify-between mb-1.5">
+        ${lbl(
+          "Content",
+          "",
+          "Тело ответа с форматами. Не требуется для 204 No Content."
+        )}
+        <select class="field" style="width:auto;padding:3px 6px;font-size:11px" onchange="addCT('${encodeURIComponent(
+          pk
+        )}','${m}','resp_${code}',this.value);this.selectedIndex=0">
+          <option value="">+ Content-Type</option>${CONTENT_TYPES.map(
+            (ct) => `<option value="${ct}">${ct}</option>`
+          ).join("")}
+        </select>
+      </div>
+      ${Object.entries(r.content || {})
+        .map(([ct, ctv]) => renderCT(pk, m, "resp_" + code, ct, ctv))
+        .join("")}
+      ${renderRespHeaders(pk, m, code, r.headers || {})}
+    </div>`;
+          })
+          .join("")}</div>`;
+      }
+
+      function renderRespHeaders(pk, m, code, hdrs) {
+        const ks = Object.keys(hdrs);
+        return `<div class="mt-2">
+    <div class="flex items-center justify-between mb-1">
+      ${lbl(
+        "Заголовки ответа",
+        "",
+        "HTTP заголовки в ответе. Например: X-Rate-Limit, X-Request-Id, Location, ETag."
+      )}
+      <button class="btn btn-secondary btn-xs" onclick="addRespHdr('${encodeURIComponent(
+        pk
+      )}','${m}','${code}')">+ Header</button>
+    </div>
+    ${ks
+      .map(
+        (h) => `<div class="flex gap-1.5 mb-1">
+      <span class="text-xs font-mono px-2 py-1 rounded flex-shrink-0" style="background:#091220;color:#60a5fa;border:1px solid #1e293b">${esc(
+        h
+      )}</span>
+      <input class="field flex-1" style="padding:4px 8px;font-size:11px" value="${esc(
+        hdrs[h].description || ""
+      )}" placeholder="Описание заголовка" oninput="S.paths['${esc(
+          pk
+        )}']['${m}'].responses['${code}'].headers['${h}'].description=this.value;updatePreview()">
+      <button class="btn btn-danger btn-xs" onclick="delete S.paths['${esc(
+        pk
+      )}']['${m}'].responses['${code}'].headers['${h}'];render()">×</button>
+    </div>`
+      )
+      .join("")}
+  </div>`;
+      }
+
+      function renderCT(pk, m, target, ct, ctv) {
+        const schema = ctv.schema || {};
+        const srefs = Object.keys(S.components.schemas);
+        return `<div class="mb-2 p-2.5 rounded-lg" style="background:#040b15;border:1px solid #1a2640">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-xs font-mono text-green-400">${esc(ct)}</span>
+      <button class="btn btn-danger btn-xs" onclick="removeCT('${encodeURIComponent(
+        pk
+      )}','${m}','${esc(target)}','${esc(ct)}')">×</button>
+    </div>
+    <div class="grid grid-cols-2 gap-2 mb-2">
+      <div><div class="lbl" style="font-size:10px">Ссылка на схему ($ref) ${tip(
+        'Ссылается на компонент из раздела "Схемы". Предпочтительно для повторно используемых схем.'
+      )}</div>
+        <select class="field" style="padding:4px 8px;font-size:12px" onchange="setCTRef('${encodeURIComponent(
+          pk
+        )}','${m}','${esc(target)}','${esc(ct)}',this.value)">
+          <option value="">Inline</option>${srefs
+            .map(
+              (r) =>
+                `<option value="#/components/schemas/${r}" ${
+                  schema.$ref === "#/components/schemas/" + r ? "selected" : ""
+                }>→ ${r}</option>`
+            )
+            .join("")}
+        </select></div>
+      ${
+        !schema.$ref
+          ? `<div><div class="lbl" style="font-size:10px">Тип (inline)</div>
+        <select class="field" style="padding:4px 8px;font-size:12px" onchange="setCTInlineType('${encodeURIComponent(
+          pk
+        )}','${m}','${esc(target)}','${esc(ct)}',this.value)">
+          ${SCHEMA_TYPES.map(
+            (t) =>
+              `<option value="${t}" ${
+                schema.type === t ? "selected" : ""
+              }>${t}</option>`
+          ).join("")}
+        </select></div>`
+          : `<div class="flex items-center"><span class="text-xs text-blue-400 font-mono px-2 py-1 rounded w-full truncate" style="background:#0a1628;border:1px solid #1e293b">→ ${esc(
+              schema.$ref?.split("/").pop() || ""
+            )}</span></div>`
+      }
+    </div>
+    <div><div class="lbl" style="font-size:10px">Пример ${tip(
+      "JSON пример для документации. Должен соответствовать схеме."
+    )}</div>
+      <textarea class="field field-mono" rows="2" style="padding:4px 8px;font-size:11px" placeholder='{"id":"123","name":"John"}' oninput="setCTExample('${encodeURIComponent(
+        pk
+      )}','${m}','${esc(target)}','${esc(ct)}',this.value)">${esc(
+          ctv.example ? JSON.stringify(ctv.example, null, 2) : ""
+        )}</textarea></div>
+  </div>`;
+      }
+
+      function renderOpSecurity(pk, m, op) {
+        const sc = Object.keys(S.components.securitySchemes);
+        const ov = op.security !== undefined;
+        return `<div>
+    ${chk(
+      ov,
+      "Переопределить глобальную безопасность",
+      `toggleOpSecOverride('${esc(pk)}','${m}',this.checked)`,
+      "Отключите чтобы наследовать глобальные настройки. Включите для индивидуальной конфигурации или публичного доступа."
+    )}
+    ${
+      ov
+        ? `<div class="mt-3 space-y-1">
+      ${
+        sc.length === 0
+          ? '<div class="text-xs" style="color:#2a4a6e">Определите схемы в разделе Безопасность</div>'
+          : sc
+              .map(
+                (n) => `<label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" class="w-3 h-3 cursor-pointer" ${
+          (op.security || []).some((x) => x[n] !== undefined) ? "checked" : ""
+        } onchange="toggleOpSec('${esc(pk)}','${m}','${esc(n)}',this.checked)">
+        <span class="text-xs" style="color:#7c8fa8">${esc(n)}</span>
+        <span class="text-xs" style="color:#2a4a6e">(${
+          S.components.securitySchemes[n].type
+        })</span>
+      </label>`
+              )
+              .join("")
+      }
+      <label class="flex items-center gap-2 cursor-pointer mt-2">
+        <input type="checkbox" class="w-3 h-3 cursor-pointer" ${
+          (op.security || []).some((x) => Object.keys(x).length === 0)
+            ? "checked"
+            : ""
+        } onchange="toggleOpSecPublic('${esc(pk)}','${m}',this.checked)">
+        <span class="text-xs text-red-400">🔓 Публичный доступ (без аутентификации)</span>
+      </label>
+    </div>`
+        : '<div class="text-xs mt-2" style="color:#2a4a6e">Используется глобальная конфигурация безопасности</div>'
+    }
+  </div>`;
+      }
+
+      // Paths mutations
+      function addPath() {
+        const p = prompt("Путь (начинается с /):", "/");
+        if (!p) return;
+        const np = p.startsWith("/") ? p : "/" + p;
+        if (S.paths[np]) {
+          alert("Путь уже существует");
+          return;
+        }
+        S.paths[np] = {};
+        UI.path = np;
+        UI.method = null;
+        render();
+      }
+      function removePath(enc) {
+        const p = decodeURIComponent(enc);
+        if (!confirm(`Удалить путь "${p}"?`)) return;
+        delete S.paths[p];
+        if (UI.path === p) {
+          UI.path = null;
+          UI.method = null;
+        }
+        render();
+      }
+      function selectPath(enc) {
+        const p = decodeURIComponent(enc);
+        UI.path = p;
+        const ms = METHODS.filter((m) => S.paths[p] && S.paths[p][m]);
+        UI.method = ms[0] || null;
+        render();
+      }
+      function renamePath(enc, np) {
+        const op = decodeURIComponent(enc);
+        if (!np || op === np) return;
+        if (S.paths[np]) {
+          alert("Путь уже существует");
+          const el = document.querySelector("input[value]");
+          if (el) el.value = op.replace(/^\//, "");
+          return;
+        }
+        S.paths[np] = S.paths[op];
+        delete S.paths[op];
+        UI.path = np;
+        render();
+      }
+      function addMethod(enc, m) {
+        const p = decodeURIComponent(enc);
+        if (!S.paths[p]) S.paths[p] = {};
+        S.paths[p][m] = {
+          summary: "",
+          description: "",
+          operationId: "",
+          tags: [],
+          parameters: [],
+          responses: { 200: { description: "OK", content: {} } },
+        };
+        if (["post", "put", "patch"].includes(m))
+          S.paths[p][m].requestBody = {
+            required: true,
+            description: "",
+            content: { "application/json": { schema: { type: "object" } } },
+          };
+        UI.method = m;
+        render();
+      }
+      function removeMethod(enc, m) {
+        const p = decodeURIComponent(enc);
+        if (!confirm(`Удалить ${m.toUpperCase()}?`)) return;
+        delete S.paths[p][m];
+        const ms = METHODS.filter((x) => S.paths[p][x]);
+        UI.method = ms[0] || null;
+        render();
+      }
+      function selectMethod(m) {
+        UI.method = m;
+        render();
+      }
+      function addParam(enc, m) {
+        const p = decodeURIComponent(enc);
+        const op = S.paths[p][m];
+        if (!op.parameters) op.parameters = [];
+        op.parameters.push({
+          name: "param" + (op.parameters.length + 1),
+          in: "query",
+          description: "",
+          required: false,
+          schema: { type: "string" },
+        });
+        render();
+      }
+      function addPathParam(enc) {
+        const p = decodeURIComponent(enc);
+        const n = prompt("Имя path-параметра:");
+        if (!n) return;
+        if (!S.paths[p].parameters) S.paths[p].parameters = [];
+        S.paths[p].parameters.push({
+          name: n,
+          in: "path",
+          required: true,
+          description: "",
+          schema: { type: "string" },
+        });
+        render();
+      }
+      function addResponse(enc, m) {
+        const p = decodeURIComponent(enc);
+        const c = prompt("HTTP код (200,400,404,default...):");
+        if (!c) return;
+        if (!S.paths[p][m].responses) S.paths[p][m].responses = {};
+        S.paths[p][m].responses[c] = {
+          description: HTTP_STATUS[c] || "",
+          content: {},
+        };
+        render();
+      }
+      function addRespHdr(enc, m, code) {
+        const p = decodeURIComponent(enc);
+        const n = prompt("Имя заголовка (напр. X-Rate-Limit):");
+        if (!n) return;
+        if (!S.paths[p][m].responses[code].headers)
+          S.paths[p][m].responses[code].headers = {};
+        S.paths[p][m].responses[code].headers[n] = {
+          schema: { type: "string" },
+          description: "",
+        };
+        render();
+      }
+      function toggleOpTag(pk, m, t) {
+        const op = S.paths[pk][m];
+        if (!op.tags) op.tags = [];
+        const i = op.tags.indexOf(t);
+        if (i >= 0) op.tags.splice(i, 1);
+        else op.tags.push(t);
+        render();
+      }
+      function toggleOpSecOverride(pk, m, on) {
+        if (on) S.paths[pk][m].security = [];
+        else delete S.paths[pk][m].security;
+        render();
+      }
+      function toggleOpSec(pk, m, n, on) {
+        const op = S.paths[pk][m];
+        if (!op.security) op.security = [];
+        if (on) {
+          if (!op.security.some((x) => x[n] !== undefined))
+            op.security.push({ [n]: [] });
+        } else op.security = op.security.filter((x) => x[n] === undefined);
+        updatePreview();
+      }
+      function toggleOpSecPublic(pk, m, on) {
+        const op = S.paths[pk][m];
+        if (!op.security) op.security = [];
+        if (on) {
+          if (!op.security.some((x) => Object.keys(x).length === 0))
+            op.security.push({});
+        } else
+          op.security = op.security.filter((x) => Object.keys(x).length > 0);
+        updatePreview();
+      }
+      function addCT(enc, m, target, ct) {
+        if (!ct) return;
+        const p = decodeURIComponent(enc);
+        const obj = { schema: { type: "object" } };
+        if (target === "req") {
+          if (!S.paths[p][m].requestBody.content)
+            S.paths[p][m].requestBody.content = {};
+          S.paths[p][m].requestBody.content[ct] = obj;
+        } else {
+          const code = target.replace("resp_", "");
+          if (!S.paths[p][m].responses[code].content)
+            S.paths[p][m].responses[code].content = {};
+          S.paths[p][m].responses[code].content[ct] = obj;
+        }
+        render();
+      }
+      function removeCT(enc, m, target, ct) {
+        const p = decodeURIComponent(enc);
+        if (target === "req") delete S.paths[p][m].requestBody.content[ct];
+        else {
+          const code = target.replace("resp_", "");
+          delete S.paths[p][m].responses[code].content[ct];
+        }
+        render();
+      }
+      function getCTContent(p, m, target, ct) {
+        if (target === "req") return S.paths[p][m].requestBody.content[ct];
+        const code = target.replace("resp_", "");
+        return S.paths[p][m].responses[code].content[ct];
+      }
+      function setCTRef(enc, m, target, ct, ref) {
+        const p = decodeURIComponent(enc);
+        const c = getCTContent(p, m, target, ct);
+        if (ref) c.schema = { $ref: ref };
+        else c.schema = { type: "object" };
+        render();
+      }
+      function setCTInlineType(enc, m, target, ct, type) {
+        const p = decodeURIComponent(enc);
+        const c = getCTContent(p, m, target, ct);
+        c.schema = { type };
+        updatePreview();
+      }
+      function setCTExample(enc, m, target, ct, val) {
+        const p = decodeURIComponent(enc);
+        const c = getCTContent(p, m, target, ct);
+        try {
+          c.example = JSON.parse(val);
+        } catch {
+          c.example = val;
+        }
+        updatePreview();
+      }
+
+      // ═══════════════════════════════════════════════════════════
+      // SCHEMAS
+      // ═══════════════════════════════════════════════════════════
+      function renderSchemas() {
+        const sc = S.components.schemas;
+        const names = Object.keys(sc);
+        const used = findUsedSchemas();
+        const unused = names.filter((n) => !used.has(n));
+        return `<div class="flex h-full">
+  <div class="flex-shrink-0 flex flex-col" style="width:230px;background:#060e1c;border-right:1px solid #1a2640">
+    <div class="flex items-center justify-between px-3 py-2.5" style="border-bottom:1px solid #1a2640">
+      <span class="text-xs font-semibold uppercase tracking-wider" style="color:#2a4a6e">Схемы (${
+        names.length
+      })</span>
+      <button class="btn btn-primary btn-xs" onclick="addSchema()">+ Схема</button>
+    </div>
+    <div class="flex-1 overflow-y-auto p-2">
+    ${
+      names.length === 0
+        ? `<div class="text-center py-8 text-xs" style="color:#2a4a6e"><p class="mb-2">Нет схем</p><button class="btn btn-secondary btn-xs" onclick="addSchema()">Создать схему</button></div>`
+        : names
+            .map((n) => {
+              const u = used.has(n);
+              return `<div class="path-item group mb-1 ${
+                UI.schema === n ? "active" : ""
+              } ${!u ? "opacity-60" : ""}" onclick="UI.schema='${esc(
+                n
+              )}';render()">
+        <div class="flex-1 min-w-0">
+          <div class="text-sm truncate ${
+            UI.schema === n ? "text-blue-300" : "text-slate-400"
+          }">${esc(n)}</div>
+          <div class="text-xs" style="color:#2a4a6e">${sc[n].type || "any"}${
+                sc[n].properties
+                  ? " · " + Object.keys(sc[n].properties).length + " props"
+                  : sc[n].items
+                  ? " · array"
+                  : ""
+              }${sc[n].enum ? " · enum" : ""}</div>
+        </div>
+        <button class="btn btn-ghost opacity-0 group-hover:opacity-100" style="padding:2px 4px;flex-shrink:0" onclick="removeSchema('${esc(
+          n
+        )}');event.stopPropagation()">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>`;
+            })
+            .join("")
+    }
+    ${
+      unused.length > 0
+        ? `
+    <div class="mt-2 px-2 pt-2" style="border-top:1px solid #1a2640">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-xs font-semibold uppercase tracking-wider" style="color:#fb923c">Неиспользуемые (${
+          unused.length
+        })</span>
+        <button class="btn btn-danger btn-xs" onclick="deleteUnusedSchemas()">Удалить все</button>
+      </div>
+      <div class="space-y-1">
+      ${unused
+        .map(
+          (
+            n
+          ) => `<div class="flex items-center justify-between px-2 py-1 rounded" style="background:#1e1000;border:1px solid #7c3500">
+        <span class="text-xs truncate max-w-[140px] text-orange-300">${esc(
+          n
+        )}</span>
+        <button class="btn btn-danger btn-xs" onclick="removeSchema('${esc(
+          n
+        )}')">×</button>
+      </div>`
+        )
+        .join("")}
+      </div>
+    </div>`
+        : ""
+    }
+    </div>
+  </div>
+  <div class="flex-1 overflow-y-auto">
+    ${
+      UI.schema && sc[UI.schema]
+        ? renderSchemaEditor(UI.schema, sc[UI.schema])
+        : `<div class="flex flex-col items-center justify-center h-full" style="color:#2a4a6e"><svg class="w-16 h-16 mb-4 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg><p>Выберите схему или создайте новую</p></div>`
+    }
+  </div>
+  </div>`;
+      }
+      function renderSchemaEditor(name, sc) {
+        const tp = sc.type || "";
+        return `<div class="p-5 fade-in">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-3">
+        <h2 class="text-white font-bold text-base">${esc(name)}</h2>
+        <button class="btn btn-secondary btn-xs" onclick="renameSchema('${esc(
+          name
+        )}')">✏️</button>
+      </div>
+      <button class="btn btn-danger btn-xs" onclick="removeSchema('${esc(
+        name
+      )}')">Удалить</button>
+    </div>
+
+    <div class="card mb-3">
+      <div class="text-sm font-semibold text-white mb-4 flex items-center gap-2"><span class="w-1 h-4 rounded-full inline-block" style="background:#3b82f6"></span>Основные параметры</div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>${fld(
+          "Тип",
+          false,
+          `<select class="field" onchange="S.components.schemas['${esc(
+            name
+          )}'].type=this.value;if(this.value==='object'&&!S.components.schemas['${esc(
+            name
+          )}'].properties)S.components.schemas['${esc(
+            name
+          )}'].properties={};render()">
+          <option value="">— не указан —</option>
+          ${SCHEMA_TYPES.map(
+            (t) =>
+              `<option value="${t}" ${tp === t ? "selected" : ""}>${t}</option>`
+          ).join("")}
+        </select>`,
+          "",
+          "string/number/integer/boolean — примитивы. object — объект с полями. array — массив элементов."
+        )}</div>
+        <div>${fld(
+          "Формат",
+          false,
+          `<input class="field" value="${esc(
+            sc.format || ""
+          )}" placeholder="date-time, uuid, email..." oninput="S.components.schemas['${esc(
+            name
+          )}'].format=this.value||undefined;updatePreview()">`,
+          "",
+          "date, date-time, email, uuid, uri, binary, byte, password, int32, int64, float, double"
+        )}</div>
+      </div>
+      ${fld(
+        "Описание",
+        false,
+        `<textarea class="field" rows="2" placeholder="Описание схемы (поддерживает Markdown)" oninput="S.components.schemas['${esc(
+          name
+        )}'].description=this.value;updatePreview()">${esc(
+          sc.description || ""
+        )}</textarea>`,
+        ""
+      )}
+      <div class="grid grid-cols-3 gap-3">
+        <div>${lbl(
+          "nullable",
+          false,
+          "Поле принимает null дополнительно к основному типу"
+        )}${chk(
+          !!sc.nullable,
+          "nullable",
+          `S.components.schemas['${esc(
+            name
+          )}'].nullable=this.checked;updatePreview()`
+        )}</div>
+        <div>${lbl(
+          "readOnly",
+          false,
+          "Поле возвращается в ответах, но не принимается в запросах"
+        )}${chk(
+          !!sc.readOnly,
+          "readOnly",
+          `S.components.schemas['${esc(
+            name
+          )}'].readOnly=this.checked;updatePreview()`
+        )}</div>
+        <div>${lbl(
+          "writeOnly",
+          false,
+          "Поле принимается в запросах, но не включается в ответы (например, пароль)"
+        )}${chk(
+          !!sc.writeOnly,
+          "writeOnly",
+          `S.components.schemas['${esc(
+            name
+          )}'].writeOnly=this.checked;updatePreview()`
+        )}</div>
+      </div>
+    </div>
+
+    ${tp === "object" || !tp ? renderObjSchema(name, sc) : ""}
+    ${tp === "array" ? renderArrSchema(name, sc) : ""}
+    ${tp === "string" ? renderStrSchema(name, sc) : ""}
+    ${tp === "number" || tp === "integer" ? renderNumSchema(name, sc) : ""}
+
+    ${renderComposition(name, sc)}
+
+    <div class="card">
+      <div class="text-sm font-semibold text-white mb-3 flex items-center gap-2"><span class="w-1 h-4 rounded-full inline-block" style="background:#06b6d4"></span>Пример ${tip(
+        "Пример значения для документации. Должен соответствовать схеме. Отображается в Swagger UI."
+      )}</div>
+      <textarea class="field field-mono" rows="4" placeholder='{"id":"123","name":"John","email":"john@example.com"}' oninput="try{S.components.schemas['${esc(
+        name
+      )}'].example=JSON.parse(this.value)}catch{S.components.schemas['${esc(
+          name
+        )}'].example=this.value};updatePreview()">${esc(
+          sc.example ? JSON.stringify(sc.example, null, 2) : ""
+        )}</textarea>
+    </div>
+  </div>`;
+      }
+
+      function renderObjSchema(name, sc) {
+        const props = sc.properties || {};
+        const req = sc.required || [];
+        const pnames = Object.keys(props);
+        const srefs = Object.keys(S.components.schemas).filter(
+          (n) => n !== name
+        );
+        return `<div class="card mb-3">
+    <div class="flex items-center justify-between mb-4">
+      <div class="text-sm font-semibold text-white flex items-center gap-2">
+        <span class="w-1 h-4 rounded-full inline-block" style="background:#a855f7"></span>
+        Свойства объекта <span class="px-1.5 rounded text-xs" style="background:#1e293b;color:#475569">${
+          pnames.length
+        }</span>
+        ${tip(
+          "Поля объекта. Каждое свойство имеет имя, тип, может быть обязательным (required), nullable и т.д."
+        )}
+      </div>
+      <button class="btn btn-secondary btn-sm" onclick="addSchemaProp('${esc(
+        name
+      )}')">+ Свойство</button>
+    </div>
+    ${
+      pnames.length === 0
+        ? '<div class="text-xs mb-3" style="color:#2a4a6e">Нет свойств. Добавьте поля объекта.</div>'
+        : `<div class="space-y-2 mb-3">${pnames
+            .map((pn) =>
+              renderPropRow(name, pn, props[pn], req.includes(pn), srefs)
+            )
+            .join("")}</div>`
+    }
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3" style="border-top:1px solid #1a2640">
+      <div>${fld(
+        "minProperties",
+        false,
+        numInp(sc.minProperties, "0", "", "0"),
+        "",
+        "Мин. кол-во свойств"
+      )}
+        <div id="tmp_minp"></div>
+        <input type="number" class="field" style="padding:4px 8px;font-size:12px" value="${
+          sc.minProperties ?? ""
+        }" placeholder="0" min="0" oninput="S.components.schemas['${esc(
+          name
+        )}'].minProperties=this.value?parseInt(this.value):undefined;updatePreview()"></div>
+      <div><div class="lbl" style="font-size:10px">maxProperties ${tip(
+        "Макс. кол-во свойств объекта"
+      )}</div>
+        <input type="number" class="field" style="padding:4px 8px;font-size:12px" value="${
+          sc.maxProperties ?? ""
+        }" placeholder="∞" min="0" oninput="S.components.schemas['${esc(
+          name
+        )}'].maxProperties=this.value?parseInt(this.value):undefined;updatePreview()"></div>
+      <div class="col-span-2"><div class="lbl" style="font-size:10px">Additional Properties ${tip(
+        "false — запрещает дополнительные поля сверх объявленных. true — разрешает любые дополнительные поля."
+      )}</div>
+        <select class="field" style="padding:4px 8px;font-size:12px" onchange="S.components.schemas['${esc(
+          name
+        )}'].additionalProperties=this.value==='false'?false:true;updatePreview()">
+          <option value="true" ${
+            sc.additionalProperties !== false ? "selected" : ""
+          }>true — разрешены</option>
+          <option value="false" ${
+            sc.additionalProperties === false ? "selected" : ""
+          }>false — запрещены</option>
+        </select></div>
+    </div>
+  </div>`;
+      }
+
+      function renderPropRow(sname, pn, prop, isReq, srefs) {
+        const tp = prop.$ref ? "$ref" : prop.type || "string";
+        return `<div class="prop-row ${isReq ? "req-prop" : ""}">
+    <div class="flex items-center justify-between mb-2">
+      <div class="flex items-center gap-1.5">
+        <span class="text-xs font-mono ${
+          isReq ? "text-blue-300" : "text-slate-300"
+        }">${esc(pn)}</span>
+        ${
+          isReq
+            ? '<span class="text-xs px-1.5 rounded" style="background:#07152f;color:#60a5fa">req</span>'
+            : ""
+        }
+        ${
+          prop.readOnly
+            ? '<span class="text-xs px-1.5 rounded" style="background:#1e293b;color:#475569">ro</span>'
+            : ""
+        }
+        ${
+          prop.writeOnly
+            ? '<span class="text-xs px-1.5 rounded" style="background:#1e293b;color:#475569">wo</span>'
+            : ""
+        }
+        ${
+          prop.deprecated
+            ? '<span class="text-xs px-1.5 rounded" style="background:#1e0e00;color:#fb923c">dep</span>'
+            : ""
+        }
+      </div>
+      <button class="btn btn-danger btn-xs" onclick="removeSchemaProp('${esc(
+        sname
+      )}','${esc(pn)}')">×</button>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+      <div><div class="lbl" style="font-size:10px">Тип</div>
+        <select class="field" style="padding:3px 6px;font-size:11px" onchange="setSchemaPropType('${esc(
+          sname
+        )}','${esc(pn)}',this.value)">
+          ${SCHEMA_TYPES.map(
+            (t) =>
+              `<option value="${t}" ${
+                !prop.$ref && tp === t ? "selected" : ""
+              }>${t}</option>`
+          ).join("")}
+        </select></div>
+      <div><div class="lbl" style="font-size:10px">$ref ${tip(
+        "Ссылка на другую схему. Заменяет type."
+      )}</div>
+        <select class="field" style="padding:3px 6px;font-size:11px" onchange="setSchemaPropRef('${esc(
+          sname
+        )}','${esc(pn)}',this.value)">
+          <option value="">—</option>${srefs
+            .map(
+              (r) =>
+                `<option value="#/components/schemas/${r}" ${
+                  prop.$ref === "#/components/schemas/" + r ? "selected" : ""
+                }>→ ${r}</option>`
+            )
+            .join("")}
+        </select></div>
+      ${
+        !prop.$ref
+          ? `<div><div class="lbl" style="font-size:10px">Формат</div>
+        <input class="field" style="padding:3px 6px;font-size:11px" value="${esc(
+          prop.format || ""
+        )}" placeholder="uuid,date..." oninput="S.components.schemas['${esc(
+              sname
+            )}'].properties['${esc(
+              pn
+            )}'].format=this.value||undefined;updatePreview()"></div>`
+          : `<div><div class="lbl" style="font-size:10px">Тип ref</div><span class="text-xs text-blue-400 font-mono px-2 py-1 rounded w-full block truncate" style="background:#0a1628;border:1px solid #1e293b">→ ${esc(
+              prop.$ref?.split("/").pop() || ""
+            )}</span></div>`
+      }
+      <div><div class="lbl" style="font-size:10px">Пример</div>
+        <input class="field" style="padding:3px 6px;font-size:11px" value="${esc(
+          prop.example ?? ""
+        )}" placeholder="" oninput="S.components.schemas['${esc(
+          sname
+        )}'].properties['${esc(pn)}'].example=this.value;updatePreview()"></div>
+    </div>
+    <div class="mt-1.5"><div class="lbl" style="font-size:10px">Описание</div>
+      <input class="field" style="padding:3px 6px;font-size:11px" value="${esc(
+        prop.description || ""
+      )}" placeholder="Описание поля" oninput="S.components.schemas['${esc(
+          sname
+        )}'].properties['${esc(
+          pn
+        )}'].description=this.value;updatePreview()"></div>
+    <div class="flex flex-wrap gap-3 mt-1.5">
+      <label class="flex items-center gap-1 cursor-pointer text-xs" style="color:#5a7090">
+        <input type="checkbox" class="w-3 h-3 cursor-pointer" ${
+          isReq ? "checked" : ""
+        } onchange="togglePropRequired('${esc(sname)}','${esc(
+          pn
+        )}',this.checked)">required
+      </label>
+      <label class="flex items-center gap-1 cursor-pointer text-xs" style="color:#5a7090">
+        <input type="checkbox" class="w-3 h-3 cursor-pointer" ${
+          prop.nullable ? "checked" : ""
+        } onchange="S.components.schemas['${esc(sname)}'].properties['${esc(
+          pn
+        )}'].nullable=this.checked;updatePreview()">nullable
+      </label>
+      <label class="flex items-center gap-1 cursor-pointer text-xs" style="color:#5a7090">
+        <input type="checkbox" class="w-3 h-3 cursor-pointer" ${
+          prop.readOnly ? "checked" : ""
+        } onchange="S.components.schemas['${esc(sname)}'].properties['${esc(
+          pn
+        )}'].readOnly=this.checked;updatePreview()">readOnly
+      </label>
+      <label class="flex items-center gap-1 cursor-pointer text-xs" style="color:#5a7090">
+        <input type="checkbox" class="w-3 h-3 cursor-pointer" ${
+          prop.writeOnly ? "checked" : ""
+        } onchange="S.components.schemas['${esc(sname)}'].properties['${esc(
+          pn
+        )}'].writeOnly=this.checked;updatePreview()">writeOnly
+      </label>
+      <label class="flex items-center gap-1 cursor-pointer text-xs" style="color:#5a7090">
+        <input type="checkbox" class="w-3 h-3 cursor-pointer" ${
+          prop.deprecated ? "checked" : ""
+        } onchange="S.components.schemas['${esc(sname)}'].properties['${esc(
+          pn
+        )}'].deprecated=this.checked;updatePreview()">deprecated
+      </label>
+    </div>
+    ${
+      tp === "string"
+        ? `<div class="mt-1.5"><div class="lbl" style="font-size:10px">Enum (через запятую)</div>
+      <input class="field" style="padding:3px 6px;font-size:11px" value="${esc(
+        (prop.enum || []).join(",")
+      )}" placeholder="active,inactive,pending" oninput="S.components.schemas['${esc(
+            sname
+          )}'].properties['${esc(
+            pn
+          )}'].enum=this.value.split(',').map(x=>x.trim()).filter(Boolean);updatePreview()"></div>`
+        : ""
+    }
+  </div>`;
+      }
+
+      function renderArrSchema(name, sc) {
+        const items = sc.items || {};
+        const srefs = Object.keys(S.components.schemas).filter(
+          (n) => n !== name
+        );
+        return `<div class="card mb-3">
+    <div class="text-sm font-semibold text-white mb-4 flex items-center gap-2"><span class="w-1 h-4 rounded-full inline-block" style="background:#eab308"></span>Параметры массива ${tip(
+      "items определяет схему элементов. minItems/maxItems ограничивают длину. uniqueItems запрещает дублирование."
+    )}</div>
+    <div class="grid grid-cols-2 gap-3 mb-3">
+      <div>${lbl("Элементы ($ref)", false, "Ссылка на схему элементов")}
+        <select class="field" onchange="S.components.schemas['${esc(
+          name
+        )}'].items=this.value?{$ref:this.value}:{type:'string'};render()">
+          <option value="">Inline тип</option>${srefs
+            .map(
+              (r) =>
+                `<option value="#/components/schemas/${r}" ${
+                  items.$ref === "#/components/schemas/" + r ? "selected" : ""
+                }>→ ${r}</option>`
+            )
+            .join("")}
+        </select></div>
+      ${
+        !items.$ref
+          ? `<div>${lbl("Тип элементов (inline)", false)}
+        <select class="field" onchange="if(!S.components.schemas['${esc(
+          name
+        )}'].items)S.components.schemas['${esc(
+              name
+            )}'].items={};S.components.schemas['${esc(
+              name
+            )}'].items.type=this.value;updatePreview()">
+          ${SCHEMA_TYPES.filter((t) => t !== "array")
+            .map(
+              (t) =>
+                `<option value="${t}" ${
+                  items.type === t ? "selected" : ""
+                }>${t}</option>`
+            )
+            .join("")}
+        </select></div>`
+          : `<div class="flex items-center"><span class="text-xs text-blue-400 font-mono px-2 py-1 rounded w-full truncate mt-5" style="background:#0a1628;border:1px solid #1e293b">→ ${esc(
+              items.$ref?.split("/").pop() || ""
+            )}</span></div>`
+      }
+    </div>
+    <div class="grid grid-cols-3 gap-3">
+      <div><div class="lbl" style="font-size:10px">minItems</div>
+        <input type="number" class="field" style="padding:4px 8px;font-size:12px" value="${
+          sc.minItems ?? ""
+        }" placeholder="0" min="0" oninput="S.components.schemas['${esc(
+          name
+        )}'].minItems=this.value?parseInt(this.value):undefined;updatePreview()"></div>
+      <div><div class="lbl" style="font-size:10px">maxItems</div>
+        <input type="number" class="field" style="padding:4px 8px;font-size:12px" value="${
+          sc.maxItems ?? ""
+        }" placeholder="∞" min="0" oninput="S.components.schemas['${esc(
+          name
+        )}'].maxItems=this.value?parseInt(this.value):undefined;updatePreview()"></div>
+      <div>${lbl(
+        "uniqueItems",
+        false,
+        "Элементы должны быть уникальными"
+      )}${chk(
+          !!sc.uniqueItems,
+          "uniqueItems",
+          `S.components.schemas['${esc(
+            name
+          )}'].uniqueItems=this.checked;updatePreview()`
+        )}</div>
+    </div>
+  </div>`;
+      }
+
+      function renderStrSchema(name, sc) {
+        return `<div class="card mb-3">
+    <div class="text-sm font-semibold text-white mb-4 flex items-center gap-2"><span class="w-1 h-4 rounded-full inline-block" style="background:#06b6d4"></span>Параметры строки</div>
+    <div class="grid grid-cols-2 gap-3">
+      <div><div class="lbl" style="font-size:10px">minLength ${tip(
+        "Минимальная длина строки"
+      )}</div>
+        <input type="number" class="field" style="padding:4px 8px;font-size:12px" value="${
+          sc.minLength ?? ""
+        }" placeholder="0" min="0" oninput="S.components.schemas['${esc(
+          name
+        )}'].minLength=this.value?parseInt(this.value):undefined;updatePreview()"></div>
+      <div><div class="lbl" style="font-size:10px">maxLength ${tip(
+        "Максимальная длина строки"
+      )}</div>
+        <input type="number" class="field" style="padding:4px 8px;font-size:12px" value="${
+          sc.maxLength ?? ""
+        }" placeholder="∞" min="0" oninput="S.components.schemas['${esc(
+          name
+        )}'].maxLength=this.value?parseInt(this.value):undefined;updatePreview()"></div>
+    </div>
+    <div class="mt-3">${fld(
+      "Pattern (RegExp)",
+      false,
+      `<input class="field field-mono" value="${esc(
+        sc.pattern || ""
+      )}" placeholder="^[a-zA-Z0-9_]+$" oninput="S.components.schemas['${esc(
+        name
+      )}'].pattern=this.value||undefined;updatePreview()">`,
+      "",
+      "Регулярное выражение ECMA 262. Строка должна соответствовать паттерну."
+    )}
+    </div>
+    ${fld(
+      "Enum значения",
+      false,
+      `<textarea class="field field-mono" rows="3" placeholder="value1\nvalue2\nvalue3" oninput="S.components.schemas['${esc(
+        name
+      )}'].enum=this.value.split('\\n').map(x=>x.trim()).filter(Boolean);updatePreview()">${esc(
+        (sc.enum || []).join("\n")
+      )}</textarea>`,
+      "По одному значению на строку",
+      "Если заполнено, поле принимает только перечисленные значения"
+    )}
+  </div>`;
+      }
+
+      function renderNumSchema(name, sc) {
+        return `<div class="card mb-3">
+    <div class="text-sm font-semibold text-white mb-4 flex items-center gap-2"><span class="w-1 h-4 rounded-full inline-block" style="background:#f59e0b"></span>Параметры числа</div>
+    <div class="grid grid-cols-2 gap-3 mb-3">
+      <div><div class="lbl" style="font-size:10px">minimum</div>
+        <input type="number" class="field" style="padding:4px 8px;font-size:12px" value="${
+          sc.minimum ?? ""
+        }" step="any" oninput="S.components.schemas['${esc(
+          name
+        )}'].minimum=this.value!==''?parseFloat(this.value):undefined;updatePreview()"></div>
+      <div><div class="lbl" style="font-size:10px">maximum</div>
+        <input type="number" class="field" style="padding:4px 8px;font-size:12px" value="${
+          sc.maximum ?? ""
+        }" step="any" oninput="S.components.schemas['${esc(
+          name
+        )}'].maximum=this.value!==''?parseFloat(this.value):undefined;updatePreview()"></div>
+    </div>
+    <div class="grid grid-cols-2 gap-3 mb-3">
+      ${lbl(
+        "exclusiveMinimum",
+        false,
+        "Строгое неравенство: значение > minimum (не включает minimum)"
+      )}${chk(
+          !!sc.exclusiveMinimum,
+          "exclusiveMinimum",
+          `S.components.schemas['${esc(
+            name
+          )}'].exclusiveMinimum=this.checked;updatePreview()`
+        )}
+      ${lbl(
+        "exclusiveMaximum",
+        false,
+        "Строгое неравенство: значение < maximum (не включает maximum)"
+      )}${chk(
+          !!sc.exclusiveMaximum,
+          "exclusiveMaximum",
+          `S.components.schemas['${esc(
+            name
+          )}'].exclusiveMaximum=this.checked;updatePreview()`
+        )}
+    </div>
+    ${fld(
+      "multipleOf",
+      false,
+      `<input type="number" class="field" value="${
+        sc.multipleOf ?? ""
+      }" placeholder="" min="0" step="any" oninput="S.components.schemas['${esc(
+        name
+      )}'].multipleOf=this.value?parseFloat(this.value):undefined;updatePreview()">`,
+      "Значение кратно указанному числу",
+      "Пример: 5 — допускает 0, 5, 10, 15..."
+    )}
+  </div>`;
+      }
+
+      function renderComposition(name, sc) {
+        const srefs = Object.keys(S.components.schemas).filter(
+          (n) => n !== name
+        );
+        const kwInfo = {
+          allOf: "Все sub-схемы должны выполняться (наследование, слияние)",
+          oneOf: "Ровно одна sub-схема (дискриминаторы, полиморфизм)",
+          anyOf: "Хотя бы одна sub-схема (варианты типов)",
+        };
+        return `<div class="card mb-3">
+    <div class="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+      <span class="w-1 h-4 rounded-full inline-block" style="background:#ec4899"></span>
+      Композиция ${tip(
+        "allOf — схема наследует ВСЕ sub-схемы (используется для расширения). oneOf — ровно одна sub-схема должна подходить. anyOf — хотя бы одна sub-схема должна подходить."
+      )}
+    </div>
+    ${["allOf", "oneOf", "anyOf"]
+      .map((kw) => {
+        const items = sc[kw] || [];
+        return `<div class="mb-3">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-mono text-purple-400 flex items-center gap-1">${kw} ${tip(
+          kwInfo[kw]
+        )}</span>
+          <button class="btn btn-secondary btn-xs" onclick="addCompositionItem('${esc(
+            name
+          )}','${kw}')">+</button>
+        </div>
+        ${
+          items.length === 0
+            ? `<div class="text-xs" style="color:#2a4a6e">Нет элементов</div>`
+            : items
+                .map(
+                  (item, i) => `<div class="flex gap-2 mb-1">
+          <select class="field flex-1" style="padding:4px 8px;font-size:12px" onchange="S.components.schemas['${esc(
+            name
+          )}']['${kw}'][${i}]=this.value?{$ref:this.value}:{};updatePreview()">
+            <option value="">— выберите схему —</option>
+            ${srefs
+              .map(
+                (r) =>
+                  `<option value="#/components/schemas/${r}" ${
+                    item.$ref === "#/components/schemas/" + r ? "selected" : ""
+                  }>→ ${r}</option>`
+              )
+              .join("")}
+          </select>
+          <button class="btn btn-danger btn-xs" onclick="S.components.schemas['${esc(
+            name
+          )}']['${kw}'].splice(${i},1);if(!S.components.schemas['${esc(
+                    name
+                  )}']['${kw}'].length)delete S.components.schemas['${esc(
+                    name
+                  )}']['${kw}'];render()">×</button>
+        </div>`
+                )
+                .join("")
+        }
+      </div>`;
+      })
+      .join("")}
+  </div>`;
+      }
+
+      // Schema mutations
+      function addSchema() {
+        const n = prompt("Имя схемы (напр. User, Product, ErrorResponse):");
+        if (!n) return;
+        if (S.components.schemas[n]) {
+          alert("Схема уже существует");
+          return;
+        }
+        S.components.schemas[n] = {
+          type: "object",
+          description: "",
+          properties: {},
+          required: [],
+        };
+        UI.schema = n;
+        render();
+      }
+      function removeSchema(n) {
+        if (!confirm(`Удалить схему "${n}"?`)) return;
+        delete S.components.schemas[n];
+        if (UI.schema === n) UI.schema = null;
+        render();
+      }
+      function renameSchema(old) {
+        const nw = prompt("Новое имя:", old);
+        if (!nw || nw === old) return;
+        if (S.components.schemas[nw]) {
+          alert("Уже существует");
+          return;
+        }
+        S.components.schemas[nw] = S.components.schemas[old];
+        delete S.components.schemas[old]; // Update refs
+        const oldRef = `#/components/schemas/${old}`,
+          newRef = `#/components/schemas/${nw}`;
+        const str = JSON.stringify(S).replaceAll(oldRef, newRef);
+        Object.assign(S, JSON.parse(str));
+        UI.schema = nw;
+        render();
+      }
+      function addSchemaProp(name) {
+        const pn = prompt("Имя свойства:");
+        if (!pn) return;
+        if (!S.components.schemas[name].properties)
+          S.components.schemas[name].properties = {};
+        S.components.schemas[name].properties[pn] = {
+          type: "string",
+          description: "",
+        };
+        render();
+      }
+      function removeSchemaProp(name, pn) {
+        delete S.components.schemas[name].properties[pn];
+        const ri = (S.components.schemas[name].required || []).indexOf(pn);
+        if (ri >= 0) S.components.schemas[name].required.splice(ri, 1);
+        render();
+      }
+      function setSchemaPropType(name, pn, type) {
+        S.components.schemas[name].properties[pn].type = type;
+        delete S.components.schemas[name].properties[pn].$ref;
+        render();
+      }
+      function setSchemaPropRef(name, pn, ref) {
+        if (ref) {
+          S.components.schemas[name].properties[pn] = { $ref: ref };
+        } else {
+          S.components.schemas[name].properties[pn] = { type: "string" };
+        }
+        render();
+      }
+      function togglePropRequired(name, pn, on) {
+        if (!S.components.schemas[name].required)
+          S.components.schemas[name].required = [];
+        const req = S.components.schemas[name].required;
+        const i = req.indexOf(pn);
+        if (on && i < 0) req.push(pn);
+        else if (!on && i >= 0) req.splice(i, 1);
+        render();
+      }
+      function addCompositionItem(name, kw) {
+        if (!S.components.schemas[name][kw])
+          S.components.schemas[name][kw] = [];
+        S.components.schemas[name][kw].push({});
+        render();
+      }
+
+      // ═══════════════════════════════════════════════════════════
+      // GENERATE OPENAPI DOC
+      // ═══════════════════════════════════════════════════════════
+      function generateDoc() {
+        const doc = { openapi: $("oa-ver")?.value || "3.0.3", info: {} };
+
+        // Info
+        doc.info.title = S.info.title || "My API";
+        doc.info.version = S.info.version || "1.0.0";
+        if (S.info.description) doc.info.description = S.info.description;
+        if (S.info.termsOfService)
+          doc.info.termsOfService = S.info.termsOfService;
+        const ct = {};
+        if (S.info.contact.name) ct.name = S.info.contact.name;
+        if (S.info.contact.email) ct.email = S.info.contact.email;
+        if (S.info.contact.url) ct.url = S.info.contact.url;
+        if (Object.keys(ct).length) doc.info.contact = ct;
+        const lic = {};
+        if (S.info.license.name) {
+          lic.name = S.info.license.name;
+          if (S.info.license.url) lic.url = S.info.license.url;
+          doc.info.license = lic;
+        }
+        if (S.externalDocs.url) {
+          doc.externalDocs = { url: S.externalDocs.url };
+          if (S.externalDocs.description)
+            doc.externalDocs.description = S.externalDocs.description;
+        }
+
+        // Servers
+        const srvs = S.servers
+          .filter((s) => s.url)
+          .map((s) => {
+            const o = { url: s.url };
+            if (s.description) o.description = s.description;
+            const vs = s.variables || {};
+            const vks = Object.keys(vs).filter((k) => vs[k].default);
+            if (vks.length) {
+              o.variables = {};
+              vks.forEach((k) => {
+                o.variables[k] = { default: vs[k].default };
+                if (vs[k].description)
+                  o.variables[k].description = vs[k].description;
+                if (vs[k].enum?.length) o.variables[k].enum = vs[k].enum;
+              });
+            }
+            return o;
+          });
+        if (srvs.length) doc.servers = srvs;
+
+        // Tags
+        const tgs = S.tags
+          .filter((t) => t.name)
+          .map((t) => {
+            const o = { name: t.name };
+            if (t.description) o.description = t.description;
+            if (t.externalDocs?.url)
+              o.externalDocs = { url: t.externalDocs.url };
+            return o;
+          });
+        if (tgs.length) doc.tags = tgs;
+
+        // Security
+        if (S.security?.length) doc.security = S.security;
+
+        // Paths
+        const pks = Object.keys(S.paths);
+        if (pks.length) {
+          doc.paths = {};
+          pks
+            .filter((pk) => pk)
+            .forEach((pk) => {
+              const pObj = S.paths[pk];
+              doc.paths[pk] = {};
+              if (pObj.parameters?.length)
+                doc.paths[pk].parameters = cleanParams(pObj.parameters);
+              METHODS.forEach((m) => {
+                if (!pObj[m]) return;
+                const op = pObj[m];
+                const co = {};
+                if (op.tags?.length) co.tags = op.tags;
+                if (op.summary) co.summary = op.summary;
+                if (op.description) co.description = op.description;
+                if (op.operationId) co.operationId = op.operationId;
+                if (op.deprecated) co.deprecated = true;
+                if (op.externalDocs?.url)
+                  co.externalDocs = {
+                    url: op.externalDocs.url,
+                    description: op.externalDocs.description || undefined,
+                  };
+                if (op.parameters?.length)
+                  co.parameters = cleanParams(op.parameters);
+                if (op.requestBody) {
+                  const rb = {};
+                  if (op.requestBody.description)
+                    rb.description = op.requestBody.description;
+                  if (op.requestBody.required) rb.required = true;
+                  const ct = cleanContent(op.requestBody.content || {});
+                  if (Object.keys(ct).length) rb.content = ct;
+                  if (Object.keys(rb).length || rb.content) co.requestBody = rb;
+                }
+                if (op.responses) {
+                  co.responses = {};
+                  Object.entries(op.responses).forEach(([code, resp]) => {
+                    if (!resp) return;
+                    const cr = { description: resp.description || "" };
+                    const ct = cleanContent(resp.content || {});
+                    if (Object.keys(ct).length) cr.content = ct;
+                    if (resp.headers && Object.keys(resp.headers).length) {
+                      cr.headers = {};
+                      Object.entries(resp.headers).forEach(([h, hv]) => {
+                        cr.headers[h] = { schema: { type: "string" } };
+                        if (hv.description)
+                          cr.headers[h].description = hv.description;
+                      });
+                    }
+                    co.responses[code] = cr;
+                  });
+                }
+                if (op.security !== undefined) co.security = op.security;
+                doc.paths[pk][m] = co;
+              });
+            });
+        }
+
+        // Components
+        const comps = {};
+        if (Object.keys(S.components.schemas).length) {
+          comps.schemas = {};
+          Object.entries(S.components.schemas).forEach(([n, s]) => {
+            comps.schemas[n] = cleanSchema(s);
+          });
+        }
+        if (Object.keys(S.components.securitySchemes).length) {
+          comps.securitySchemes = {};
+          Object.entries(S.components.securitySchemes).forEach(([n, s]) => {
+            const cs = { type: s.type };
+            if (s.description) cs.description = s.description;
+            if (s.type === "apiKey") {
+              if (s.name) cs.name = s.name;
+              if (s.in) cs.in = s.in;
+            } else if (s.type === "http") {
+              if (s.scheme) cs.scheme = s.scheme;
+              if (s.bearerFormat) cs.bearerFormat = s.bearerFormat;
+            } else if (s.type === "oauth2") {
+              cs.flows = {};
+              Object.entries(s.flows || {}).forEach(([fk, fv]) => {
+                const cf = {};
+                if (fv.authorizationUrl)
+                  cf.authorizationUrl = fv.authorizationUrl;
+                if (fv.tokenUrl) cf.tokenUrl = fv.tokenUrl;
+                if (fv.refreshUrl) cf.refreshUrl = fv.refreshUrl;
+                cf.scopes = fv.scopes || {};
+                cs.flows[fk] = cf;
+              });
+            } else if (s.type === "openIdConnect") {
+              if (s.openIdConnectUrl) cs.openIdConnectUrl = s.openIdConnectUrl;
+            }
+            comps.securitySchemes[n] = cs;
+          });
+        }
+        if (Object.keys(comps).length) doc.components = comps;
+
+        return doc;
+      }
+
+      function cleanParams(params) {
+        return (params || [])
+          .filter((p) => p.name && p.in)
+          .map((p) => {
+            const cp = { name: p.name, in: p.in };
+            if (p.description) cp.description = p.description;
+            if (p.required || p.in === "path") cp.required = true;
+            if (p.deprecated) cp.deprecated = true;
+            if (p.style) cp.style = p.style;
+            if (p.explode !== undefined) cp.explode = p.explode;
+            if (p.allowEmptyValue) cp.allowEmptyValue = true;
+            const sch = {};
+            if (p.schema?.type) sch.type = p.schema.type;
+            if (p.schema?.format) sch.format = p.schema.format;
+            if (p.schema?.enum?.length) sch.enum = p.schema.enum;
+            if (p.schema?.default !== undefined && p.schema.default !== "")
+              sch.default = p.schema.default;
+            if (p.schema?.items) sch.items = p.schema.items;
+            if (p.schema?.example !== undefined) sch.example = p.schema.example;
+            if (Object.keys(sch).length) cp.schema = sch;
+            if (p.example !== undefined && p.example !== "")
+              cp.example = p.example;
+            return cp;
+          });
+      }
+
+      function cleanContent(content) {
+        const res = {};
+        Object.entries(content || {}).forEach(([ct, ctv]) => {
+          res[ct] = {};
+          if (ctv.schema) {
+            if (ctv.schema.$ref) res[ct].schema = { $ref: ctv.schema.$ref };
+            else {
+              const s = cleanSchema(ctv.schema);
+              if (Object.keys(s).length) res[ct].schema = s;
+            }
+          }
+          if (ctv.example !== undefined && ctv.example !== "")
+            res[ct].example = ctv.example;
+        });
+        return res;
+      }
+
+      function cleanSchema(sc) {
+        if (!sc) return {};
+        if (sc.$ref) return { $ref: sc.$ref };
+        const r = {};
+        if (sc.type) r.type = sc.type;
+        if (sc.format) r.format = sc.format;
+        if (sc.description) r.description = sc.description;
+        if (sc.nullable) r.nullable = true;
+        if (sc.readOnly) r.readOnly = true;
+        if (sc.writeOnly) r.writeOnly = true;
+        if (sc.deprecated) r.deprecated = true;
+        if (sc.example !== undefined && sc.example !== "")
+          r.example = sc.example;
+        if (sc.properties && Object.keys(sc.properties).length) {
+          r.properties = {};
+          Object.entries(sc.properties).forEach(([k, v]) => {
+            r.properties[k] = cleanSchema(v);
+          });
+        }
+        if (sc.required?.length) r.required = sc.required;
+        if (sc.additionalProperties !== undefined)
+          r.additionalProperties = sc.additionalProperties;
+        if (sc.minProperties !== undefined) r.minProperties = sc.minProperties;
+        if (sc.maxProperties !== undefined) r.maxProperties = sc.maxProperties;
+        if (sc.items) r.items = cleanSchema(sc.items);
+        if (sc.minItems !== undefined) r.minItems = sc.minItems;
+        if (sc.maxItems !== undefined) r.maxItems = sc.maxItems;
+        if (sc.uniqueItems) r.uniqueItems = true;
+        if (sc.minLength !== undefined) r.minLength = sc.minLength;
+        if (sc.maxLength !== undefined) r.maxLength = sc.maxLength;
+        if (sc.pattern) r.pattern = sc.pattern;
+        if (sc.enum?.length) r.enum = sc.enum;
+        if (sc.minimum !== undefined) r.minimum = sc.minimum;
+        if (sc.maximum !== undefined) r.maximum = sc.maximum;
+        if (sc.exclusiveMinimum) r.exclusiveMinimum = true;
+        if (sc.exclusiveMaximum) r.exclusiveMaximum = true;
+        if (sc.multipleOf !== undefined) r.multipleOf = sc.multipleOf;
+        ["allOf", "oneOf", "anyOf"].forEach((kw) => {
+          if (sc[kw]?.length) {
+            const items = sc[kw].filter((x) => x.$ref);
+            if (items.length) r[kw] = items;
+          }
+        });
+        return r;
+      }
+
+      // ═══════════════════════════════════════════════════════════
+      // PREVIEW
+      // ═══════════════════════════════════════════════════════════
+      function updatePreview() {
+        const el = $("preview-code");
+        if (!el) return;
+        try {
+          const doc = generateDoc();
+          let text;
+          if (UI.fmt === "yaml")
+            text = jsyaml.dump(doc, { indent: 2, lineWidth: -1, noRefs: true });
+          else text = JSON.stringify(doc, null, 2);
+          el.innerHTML = syntaxHL(text, UI.fmt);
+        } catch (e) {
+          el.textContent = "Ошибка: " + e.message;
+        }
+      }
+
+      function syntaxHL(code, fmt) {
+        if (fmt === "json") {
+          return code.replace(
+            /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+            (m) => {
+              if (/^"/.test(m)) {
+                if (/:$/.test(m))
+                  return `<span style="color:#93c5fd">${m}</span>`;
+                return `<span style="color:#86efac">${m}</span>`;
+              }
+              if (/true|false/.test(m))
+                return `<span style="color:#f472b6">${m}</span>`;
+              if (/null/.test(m))
+                return `<span style="color:#64748b">${m}</span>`;
+              return `<span style="color:#fbbf24">${m}</span>`;
+            }
+          );
+        }
+        return code
+          .replace(
+            /^(\s*)([\w-]+)(:)/gm,
+            (_, sp, k, col) =>
+              `${sp}<span style="color:#93c5fd">${k}</span>${col}`
+          )
+          .replace(/(:\s*)(.+)$/gm, (m, pre, val) => {
+            if (
+              val.startsWith('"') ||
+              val.startsWith("'") ||
+              /^[a-zA-Z][a-zA-Z0-9_-]*$/.test(val.trim())
+            )
+              return pre + `<span style="color:#86efac">${val}</span>`;
+            if (
+              /^\d/.test(val.trim()) ||
+              val.trim() === "true" ||
+              val.trim() === "false"
+            )
+              return pre + `<span style="color:#fbbf24">${val}</span>`;
+            return m;
+          });
+      }
+
+      function setFmt(f) {
+        UI.fmt = f;
+        $("fmt-json").style.cssText =
+          f === "json"
+            ? "background:#0c2048;color:#60a5fa;border:1px solid #1d4ed8"
+            : "background:#1e293b;color:#475569;border:1px solid #334155";
+        $("fmt-yaml").style.cssText =
+          f === "yaml"
+            ? "background:#0c2048;color:#60a5fa;border:1px solid #1d4ed8"
+            : "background:#1e293b;color:#475569;border:1px solid #334155";
+        updatePreview();
+      }
+
+      function copyPreview() {
+        navigator.clipboard
+          .writeText($("preview-code").textContent)
+          .then(() => showToast("Скопировано!"));
+      }
+      function togglePreviewPanel() {
+        $("preview").classList.toggle("mob-show");
+      }
+
+      // ═══════════════════════════════════════════════════════════
+      // IMPORT / EXPORT
+      // ═══════════════════════════════════════════════════════════
+      function copyAs(fmt) {
+        const doc = generateDoc();
+        const text =
+          fmt === "yaml"
+            ? jsyaml.dump(doc, { indent: 2, lineWidth: -1, noRefs: true })
+            : JSON.stringify(doc, null, 2);
+        navigator.clipboard
+          .writeText(text)
+          .then(() => showToast(`${fmt.toUpperCase()} скопирован!`));
+      }
+      function doDownload() {
+        const doc = generateDoc();
+        const blob = new Blob([JSON.stringify(doc, null, 2)], {
+          type: "application/json",
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download =
+          (S.info.title || "openapi")
+            .replace(/[^a-z0-9]/gi, "_")
+            .toLowerCase() + ".json";
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast("Файл скачан!");
+      }
+      function doImport() {
+        $("file-inp").click();
+      }
+      function handleImport(e) {
+        const f = e.target.files[0];
+        if (!f) return;
+        const rd = new FileReader();
+        rd.onload = (ev) => {
+          try {
+            const doc = f.name.match(/\.ya?ml$/i)
+              ? jsyaml.load(ev.target.result)
+              : JSON.parse(ev.target.result);
+            importDoc(doc);
+          } catch (err) {
+            alert("Ошибка парсинга: " + err.message);
+          }
+        };
+        rd.readAsText(f);
+        e.target.value = "";
+      }
+      function importDoc(doc) {
+        if (doc.info) {
+          S.info.title = doc.info.title || "";
+          S.info.version = doc.info.version || "1.0.0";
+          S.info.description = doc.info.description || "";
+          S.info.termsOfService = doc.info.termsOfService || "";
+          if (doc.info.contact) {
+            S.info.contact.name = doc.info.contact.name || "";
+            S.info.contact.email = doc.info.contact.email || "";
+            S.info.contact.url = doc.info.contact.url || "";
+          }
+          if (doc.info.license) {
+            S.info.license.name = doc.info.license.name || "";
+            S.info.license.url = doc.info.license.url || "";
+          }
+        }
+        if (doc.externalDocs) {
+          S.externalDocs.url = doc.externalDocs.url || "";
+          S.externalDocs.description = doc.externalDocs.description || "";
+        }
+        S.servers = (doc.servers || []).map((s) => ({
+          url: s.url || "",
+          description: s.description || "",
+          variables: s.variables || {},
+        }));
+        S.tags = (doc.tags || []).map((t) => ({
+          name: t.name || "",
+          description: t.description || "",
+          externalDocs: t.externalDocs || {},
+        }));
+        S.paths = doc.paths || {};
+        S.security = doc.security || [];
+        if (doc.components) {
+          S.components.schemas = doc.components.schemas || {};
+          S.components.securitySchemes = doc.components.securitySchemes || {};
+          S.components.responses = doc.components.responses || {};
+          S.components.parameters = doc.components.parameters || {};
+        }
+        UI.path = null;
+        UI.method = null;
+        UI.schema = null;
+        UI.secScheme = null;
+        renderNav();
+        renderStats();
+        render();
+        showToast("Импорт успешен!");
+      }
+      function doNew() {
+        if (!confirm("Создать новый API? Текущие данные будут удалены."))
+          return;
+        S = {
+          info: {
+            title: "My API",
+            description: "",
+            version: "1.0.0",
+            termsOfService: "",
+            contact: { name: "", email: "", url: "" },
+            license: { name: "", url: "" },
+          },
+          externalDocs: { url: "", description: "" },
+          servers: [
+            { url: "https://api.example.com/v1", description: "Production" },
+          ],
+          tags: [],
+          paths: {},
+          components: {
+            schemas: {},
+            securitySchemes: {},
+            responses: {},
+            parameters: {},
+          },
+          security: [],
+        };
+        UI.path = null;
+        UI.method = null;
+        UI.schema = null;
+        UI.secScheme = null;
+        UI.acc = {};
+        renderNav();
+        renderStats();
+        render();
+        showToast("Новый API создан");
+      }
+
+      // ═══════════════════════════════════════════════════════════
+      // INIT
+      // ═══════════════════════════════════════════════════════════
+      renderNav();
+      renderStats();
+      render();
+    </script>
+  </body>
+</html>
