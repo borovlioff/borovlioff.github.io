@@ -30,6 +30,8 @@
     "vite-plugin-html-inject": "^1.1.2"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.14"
+    "@borovlioff/no-jsx": "^1.1.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "openapi-types": "^12.1.3"
   }
 }
