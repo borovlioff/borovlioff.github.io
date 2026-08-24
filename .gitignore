@@ -5,7 +5,8 @@
 
 /node_modules
 /dist
-
+.DS_Store
+**/.DS_Store
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json

@@ -1,17 +1,48 @@
 @import "tailwindcss";
 
-html, body, #app { height: 100%; }
+html, body, #app {
+  height: 100%;
+}
 
 body {
   margin: 0;
   background: #222422;
   overscroll-behavior: none;
+  font-family: system-ui, -apple-system, sans-serif;
 }
 
-* { scrollbar-width: thin; scrollbar-color: #4a4d4a transparent; }
-*::-webkit-scrollbar { width: 8px; height: 8px; }
-*::-webkit-scrollbar-thumb { background: #4a4d4a; }
-*::-webkit-scrollbar-track { background: transparent; }
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4a4d4a transparent;
+}
 
-textarea { -webkit-tap-highlight-color: transparent; }
-::selection { background: rgba(255, 255, 255, 0.18); }
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #4a4d4a;
+  border-radius: 3px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Анимация для чипов методов */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+}
