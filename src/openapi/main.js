@@ -84,12 +84,40 @@ function extractPathDoc(spec, pathKey, methods) {
     }
   }
 
+  // Сбор используемых тегов
+  const usedTags = new Set();
+  
+  // Теги уровня Path Item
+  if (rawItem && Array.isArray(rawItem.tags)) {
+    rawItem.tags.forEach(t => usedTags.add(typeof t === 'string' ? t : t.name));
+  }
+
+  // Теги уровня операций
+  if (pathItem && typeof pathItem === "object") {
+    for (const [k, v] of Object.entries(pathItem)) {
+      if (HTTP_METHODS.includes(k) && v && typeof v === "object" && Array.isArray(v.tags)) {
+        v.tags.forEach(t => usedTags.add(typeof t === 'string' ? t : t.name));
+      }
+    }
+  }
+
   const out = {};
   if (spec.openapi) out.openapi = spec.openapi;
   else if (spec.swagger) out.swagger = spec.swagger;
   else out.openapi = "3.0.3";
   if (spec.info) out.info = spec.info;
   if (spec.servers) out.servers = spec.servers;
+  
+  if (spec.security) out.security = spec.security;
+  
+  // Фильтрация глобальных тегов
+  if (spec.tags && Array.isArray(spec.tags) && usedTags.size > 0) {
+    out.tags = spec.tags.filter(t => {
+      const name = typeof t === 'string' ? t : t.name;
+      return usedTags.has(name);
+    });
+  }
+  
   for (const k of ["host", "basePath", "schemes"]) if (spec[k] !== undefined) out[k] = spec[k];
   out.paths = { [pathKey]: pathItem };
 
@@ -108,23 +136,35 @@ function extractPathDoc(spec, pathKey, methods) {
       else scan(v);
     }
   };
-  const addSecurity = (sec) => {
-    if (!Array.isArray(sec)) return;
-    for (const req of sec) {
+  
+  const addSecuritySchemesFromRequirements = (secReqs) => {
+    if (!Array.isArray(secReqs)) return;
+    for (const req of secReqs) {
       if (!req || typeof req !== "object") continue;
       for (const name of Object.keys(req)) {
         const enc = name.replace(/~/g, "~0").replace(/\//g, "~1");
-        if (spec.components?.securitySchemes?.[name] !== undefined) push(`#/components/securitySchemes/${enc}`);
-        else if (spec.securityDefinitions?.[name] !== undefined) push(`#/securityDefinitions/${enc}`);
+        if (spec.components?.securitySchemes?.[name] !== undefined) {
+          push(`#/components/securitySchemes/${enc}`);
+        } else if (spec.securityDefinitions?.[name] !== undefined) {
+          push(`#/securityDefinitions/${enc}`);
+        }
       }
     }
   };
 
   scan(pathItem);
-  addSecurity(spec.security);
+  
+  addSecuritySchemesFromRequirements(spec.security);
+  
+  if (rawItem && typeof rawItem === "object" && rawItem.security) {
+    addSecuritySchemesFromRequirements(rawItem.security);
+  }
+
   if (pathItem && typeof pathItem === "object") {
     for (const [k, v] of Object.entries(pathItem)) {
-      if (HTTP_METHODS.includes(k) && v && typeof v === "object") addSecurity(v.security);
+      if (HTTP_METHODS.includes(k) && v && typeof v === "object") {
+        addSecuritySchemesFromRequirements(v.security);
+      }
     }
   }
 
@@ -139,7 +179,6 @@ function extractPathDoc(spec, pathKey, methods) {
   if (out.components) out.components = orderComponents(out.components);
   return { doc: out, refs: visited.size };
 }
-
 function countComponents(doc) {
   let n = 0;
   if (doc.components && typeof doc.components === "object")
