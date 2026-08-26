@@ -218,7 +218,9 @@ function extractSinglePathDoc(spec, pathKey, methodsFilter) {
 // Объединяем несколько документов
 function mergeDocs(docsArray) {
   if (docsArray.length === 0) return null;
-  if (docsArray.length === 1) return docsArray[0].doc;
+  if (docsArray.length === 1) {
+    return { doc: docsArray[0].doc, refs: docsArray[0].refs };
+  }
 
   const base = { ...docsArray[0].doc };
   let totalRefs = docsArray[0].refs;
